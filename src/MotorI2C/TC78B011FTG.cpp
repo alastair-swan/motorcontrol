@@ -1,8 +1,5 @@
 #include "TC78B011FTG.h"
 
-int i2cBus;
-int i2cBusNumber = 1;
-
 char* numToBin(uint8_t num){
     char* bin = new char[8];
     bin[0] = ((num >> 7) & 1) | 0x30;
@@ -17,8 +14,8 @@ char* numToBin(uint8_t num){
 }
 
 int motorTest(){
-    TC78B011FTG motor0 = TC78B011FTG(0x29);
-    TC78B011FTG motor1 = TC78B011FTG(0x32);
+    TC78B011FTG motor0 = TC78B011FTG(1, 0x29);
+    TC78B011FTG motor1 = TC78B011FTG(1, 0x32);
 
     for (int i = 0; i < 512; i++){
         motor0.setSpeed(i);
@@ -37,8 +34,9 @@ int main (int argc, char* argv[]){
     return 0;
 }
 
-TC78B011FTG::TC78B011FTG(int address)
-    : i2cAddress(address)
+TC78B011FTG::TC78B011FTG(int i2cBus, int address)
+    :   i2cBusNumber(i2cBus),
+        i2cAddress(address)
 {
     NOSTOP          = DEFAULT_NOSTOP;
     STOPDUTY        = DEFAULT_STOPDUTY;
@@ -121,7 +119,7 @@ TC78B011FTG::TC78B011FTG(int address)
 
 int TC78B011FTG::i2cWrite(int reg, uint8_t data){
     char filename[20];
-    
+    int i2cBus;
     sprintf(filename,"/dev/i2c-%d", i2cBusNumber);
     if ((i2cBus = open(filename, O_RDWR)) < 0)
         return -1;
@@ -137,13 +135,13 @@ int TC78B011FTG::i2cWrite(int reg, uint8_t data){
         std::cout << errno << std::endl;
         return -3;
     }
-
+    close(i2cBus);
     return 0;
 }
 
 int TC78B011FTG::i2cRead(int reg){
     char filename[20];
-    
+    int i2cBus;
     sprintf(filename,"/dev/i2c-%d", i2cBusNumber);
     if ((i2cBus = open(filename, O_RDWR)) < 0)
         return -1;
@@ -159,8 +157,10 @@ int TC78B011FTG::i2cRead(int reg){
 
     uint8_t buf[20];
     if (read(i2cBus, buf, 1) != 1) {
+        close(i2cBus);
         return -3;
     } else {
+        close(i2cBus);
         return buf[0];
     }
 }

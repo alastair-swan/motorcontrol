@@ -71,9 +71,10 @@ class TC78B011FTG{
         const int DEFAULT_SINK = 0;           // register 23[2:0]
         const int DEFAULT_COMP_HYS = 1;       // register 24[7:6]
 
+        int i2cBusNumber;
         int i2cAddress;
 
-        TC78B011FTG(int address);
+        TC78B011FTG(int i2cBus, int address);
 
         /// @brief Sets the NOSTOP behavior, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param nostop false: disable, true: enable
