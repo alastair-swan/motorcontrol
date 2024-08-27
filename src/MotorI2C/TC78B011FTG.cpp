@@ -108,7 +108,7 @@ TC78B011FTG::TC78B011FTG(int address)
     i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
     i2cWrite(15,    (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
     i2cWrite(16,    (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
-    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
     i2cWrite(18,    (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
     i2cWrite(19,    (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
     i2cWrite(20,    (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
@@ -386,7 +386,7 @@ int TC78B011FTG::setSoftStartRange(int ssRange)
         return -10;
     }
     SS_ADD_SEL = ssRange;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
@@ -395,7 +395,7 @@ int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
         return -10;
     }
     SS_UP_SEL = ssStepSize;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
@@ -404,13 +404,13 @@ int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
         return -10;
     }
     SS_DUTYCHGLIMIT = dutyChange;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setDutyUpTime(bool dutyTimeMode)
 {
     DUTY_UP_TIME = (int)dutyTimeMode;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setRPMChangeLimit(int RPMLimit)
