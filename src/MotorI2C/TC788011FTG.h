@@ -358,6 +358,8 @@ class TC788011FTG{
         /// @return returns a negative number on error
         int setSpeed(int speed);
 
+        int writeNVM();
+
     private:
         int NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
         int STOPDUTY = 13;      // register 2[6:0]          // STOPDUTY * 2 / 512

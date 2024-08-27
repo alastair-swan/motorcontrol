@@ -3,9 +3,6 @@
 int i2cBus;
 int i2cBusNumber = 1;
 
-uint8_t ioreg = 86;
-uint8_t processreg = 87;
-
 char* numToBin(uint8_t num){
     char* bin = new char[8];
     bin[0] = ((num & 128) > 0) ? '1' : '0';
@@ -19,82 +16,24 @@ char* numToBin(uint8_t num){
     return bin;
 }
 
-int TC788011FTG::setup(){
-    //i2cWrite(i2cAddress, ioreg, 1);
-    //i2cWrite(i2cAddress, processreg, 1);
-    //while (i2cRead(i2cAddress, processreg) != 0){}
-    i2cWrite(2,     (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
-    i2cWrite(3,     (uint8_t)(0xFF & STARTDUTY));
-    i2cWrite(4,     (uint8_t)(0xFF & CHANGEDUTY));
-    i2cWrite(5,     (uint8_t)(0xFF & MAXDUTY));
-    i2cWrite(6,     (uint8_t)(0xFF & (STARTRPM >> 4)));
-    i2cWrite(7,     (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) & (0x0F & MAXDUTYHYS))));
-    i2cWrite(8,     (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    i2cWrite(9,     (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
-    i2cWrite(10,    (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    i2cWrite(11,    (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
-    i2cWrite(12,    (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) & (KI_REG & 0x7F))));
-    i2cWrite(13,    (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) & (KP_REG & 0x7F))));
-    i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
-    i2cWrite(15,    (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
-    i2cWrite(16,    (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
-    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
-    i2cWrite(18,    (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
-    i2cWrite(19,    (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
-    i2cWrite(20,    (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
-    i2cWrite(21,    (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
-    i2cWrite(22,    (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
-    i2cWrite(23,    (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
-    i2cWrite(24,    (uint8_t)(0xFF & (((COMP_HYS & 0x03) << 6))));
-    //i2cWrite(i2cAddress, processreg, 1);
-    //while (i2cRead(i2cAddress, processreg) != 0){}
-    return 0;
- }
-
-int motorSetup(){
-    uint8_t i2cAddress = 0x29;
-
+int motorTest(){
     TC788011FTG motor0 = TC788011FTG(0x29);
     TC788011FTG motor1 = TC788011FTG(0x32);
 
-    //setup(i2cAddress);
-    float speed = 0.0f;
-
-    uint8_t speedreg1 = 27;
-    uint8_t speedreg2 = 28;
-    uint8_t speedval1 = (uint8_t)(((int)(1023 * speed)) >> 2);
-    uint8_t speedval2 = (uint8_t)(((int)(1023 * speed)) << 6);
-    //std::cout << (int)speedval1 << std::endl;
-    //std::cout << (int)speedval2 << std::endl;
-
-    //i2cWrite(i2cAddress, speedreg1, speedval1);
-    //i2cWrite(i2cAddress, speedreg2, speedval2);
-    //i2cWrite(i2cAddress, 5, 127);
-    //i2cWrite(i2cAddress, 20, 0x2A);
-    //i2cWrite(i2cAddress, 15, 0b00000000);
-    //i2cWrite(i2cAddress, 16, 0b00101000);
-    //i2cWrite(i2cAddress, 17, 0b00000010);
-    //i2cWrite(i2cAddress, 11, 0x01);
-    //i2cWrite(i2cAddress, processreg, 1);
-    //while (i2cRead(i2cAddress, processreg) != 0){}
-    
-    //i2cWrite(i2cAddress, ioreg, 0);
-    //i2cWrite(i2cAddress, processreg, 1);
-    
-    /*
-    while (i2cRead(i2cAddress, processreg) != 0){}
-    for (int i = 0; i <= 30; i++){
-        int result = i2cRead(i2cAddress, i);
-        char* bin = numToBin(result);
-        std::cout << ((i < 10) ? " " : "") << i << ": " << bin << std::endl;
-        delete(bin);
+    for (int i = 0; i < 512; i++){
+        motor0.setSpeed(i);
+        // delay 20ms
     }
-    */
+    for (int i = 511; i >= 0; i++){
+        motor0.setSpeed(i);
+        // delay 20ms
+    }
+
     return 0;
 }
 
 int main (int argc, char* argv[]){
-    std::cout << motorSetup() << std::endl;
+    std::cout << motorTest() << std::endl;
     return 0;
 }
 
@@ -671,4 +610,20 @@ int TC788011FTG::setSpeed(int speed)
     int status3 = i2cWrite(27, (uint8_t)(SPEED >> 2));
     int status4 = i2cWrite(28, (uint8_t)(SPEED << 6));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
+}
+
+int TC788011FTG::writeNVM()
+{
+    i2cWrite(86, 1);
+    i2cWrite(87, 1);
+    int waitTime = 0;
+    // wait 100ms
+    while (i2cRead(87) != 0){
+        // wait 100ms
+        waitTime++;
+        if (waitTime > 10){
+            return -1;
+        }
+    }
+    return 0;
 }
