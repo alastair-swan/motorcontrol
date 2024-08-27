@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cmath>
 
-class TC788011FTG{ 
+class TC78B011FTG{ 
     public:
         const int DEFAULT_NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
         const int DEFAULT_STOPDUTY = 13;      // register 2[6:0]          // STOPDUTY * 2 / 512
@@ -73,7 +73,7 @@ class TC788011FTG{
 
         int i2cAddress;
 
-        TC788011FTG(int address);
+        TC78B011FTG(int address);
 
         /// @brief Sets the NOSTOP behavior, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param nostop false: disable, true: enable

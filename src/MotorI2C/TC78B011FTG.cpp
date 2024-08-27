@@ -1,4 +1,4 @@
-#include "TC788011FTG.h"
+#include "TC78B011FTG.h"
 
 int i2cBus;
 int i2cBusNumber = 1;
@@ -17,8 +17,8 @@ char* numToBin(uint8_t num){
 }
 
 int motorTest(){
-    TC788011FTG motor0 = TC788011FTG(0x29);
-    TC788011FTG motor1 = TC788011FTG(0x32);
+    TC78B011FTG motor0 = TC78B011FTG(0x29);
+    TC78B011FTG motor1 = TC78B011FTG(0x32);
 
     for (int i = 0; i < 512; i++){
         motor0.setSpeed(i);
@@ -37,7 +37,7 @@ int main (int argc, char* argv[]){
     return 0;
 }
 
-TC788011FTG::TC788011FTG(int address)
+TC78B011FTG::TC78B011FTG(int address)
     : i2cAddress(address)
 {
     NOSTOP          = DEFAULT_NOSTOP;
@@ -119,7 +119,7 @@ TC788011FTG::TC788011FTG(int address)
     
 }
 
-int TC788011FTG::i2cWrite(int reg, uint8_t data){
+int TC78B011FTG::i2cWrite(int reg, uint8_t data){
     char filename[20];
     
     sprintf(filename,"/dev/i2c-%d", i2cBusNumber);
@@ -141,7 +141,7 @@ int TC788011FTG::i2cWrite(int reg, uint8_t data){
     return 0;
 }
 
-int TC788011FTG::i2cRead(int reg){
+int TC78B011FTG::i2cRead(int reg){
     char filename[20];
     
     sprintf(filename,"/dev/i2c-%d", i2cBusNumber);
@@ -165,13 +165,13 @@ int TC788011FTG::i2cRead(int reg){
     }
 }
 
-int TC788011FTG::setNoStop(bool nostop)
+int TC78B011FTG::setNoStop(bool nostop)
 {
     NOSTOP = (int)nostop;
     return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
 }
 
-int TC788011FTG::setStopDuty(int stopduty)
+int TC78B011FTG::setStopDuty(int stopduty)
 {
     if ((stopduty & 127) != stopduty){
         return -10;
@@ -180,7 +180,7 @@ int TC788011FTG::setStopDuty(int stopduty)
     return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
 }
 
-int TC788011FTG::setStartDuty(int startduty)
+int TC78B011FTG::setStartDuty(int startduty)
 {
     if ((startduty & 255) != startduty){
         return -10;
@@ -189,7 +189,7 @@ int TC788011FTG::setStartDuty(int startduty)
     return i2cWrite(3, (uint8_t)(0xFF & STARTDUTY));
 }
 
-int TC788011FTG::setChangeDuty(int changeduty)
+int TC78B011FTG::setChangeDuty(int changeduty)
 {
     if ((changeduty & 255) != changeduty){
         return -10;
@@ -198,7 +198,7 @@ int TC788011FTG::setChangeDuty(int changeduty)
     return i2cWrite(4, (uint8_t)(0xFF & CHANGEDUTY));
 }
 
-int TC788011FTG::setMaxDuty(int maxduty)
+int TC78B011FTG::setMaxDuty(int maxduty)
 {
     if ((maxduty & 255) != maxduty){
         return -10;
@@ -207,7 +207,7 @@ int TC788011FTG::setMaxDuty(int maxduty)
     return i2cWrite(5, (uint8_t)(0xFF & MAXDUTY));
 }
 
-int TC788011FTG::setStartRPM(int startRPM)
+int TC78B011FTG::setStartRPM(int startRPM)
 {
     if ((startRPM & 4095) != startRPM){
         return -10;
@@ -218,7 +218,7 @@ int TC788011FTG::setStartRPM(int startRPM)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
-int TC788011FTG::setMaxDutyHysteresis(int hysteresis)
+int TC78B011FTG::setMaxDutyHysteresis(int hysteresis)
 {
     if ((hysteresis & 15) != hysteresis){
         return -10;
@@ -227,7 +227,7 @@ int TC788011FTG::setMaxDutyHysteresis(int hysteresis)
     return i2cWrite(7, (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) & (0x0F & MAXDUTYHYS))));
 }
 
-int TC788011FTG::setSpeedSlope(int speedslope)
+int TC78B011FTG::setSpeedSlope(int speedslope)
 {
     if ((speedslope & 16383) != speedslope){
         return -10;
@@ -238,19 +238,19 @@ int TC788011FTG::setSpeedSlope(int speedslope)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
-int TC788011FTG::setMaxOpen(bool maxopen)
+int TC78B011FTG::setMaxOpen(bool maxopen)
 {
     MAXOPEN = (int)maxopen;
     return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
 }
 
-int TC788011FTG::setMaxOff(bool maxoff)
+int TC78B011FTG::setMaxOff(bool maxoff)
 {
     MAXOFF = (int)maxoff;
     return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
 }
 
-int TC788011FTG::setSpeedSlope2(int speedslope2)
+int TC78B011FTG::setSpeedSlope2(int speedslope2)
 {
     if ((speedslope2 & 16383) != speedslope2){
         return -10;
@@ -261,19 +261,19 @@ int TC788011FTG::setSpeedSlope2(int speedslope2)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
-int TC788011FTG::setChargePumpVCP(bool VCP)
+int TC78B011FTG::setChargePumpVCP(bool VCP)
 {
     VCP_MASK = (int)VCP;
     return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
 }
 
-int TC788011FTG::setOpenLoop(bool openLoop)
+int TC78B011FTG::setOpenLoop(bool openLoop)
 {
     OPENLOOP = (int)openLoop;
     return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
 }
 
-int TC788011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
+int TC78B011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
 {
     if (((KI & 127) != KI) | ((KP & 127) != KP)){
         return -10;
@@ -287,19 +287,19 @@ int TC788011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
-int TC788011FTG::setStandbyMode(bool standbymode)
+int TC78B011FTG::setStandbyMode(bool standbymode)
 {
     STBY_MODE = (int)standbymode;
     return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
 }
 
-int TC788011FTG::setDIRMode(bool dirMode)
+int TC78B011FTG::setDIRMode(bool dirMode)
 {
     DIR = (int)dirMode;
     return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
 }
 
-int TC788011FTG::setPoles(int polesMode)
+int TC78B011FTG::setPoles(int polesMode)
 {
     if ((polesMode & 7) != polesMode){
         return -10;
@@ -308,7 +308,7 @@ int TC788011FTG::setPoles(int polesMode)
     return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
 }
 
-int TC788011FTG::setMaxSpeed(int maxSpeedMode)
+int TC78B011FTG::setMaxSpeed(int maxSpeedMode)
 {
     if ((maxSpeedMode & 3) != maxSpeedMode){
         return -10;
@@ -317,31 +317,31 @@ int TC788011FTG::setMaxSpeed(int maxSpeedMode)
     return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
 }
 
-int TC788011FTG::setSpeedOutputMode(bool outputMode)
+int TC78B011FTG::setSpeedOutputMode(bool outputMode)
 {
     FG_ON = (int)outputMode;
     return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
 }
 
-int TC788011FTG::setSpeedControlMode(bool mode)
+int TC78B011FTG::setSpeedControlMode(bool mode)
 {
     TSPSEL = (int)mode;
     return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
 }
 
-int TC788011FTG::setSpeedInversion(bool inverted)
+int TC78B011FTG::setSpeedInversion(bool inverted)
 {
     SPDINV = (int)inverted;
     return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
 }
 
-int TC788011FTG::setAutoRecoveryMode(bool autorecovery)
+int TC78B011FTG::setAutoRecoveryMode(bool autorecovery)
 {
     LATCH = (int)autorecovery;
     return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
 }
 
-int TC788011FTG::setDigitalFiltering(int filter)
+int TC78B011FTG::setDigitalFiltering(int filter)
 {
     if ((filter & 3) != filter){
         return -10;
@@ -350,13 +350,13 @@ int TC788011FTG::setDigitalFiltering(int filter)
     return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
 }
 
-int TC788011FTG::setForcedComutationProtection(bool protectionDisable)
+int TC78B011FTG::setForcedComutationProtection(bool protectionDisable)
 {
     LOCKDIS = (int)protectionDisable;
     return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
 }
 
-int TC788011FTG::setDutyChangeLimit(int dutyChange)
+int TC78B011FTG::setDutyChangeLimit(int dutyChange)
 {
     if ((dutyChange & 7) != dutyChange){
         return -10;
@@ -365,7 +365,7 @@ int TC788011FTG::setDutyChangeLimit(int dutyChange)
     return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
 }
 
-int TC788011FTG::setStartCurrentLimit(int currentlimit)
+int TC78B011FTG::setStartCurrentLimit(int currentlimit)
 {
     if ((currentlimit & 7) != currentlimit){
         return -10;
@@ -374,13 +374,13 @@ int TC788011FTG::setStartCurrentLimit(int currentlimit)
     return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
 }
 
-int TC788011FTG::setOCPDisable(bool OCPDisable)
+int TC78B011FTG::setOCPDisable(bool OCPDisable)
 {
     OCPDIS = (int)OCPDisable;
     return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
 }
 
-int TC788011FTG::setSoftStartRange(int ssRange)
+int TC78B011FTG::setSoftStartRange(int ssRange)
 {
     if ((ssRange & 3) != ssRange){
         return -10;
@@ -389,7 +389,7 @@ int TC788011FTG::setSoftStartRange(int ssRange)
     return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
-int TC788011FTG::setSoftStartStepSize(int ssStepSize)
+int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
 {
     if ((ssStepSize & 3) != ssStepSize){
         return -10;
@@ -398,7 +398,7 @@ int TC788011FTG::setSoftStartStepSize(int ssStepSize)
     return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
-int TC788011FTG::setSoftStartDutyChangeLimit(int dutyChange)
+int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
 {
     if ((dutyChange & 7) != dutyChange){
         return -10;
@@ -407,13 +407,13 @@ int TC788011FTG::setSoftStartDutyChangeLimit(int dutyChange)
     return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
-int TC788011FTG::setDutyUpTime(bool dutyTimeMode)
+int TC78B011FTG::setDutyUpTime(bool dutyTimeMode)
 {
     DUTY_UP_TIME = (int)dutyTimeMode;
     return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) && ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
 }
 
-int TC788011FTG::setRPMChangeLimit(int RPMLimit)
+int TC78B011FTG::setRPMChangeLimit(int RPMLimit)
 {
     if ((RPMLimit * 7) != RPMLimit){
         return -10;
@@ -422,19 +422,19 @@ int TC788011FTG::setRPMChangeLimit(int RPMLimit)
     return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
 }
 
-int TC788011FTG::setBrakeInverted(bool brakeInverted)
+int TC78B011FTG::setBrakeInverted(bool brakeInverted)
 {
     BRK_INV = (int)brakeInverted;
     return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
 }
 
-int TC788011FTG::setOvercurrentDetectionDisabled(bool OCPDisabled)
+int TC78B011FTG::setOvercurrentDetectionDisabled(bool OCPDisabled)
 {
     ISD_MASK = (int)OCPDisabled;
     return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
 }
 
-int TC788011FTG::setRSAPinFiltering(int filterMode)
+int TC78B011FTG::setRSAPinFiltering(int filterMode)
 {
     if ((filterMode & 3) != filterMode){
         return -10;
@@ -443,13 +443,13 @@ int TC788011FTG::setRSAPinFiltering(int filterMode)
     return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
 }
 
-int TC788011FTG::setAutoDeadTimeControlDisabled(bool autoDeadTimeDisabled)
+int TC78B011FTG::setAutoDeadTimeControlDisabled(bool autoDeadTimeDisabled)
 {
     ANTITHROUGH = (int)autoDeadTimeDisabled;
     return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
 }
 
-int TC788011FTG::setBrakeTime(int time)
+int TC78B011FTG::setBrakeTime(int time)
 {
     if ((time & 7) != time){
         return -10;
@@ -458,37 +458,37 @@ int TC788011FTG::setBrakeTime(int time)
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setBrakeMode(bool mode)
+int TC78B011FTG::setBrakeMode(bool mode)
 {
     WAIT_MODE = (int)mode;
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setBrakeReleaseMode(bool mode)
+int TC78B011FTG::setBrakeReleaseMode(bool mode)
 {
     WAIT_CON = (int)mode;
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setErrorBrakingMode(bool mode)
+int TC78B011FTG::setErrorBrakingMode(bool mode)
 {
     LOCK_BRK = (int)mode;
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setAlertInverted(bool inverted)
+int TC78B011FTG::setAlertInverted(bool inverted)
 {
     ALERT_INV = (int)inverted;
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setThermalShutdownDisable(bool disabled)
+int TC78B011FTG::setThermalShutdownDisable(bool disabled)
 {
     TSD_MASK = (int)disabled;
     return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
 }
 
-int TC788011FTG::setAutoRestartWaitTime(int time)
+int TC78B011FTG::setAutoRestartWaitTime(int time)
 {
     if ((time & 7) != time){
         return -10;
@@ -497,7 +497,7 @@ int TC788011FTG::setAutoRestartWaitTime(int time)
     return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
 }
 
-int TC788011FTG::setFirstDCExcitationTime(int time)
+int TC78B011FTG::setFirstDCExcitationTime(int time)
 {
     if ((time & 3) != time){
         return -10;
@@ -506,7 +506,7 @@ int TC788011FTG::setFirstDCExcitationTime(int time)
     return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
 }
 
-int TC788011FTG::setSecondDCExcitationTime(int time)
+int TC78B011FTG::setSecondDCExcitationTime(int time)
 {
     if ((time & 7) != time){
         return -10;
@@ -515,7 +515,7 @@ int TC788011FTG::setSecondDCExcitationTime(int time)
     return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
 }
 
-int TC788011FTG::setLeadAngle(int angleSetting)
+int TC78B011FTG::setLeadAngle(int angleSetting)
 {
     if ((angleSetting & 15) != angleSetting){
         return -10;
@@ -524,7 +524,7 @@ int TC788011FTG::setLeadAngle(int angleSetting)
     return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
 }
 
-int TC788011FTG::setMaxRPM(int maxRPMMode)
+int TC78B011FTG::setMaxRPM(int maxRPMMode)
 {
     if ((maxRPMMode & 3) != maxRPMMode){
         return -10;
@@ -533,7 +533,7 @@ int TC788011FTG::setMaxRPM(int maxRPMMode)
     return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
 }
 
-int TC788011FTG::setForcedComutationFrequency(int comutationMode)
+int TC78B011FTG::setForcedComutationFrequency(int comutationMode)
 {
     if ((comutationMode & 3) != comutationMode){
         return -10;
@@ -542,7 +542,7 @@ int TC788011FTG::setForcedComutationFrequency(int comutationMode)
     return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
 }
 
-int TC788011FTG::setOutputPWMFrequencyMode(int frequencyMode)
+int TC78B011FTG::setOutputPWMFrequencyMode(int frequencyMode)
 {
     if ((frequencyMode & 7) != frequencyMode){
         return -10;
@@ -551,7 +551,7 @@ int TC788011FTG::setOutputPWMFrequencyMode(int frequencyMode)
     return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
 }
 
-int TC788011FTG::setDeadtime(int deadtimeMode)
+int TC78B011FTG::setDeadtime(int deadtimeMode)
 {
     if ((deadtimeMode & 3) != deadtimeMode){
         return -10;
@@ -560,19 +560,19 @@ int TC788011FTG::setDeadtime(int deadtimeMode)
     return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
 }
 
-int TC788011FTG::setOvercurrentDetectionThreshold(bool thresholdMode)
+int TC78B011FTG::setOvercurrentDetectionThreshold(bool thresholdMode)
 {
     ISD_LVL = (int)thresholdMode;
     return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
 }
 
-int TC788011FTG::setOvercurrentProtectionGain(bool OCPGain)
+int TC78B011FTG::setOvercurrentProtectionGain(bool OCPGain)
 {
     OCP_LVL = OCPGain;
     return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
 }
 
-int TC788011FTG::setGateSourceCurrent(int currentMode)
+int TC78B011FTG::setGateSourceCurrent(int currentMode)
 {
     if ((currentMode & 7) != currentMode){
         return -10;
@@ -581,7 +581,7 @@ int TC788011FTG::setGateSourceCurrent(int currentMode)
     return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
 }
 
-int TC788011FTG::setGateSinkCurrent(int currentMode)
+int TC78B011FTG::setGateSinkCurrent(int currentMode)
 {
     if ((currentMode & 7) != currentMode){
         return -10;
@@ -591,7 +591,7 @@ int TC788011FTG::setGateSinkCurrent(int currentMode)
 
 }
 
-int TC788011FTG::setIdleModeHysteresisVoltage(int hysteresisMode)
+int TC78B011FTG::setIdleModeHysteresisVoltage(int hysteresisMode)
 {
     if ((hysteresisMode & 3) != hysteresisMode){
         return -10;
@@ -599,7 +599,7 @@ int TC788011FTG::setIdleModeHysteresisVoltage(int hysteresisMode)
     return i2cWrite(24, (uint8_t)(0xFF & (((COMP_HYS & 0x03) << 6))));
 }
 
-int TC788011FTG::setSpeed(int speed)
+int TC78B011FTG::setSpeed(int speed)
 {
     if ((speed & 1023) != speed){
         return -10;
@@ -612,7 +612,7 @@ int TC788011FTG::setSpeed(int speed)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
 }
 
-int TC788011FTG::writeNVM()
+int TC78B011FTG::writeNVM()
 {
     i2cWrite(86, 1);
     i2cWrite(87, 1);
