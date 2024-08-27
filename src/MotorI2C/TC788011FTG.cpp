@@ -5,14 +5,14 @@ int i2cBusNumber = 1;
 
 char* numToBin(uint8_t num){
     char* bin = new char[8];
-    bin[0] = ((num & 128) > 0) ? '1' : '0';
-    bin[1] = ((num & 64) > 0) ? '1' : '0';
-    bin[2] = ((num & 32) > 0) ? '1' : '0';
-    bin[3] = ((num & 16) > 0) ? '1' : '0';
-    bin[4] = ((num & 8) > 0) ? '1' : '0';
-    bin[5] = ((num & 4) > 0) ? '1' : '0';
-    bin[6] = ((num & 2) > 0) ? '1' : '0';
-    bin[7] = ((num & 1) > 0) ? '1' : '0';
+    bin[0] = ((num >> 7) & 1) | 0x30;
+    bin[1] = ((num >> 6) & 1) | 0x30;
+    bin[2] = ((num >> 5) & 1) | 0x30;
+    bin[3] = ((num >> 4) & 1) | 0x30;
+    bin[4] = ((num >> 3) & 1) | 0x30;
+    bin[5] = ((num >> 2) & 1) | 0x30;
+    bin[6] = ((num >> 1) & 1) | 0x30;
+    bin[7] = (num & 1) | 0x30;
     return bin;
 }
 
