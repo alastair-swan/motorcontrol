@@ -36,26 +36,26 @@ function StartupState(){
 function ErrorState(){
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Charge Pump:</Grid>
                 <Grid size={3}><ChargePumpState /></Grid>
                 <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}><Box>Temperature: </Box></Grid>
                 <Grid size={3}><TemperatureState /></Grid>
                 <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}><Box>Current: </Box></Grid>
                 <Grid size={3}><CurrentState /></Grid>
                 <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}><Box>Rotation: </Box></Grid>
                 <Grid size={3}><RotationState /></Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}><Box>Startup: </Box></Grid>
                 <Grid size={3}><StartupState /></Grid>
             </Grid>
@@ -66,11 +66,11 @@ function ErrorState(){
 function DutyControl(){
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>NoStop: </Grid>
                 <Grid size={3}><Checkbox />Enabled</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Stop Duty</Grid>
                 <Grid size={8}>
                     <Slider
@@ -82,7 +82,7 @@ function DutyControl(){
                 </Grid>
                 <Grid size={5}><output id="stopdutyvalue"></output></Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Start Duty</Grid>
                 <Grid size={8}>
                     <Slider
@@ -93,7 +93,7 @@ function DutyControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Change Duty</Grid>
                 <Grid size={8}>
                     <Slider
@@ -104,7 +104,7 @@ function DutyControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Max Duty</Grid>
                 <Grid size={8}>
                     <Slider
@@ -122,7 +122,7 @@ function DutyControl(){
 function SpeedControl(){
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Start RPM</Grid>
                 <Grid size={8}>
                     <Slider 
@@ -133,7 +133,7 @@ function SpeedControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Max Duty Hysteresis</Grid>
                 <Grid size={8}>
                     <Slider
@@ -145,7 +145,7 @@ function SpeedControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Speed Slope</Grid>
                 <Grid size={8}>
                     <Slider 
@@ -156,7 +156,7 @@ function SpeedControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Speed Slope 2</Grid>
                 <Grid size={8}>
                     <Slider 
@@ -167,15 +167,15 @@ function SpeedControl(){
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Max Open</Grid>
                 <Grid size={3}><Checkbox />Enabled</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Max Off</Grid>
                 <Grid size={3}><Checkbox />Enabled</Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>Open Loop Control</Grid>
                 <Grid size={3}><Checkbox />Forced</Grid>
             </Grid>
@@ -186,7 +186,7 @@ function SpeedControl(){
 function PID (){
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} minWidth={8}>
                 <Grid size={4}>KI</Grid>
                 <Grid size={3}><Checkbox />8x</Grid>
                 <Grid size={5}><Slider
@@ -197,17 +197,17 @@ function PID (){
                     />
                 </Grid>
             </Grid>
-        <Grid container spacing={2}>
-            <Grid size={4}>KP</Grid>
-            <Grid size={3}><Checkbox />8x</Grid>
-            <Grid size={5}><Slider
-                    step={1}
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={127}
-                />
+            <Grid container spacing={2} minWidth={8}>
+                <Grid size={4}>KP</Grid>
+                <Grid size={3}><Checkbox />8x</Grid>
+                <Grid size={5}><Slider
+                        step={1}
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={127}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
         </Box>
     )
 }
