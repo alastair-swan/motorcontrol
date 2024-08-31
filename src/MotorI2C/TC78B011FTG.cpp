@@ -148,28 +148,28 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
     SINK            = DEFAULT_SINK;
     COMP_HYS        = DEFAULT_COMP_HYS;
     
-    i2cWrite(2,     (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
+    i2cWrite(2,     (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) | (STOPDUTY & 0x7F))));
     i2cWrite(3,     (uint8_t)(0xFF & STARTDUTY));
     i2cWrite(4,     (uint8_t)(0xFF & CHANGEDUTY));
     i2cWrite(5,     (uint8_t)(0xFF & MAXDUTY));
     i2cWrite(6,     (uint8_t)(0xFF & (STARTRPM >> 4)));
-    i2cWrite(7,     (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) & (0x0F & MAXDUTYHYS))));
+    i2cWrite(7,     (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) | (0x0F & MAXDUTYHYS))));
     i2cWrite(8,     (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    i2cWrite(9,     (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
+    i2cWrite(9,     (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
     i2cWrite(10,    (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    i2cWrite(11,    (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
-    i2cWrite(12,    (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) & (KI_REG & 0x7F))));
-    i2cWrite(13,    (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) & (KP_REG & 0x7F))));
-    i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
-    i2cWrite(15,    (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
-    i2cWrite(16,    (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
-    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
-    i2cWrite(18,    (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
-    i2cWrite(19,    (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
-    i2cWrite(20,    (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
-    i2cWrite(21,    (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
-    i2cWrite(22,    (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
-    i2cWrite(23,    (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
+    i2cWrite(11,    (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
+    i2cWrite(12,    (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) | (KI_REG & 0x7F))));
+    i2cWrite(13,    (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) | (KP_REG & 0x7F))));
+    i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
+    i2cWrite(15,    (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
+    i2cWrite(16,    (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
+    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
+    i2cWrite(18,    (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
+    i2cWrite(19,    (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
+    i2cWrite(20,    (uint8_t)(0xFF & (((TRE & 0x07) << 5) | ((PRE_TIP & 0x03) << 3) | (TIP & 0x07))));
+    i2cWrite(21,    (uint8_t)(0xFF & (((LA & 0x0F) << 4) | ((FMAX & 0x03) << 2) | (FST & 0x03))));
+    i2cWrite(22,    (uint8_t)(0xFF & (((FPWM & 0x07) << 2) | (DEADTIME & 0x03))));
+    i2cWrite(23,    (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
     i2cWrite(24,    (uint8_t)(0xFF & (((COMP_HYS & 0x03) << 6))));
     
 }
@@ -227,7 +227,7 @@ int TC78B011FTG::i2cRead(int reg){
 int TC78B011FTG::setNoStop(bool nostop)
 {
     NOSTOP = (int)nostop;
-    return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
+    return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) | (STOPDUTY & 0x7F))));
 }
 
 int TC78B011FTG::setStopDuty(int stopduty)
@@ -236,7 +236,7 @@ int TC78B011FTG::setStopDuty(int stopduty)
         return -10;
     }
     STOPDUTY = stopduty;
-    return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) & (STOPDUTY & 0x7F))));
+    return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) | (STOPDUTY & 0x7F))));
 }
 
 int TC78B011FTG::setStartDuty(int startduty)
@@ -273,7 +273,7 @@ int TC78B011FTG::setStartRPM(int startRPM)
     }
     STARTRPM = startRPM;
     int status1 = i2cWrite(6, (uint8_t)(0xFF & (STARTRPM >> 4)));
-    int status2 = i2cWrite(7, (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) & (0x0F & MAXDUTYHYS))));
+    int status2 = i2cWrite(7, (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) | (0x0F & MAXDUTYHYS))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
@@ -283,7 +283,7 @@ int TC78B011FTG::setMaxDutyHysteresis(int hysteresis)
         return -10;
     }
     MAXDUTYHYS = hysteresis;
-    return i2cWrite(7, (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) & (0x0F & MAXDUTYHYS))));
+    return i2cWrite(7, (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) | (0x0F & MAXDUTYHYS))));
 }
 
 int TC78B011FTG::setSpeedSlope(int speedslope)
@@ -293,20 +293,20 @@ int TC78B011FTG::setSpeedSlope(int speedslope)
     }
     SPEEDSLOP = speedslope;
     int status1 = i2cWrite(8, (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    int status2 = i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
+    int status2 = i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
 int TC78B011FTG::setMaxOpen(bool maxopen)
 {
     MAXOPEN = (int)maxopen;
-    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
+    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
 }
 
 int TC78B011FTG::setMaxOff(bool maxoff)
 {
     MAXOFF = (int)maxoff;
-    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) & ((MAXOPEN & 0x01) << 1) & (MAXOFF & 0x01)));
+    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
 }
 
 int TC78B011FTG::setSpeedSlope2(int speedslope2)
@@ -316,20 +316,20 @@ int TC78B011FTG::setSpeedSlope2(int speedslope2)
     }
     SPEEDSLOP2 = speedslope2;
     int status1 = i2cWrite(10, (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    int status2 = i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
+    int status2 = i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
 int TC78B011FTG::setChargePumpVCP(bool VCP)
 {
     VCP_MASK = (int)VCP;
-    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
+    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
 }
 
 int TC78B011FTG::setOpenLoop(bool openLoop)
 {
     OPENLOOP = (int)openLoop;
-    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) & ((VCP_MASK & 0x01) << 1) & (OPENLOOP & 0x01)));
+    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
 }
 
 int TC78B011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
@@ -341,21 +341,21 @@ int TC78B011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
     KI_REG = KI;
     KPX_REG = (int)KPX;
     KP_REG = KP;
-    int status1 = i2cWrite(12, (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) & (KI_REG & 0x7F))));
-    int status2 = i2cWrite(13, (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) & (KP_REG & 0x7F))));
+    int status1 = i2cWrite(12, (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) | (KI_REG & 0x7F))));
+    int status2 = i2cWrite(13, (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) | (KP_REG & 0x7F))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
 int TC78B011FTG::setStandbyMode(bool standbymode)
 {
     STBY_MODE = (int)standbymode;
-    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
+    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
 }
 
 int TC78B011FTG::setDIRMode(bool dirMode)
 {
     DIR = (int)dirMode;
-    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
+    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
 }
 
 int TC78B011FTG::setPoles(int polesMode)
@@ -364,7 +364,7 @@ int TC78B011FTG::setPoles(int polesMode)
         return -10;
     }
     POLEPAIR = polesMode;
-    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
+    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
 }
 
 int TC78B011FTG::setMaxSpeed(int maxSpeedMode)
@@ -373,31 +373,31 @@ int TC78B011FTG::setMaxSpeed(int maxSpeedMode)
         return -10;
     }
     MAXSPEED = maxSpeedMode;
-    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
+    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
 }
 
 int TC78B011FTG::setSpeedOutputMode(bool outputMode)
 {
     FG_ON = (int)outputMode;
-    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) & ((DIR & 0x01) << 6) & ((POLEPAIR & 0x07) << 3) & ((MAXSPEED & 0x03) << 1) & (FG_ON & 0x01))));
+    return i2cWrite(14, (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
 }
 
 int TC78B011FTG::setSpeedControlMode(bool mode)
 {
     TSPSEL = (int)mode;
-    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
+    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
 }
 
 int TC78B011FTG::setSpeedInversion(bool inverted)
 {
     SPDINV = (int)inverted;
-    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
+    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
 }
 
 int TC78B011FTG::setAutoRecoveryMode(bool autorecovery)
 {
     LATCH = (int)autorecovery;
-    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
+    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
 }
 
 int TC78B011FTG::setDigitalFiltering(int filter)
@@ -406,13 +406,13 @@ int TC78B011FTG::setDigitalFiltering(int filter)
         return -10;
     }
     OCPMASK = filter;
-    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) & ((TSPSEL & 0x01) << 4) & ((SPDINV & 0x01) << 3) & ((LATCH & 0x01) << 2) & (OCPMASK & 0x03))));
+    return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
 }
 
 int TC78B011FTG::setForcedComutationProtection(bool protectionDisable)
 {
     LOCKDIS = (int)protectionDisable;
-    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
+    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
 }
 
 int TC78B011FTG::setDutyChangeLimit(int dutyChange)
@@ -421,7 +421,7 @@ int TC78B011FTG::setDutyChangeLimit(int dutyChange)
         return -10;
     }
     DUTYCHGLIMIT = dutyChange;
-    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
+    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
 }
 
 int TC78B011FTG::setStartCurrentLimit(int currentlimit)
@@ -430,13 +430,13 @@ int TC78B011FTG::setStartCurrentLimit(int currentlimit)
         return -10;
     }
     STARTCURRENT = currentlimit;
-    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
+    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
 }
 
 int TC78B011FTG::setOCPDisable(bool OCPDisable)
 {
     OCPDIS = (int)OCPDisable;
-    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) & ((DUTYCHGLIMIT & 0x07) << 4) & ((STARTCURRENT & 0x07) << 1) & (OCPDIS & 0x01))));
+    return i2cWrite(16, (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
 }
 
 int TC78B011FTG::setSoftStartRange(int ssRange)
@@ -445,7 +445,7 @@ int TC78B011FTG::setSoftStartRange(int ssRange)
         return -10;
     }
     SS_ADD_SEL = ssRange;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
@@ -454,7 +454,7 @@ int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
         return -10;
     }
     SS_UP_SEL = ssStepSize;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
@@ -463,13 +463,13 @@ int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
         return -10;
     }
     SS_DUTYCHGLIMIT = dutyChange;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setDutyUpTime(bool dutyTimeMode)
 {
     DUTY_UP_TIME = (int)dutyTimeMode;
-    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) & ((SS_UP_SEL & 0x03) << 4) & ((SS_DUTYCHGLIMIT & 0x07) << 1) & (DUTY_UP_TIME & 0x01))));
+    return i2cWrite(17, (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
 }
 
 int TC78B011FTG::setRPMChangeLimit(int RPMLimit)
@@ -478,19 +478,19 @@ int TC78B011FTG::setRPMChangeLimit(int RPMLimit)
         return -10;
     }
     RPMLIMIT = RPMLimit;
-    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
+    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
 }
 
 int TC78B011FTG::setBrakeInverted(bool brakeInverted)
 {
     BRK_INV = (int)brakeInverted;
-    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
+    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
 }
 
 int TC78B011FTG::setOvercurrentDetectionDisabled(bool OCPDisabled)
 {
     ISD_MASK = (int)OCPDisabled;
-    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
+    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
 }
 
 int TC78B011FTG::setRSAPinFiltering(int filterMode)
@@ -499,13 +499,13 @@ int TC78B011FTG::setRSAPinFiltering(int filterMode)
         return -10;
     }
     RS_SEL = filterMode;
-    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
+    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
 }
 
 int TC78B011FTG::setAutoDeadTimeControlDisabled(bool autoDeadTimeDisabled)
 {
     ANTITHROUGH = (int)autoDeadTimeDisabled;
-    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) & ((BRK_INV & 0x01) << 4) & ((ISD_MASK & 0x01) << 3) & ((RS_SEL & 0x03) << 1) & (ANTITHROUGH & 0x01))));
+    return i2cWrite(18, (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
 }
 
 int TC78B011FTG::setBrakeTime(int time)
@@ -514,37 +514,37 @@ int TC78B011FTG::setBrakeTime(int time)
         return -10;
     }
     WAIT_TIME = time;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setBrakeMode(bool mode)
 {
     WAIT_MODE = (int)mode;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setBrakeReleaseMode(bool mode)
 {
     WAIT_CON = (int)mode;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setErrorBrakingMode(bool mode)
 {
     LOCK_BRK = (int)mode;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setAlertInverted(bool inverted)
 {
     ALERT_INV = (int)inverted;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setThermalShutdownDisable(bool disabled)
 {
     TSD_MASK = (int)disabled;
-    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) & ((WAIT_MODE & 0x01) << 4) & ((WAIT_CON & 0x01) << 3) & ((LOCK_BRK & 0x01) << 2) & ((ALERT_INV & 0x01) << 1) & (TSD_MASK & 0x01))));
+    return i2cWrite(19, (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
 }
 
 int TC78B011FTG::setAutoRestartWaitTime(int time)
@@ -553,7 +553,7 @@ int TC78B011FTG::setAutoRestartWaitTime(int time)
         return -10;
     }
     TRE = time;
-    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
+    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) | ((PRE_TIP & 0x03) << 3) | (TIP & 0x07))));
 }
 
 int TC78B011FTG::setFirstDCExcitationTime(int time)
@@ -562,7 +562,7 @@ int TC78B011FTG::setFirstDCExcitationTime(int time)
         return -10;
     }
     PRE_TIP = time;
-    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
+    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) | ((PRE_TIP & 0x03) << 3) | (TIP & 0x07))));
 }
 
 int TC78B011FTG::setSecondDCExcitationTime(int time)
@@ -571,7 +571,7 @@ int TC78B011FTG::setSecondDCExcitationTime(int time)
         return -10;
     }
     TIP = time;
-    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) & ((PRE_TIP & 0x03) << 3) & (TIP & 0x07))));
+    return i2cWrite(20, (uint8_t)(0xFF & (((TRE & 0x07) << 5) | ((PRE_TIP & 0x03) << 3) | (TIP & 0x07))));
 }
 
 int TC78B011FTG::setLeadAngle(int angleSetting)
@@ -580,7 +580,7 @@ int TC78B011FTG::setLeadAngle(int angleSetting)
         return -10;
     }
     LA = angleSetting;
-    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
+    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) | ((FMAX & 0x03) << 2) | (FST & 0x03))));
 }
 
 int TC78B011FTG::setMaxRPM(int maxRPMMode)
@@ -589,7 +589,7 @@ int TC78B011FTG::setMaxRPM(int maxRPMMode)
         return -10;
     }
     FMAX = maxRPMMode;
-    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
+    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) | ((FMAX & 0x03) << 2) | (FST & 0x03))));
 }
 
 int TC78B011FTG::setForcedComutationFrequency(int comutationMode)
@@ -598,7 +598,7 @@ int TC78B011FTG::setForcedComutationFrequency(int comutationMode)
         return -10;
     }
     FST = comutationMode;
-    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) & ((FMAX & 0x03) << 2) & (FST & 0x03))));
+    return i2cWrite(21, (uint8_t)(0xFF & (((LA & 0x0F) << 4) | ((FMAX & 0x03) << 2) | (FST & 0x03))));
 }
 
 int TC78B011FTG::setOutputPWMFrequencyMode(int frequencyMode)
@@ -607,7 +607,7 @@ int TC78B011FTG::setOutputPWMFrequencyMode(int frequencyMode)
         return -10;
     }
     FPWM = frequencyMode;
-    return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
+    return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) | (DEADTIME & 0x03))));
 }
 
 int TC78B011FTG::setDeadtime(int deadtimeMode)
@@ -616,19 +616,19 @@ int TC78B011FTG::setDeadtime(int deadtimeMode)
         return -10;
     }
     DEADTIME = deadtimeMode;
-    return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) & (DEADTIME & 0x03))));
+    return i2cWrite(22, (uint8_t)(0xFF & (((FPWM & 0x07) << 2) | (DEADTIME & 0x03))));
 }
 
 int TC78B011FTG::setOvercurrentDetectionThreshold(bool thresholdMode)
 {
     ISD_LVL = (int)thresholdMode;
-    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
+    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
 }
 
 int TC78B011FTG::setOvercurrentProtectionGain(bool OCPGain)
 {
     OCP_LVL = OCPGain;
-    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
+    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
 }
 
 int TC78B011FTG::setGateSourceCurrent(int currentMode)
@@ -637,7 +637,7 @@ int TC78B011FTG::setGateSourceCurrent(int currentMode)
         return -10;
     }
     SOURCE = currentMode;
-    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
+    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
 }
 
 int TC78B011FTG::setGateSinkCurrent(int currentMode)
@@ -646,7 +646,7 @@ int TC78B011FTG::setGateSinkCurrent(int currentMode)
         return -10;
     }
     SINK = currentMode;
-    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) & ((OCP_LVL & 0x01) << 6) & ((SOURCE & 0x07) << 3) & (SINK & 0x07))));
+    return i2cWrite(23, (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
 
 }
 

@@ -13,10 +13,10 @@
 class TC78B011FTG{ 
     public:
         const int DEFAULT_NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
-        const int DEFAULT_STOPDUTY = 13;      // register 2[6:0]          // STOPDUTY * 2 / 512
-        const int DEFAULT_STARTDUTY = 77;     // register 3[7:0]          // STARTDUTY / 512
+        const int DEFAULT_STOPDUTY = 0;      // register 2[6:0]          // STOPDUTY * 2 / 512
+        const int DEFAULT_STARTDUTY = 1;     // register 3[7:0]          // STARTDUTY / 512
         const int DEFAULT_CHANGEDUTY = 120;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
-        const int DEFAULT_MAXDUTY = 180;      // register 5[7:0]          // (MAXDUTY + 257) / 512
+        const int DEFAULT_MAXDUTY = 255;      // register 5[7:0]          // (MAXDUTY + 257) / 512
         const int DEFAULT_STARTRPM = 857;     // register 6[7:0]7[7:4]
         const int DEFAULT_MAXDUTYHYS = 3;     // register 7[3:0]
         const int DEFAULT_SPEEDSLOP = 815;    // register 8[7:0]9[7:2]
@@ -64,7 +64,7 @@ class TC78B011FTG{
         const int DEFAULT_LA = 12;            // register 21[7:4]
         const int DEFAULT_FMAX = 0;           // register 21[3:2]
         const int DEFAULT_FST = 0;            // register 21[1:0]
-        const int DEFAULT_FPWM = 4;           // register 22[4:2]
+        const int DEFAULT_FPWM = 7;           // register 22[4:2]
         const int DEFAULT_DEADTIME = 1;       // register 22[1:0]
         const int DEFAULT_ISD_LVL = 1;        // register 23[7]
         const int DEFAULT_OCP_LVL = 1;        // register 23[6]
@@ -365,19 +365,19 @@ class TC78B011FTG{
         int writeNVM();
 
     private:
-        int NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
-        int STOPDUTY = 1;      // register 2[6:0]          // STOPDUTY * 2 / 512
-        int STARTDUTY = 2;     // register 3[7:0]          // STARTDUTY / 512
-        int CHANGEDUTY = 120;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
-        int MAXDUTY = 255;      // register 5[7:0]          // (MAXDUTY + 257) / 512
-        int STARTRPM = 857;     // register 6[7:0]7[7:4]
-        int MAXDUTYHYS = 3;     // register 7[3:0]
-        int SPEEDSLOP = 815;    // register 8[7:0]9[7:2]
-        int MAXOPEN = 0;        // register 9[1]
-        int MAXOFF = 0;         // register 9[0]
-        int SPEEDSLOP2 = 1795;  // register 10[7:0]11[7:2]
-        int VCP_MASK = 0;       // register 11[1]
-        int OPENLOOP = 1;       // register 11[0]
+        int NOSTOP = DEFAULT_NOSTOP;         // register 2[7]            // 0: disable, 1: enable
+        int STOPDUTY = DEFAULT_STOPDUTY;      // register 2[6:0]          // STOPDUTY * 2 / 512
+        int STARTDUTY = DEFAULT_STARTDUTY;     // register 3[7:0]          // STARTDUTY / 512
+        int CHANGEDUTY = DEFAULT_CHANGEDUTY;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
+        int MAXDUTY = DEFAULT_MAXDUTY;      // register 5[7:0]          // (MAXDUTY + 257) / 512
+        int STARTRPM = DEFAULT_STARTRPM;     // register 6[7:0]7[7:4]
+        int MAXDUTYHYS = DEFAULT_MAXDUTYHYS;     // register 7[3:0]
+        int SPEEDSLOP = DEFAULT_SPEEDSLOP;    // register 8[7:0]9[7:2]
+        int MAXOPEN = DEFAULT_MAXOPEN;        // register 9[1]
+        int MAXOFF = DEFAULT_MAXOFF;         // register 9[0]
+        int SPEEDSLOP2 = DEFAULT_SPEEDSLOP2;  // register 10[7:0]11[7:2]
+        int VCP_MASK = DEFAULT_VCP_MASK;       // register 11[1]
+        int OPENLOOP = DEFAULT_OPENLOOP;       // register 11[0]
         int KIX_REG = 0;        // register 12[7]
         int KI_REG = 40;        // register 12[6:0]
         int KPX_REG = 0;        // register 13[7]
