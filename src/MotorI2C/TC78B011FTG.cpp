@@ -673,7 +673,7 @@ int TC78B011FTG::setSpeed(int speed)
 
 int TC78B011FTG::getSpeed()
 {
-    return 250000 / ((i2cRead(29) << 8) | i2cRead(30)) * 60;
+    return 250000 / ((uint16_t)(i2cRead(29) << 8) | (uint16_t)i2cRead(30)) * 60;
 }
 
 int TC78B011FTG::writeNVM()
