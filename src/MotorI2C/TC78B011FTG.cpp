@@ -175,7 +175,7 @@ int TC78B011FTG::i2cWrite(int reg, uint8_t data){
     databuffer[0] = (uint8_t)(reg & 255);
     databuffer[1] = data;
 
-    if (write(i2cBus, databuffer, 2) != 2){
+    if (write(i2cBus, databuffer, 2) != 3){
         std::cout << errno << std::endl;
         return -3;
     }
