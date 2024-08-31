@@ -54,7 +54,8 @@ int main (int argc, char* argv[]){
     int motor = 0;
     for (int i = 0; i < argc; i++){
         if (strcmp(argv[i], "-g") == 0){
-
+            std::cout << "Speed: " << motor0.getSpeed() << std::endl;
+            return 0;
         }
         if (strcmp(argv[i], "-s") == 0 && i < argc - 1){
             speedval = strToInt(argv[i+1]);
@@ -663,7 +664,7 @@ int TC78B011FTG::setSpeed(int speed)
 
 int TC78B011FTG::getSpeed()
 {
-    return (i2cRead(29) << 8) | i2cRead(30);
+    return 250000 / ((i2cRead(29) << 8) | i2cRead(30)) * 60;
 }
 
 int TC78B011FTG::writeNVM()
