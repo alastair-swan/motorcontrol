@@ -84,6 +84,7 @@ int main (int argc, char* argv[]){
         //     motor1.setSpeed(speedval);
         //     break;
         default:
+            std::cout << "selected motor is not available" << std::endl;
             throw new std::invalid_argument("motor number not recognised");
     }
     //std::cout << motorTest() << std::endl;
