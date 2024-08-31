@@ -364,10 +364,10 @@ class TC78B011FTG{
 
     private:
         int NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
-        int STOPDUTY = 13;      // register 2[6:0]          // STOPDUTY * 2 / 512
-        int STARTDUTY = 77;     // register 3[7:0]          // STARTDUTY / 512
+        int STOPDUTY = 1;      // register 2[6:0]          // STOPDUTY * 2 / 512
+        int STARTDUTY = 2;     // register 3[7:0]          // STARTDUTY / 512
         int CHANGEDUTY = 120;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
-        int MAXDUTY = 180;      // register 5[7:0]          // (MAXDUTY + 257) / 512
+        int MAXDUTY = 255;      // register 5[7:0]          // (MAXDUTY + 257) / 512
         int STARTRPM = 857;     // register 6[7:0]7[7:4]
         int MAXDUTYHYS = 3;     // register 7[3:0]
         int SPEEDSLOP = 815;    // register 8[7:0]9[7:2]
