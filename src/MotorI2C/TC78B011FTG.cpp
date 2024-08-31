@@ -57,14 +57,22 @@ int main (int argc, char* argv[]){
             std::cout << "Speed: " << motor0.getSpeed() << std::endl;
             return 0;
         }
-        if (strcmp(argv[i], "-s") == 0 && i < argc - 1){
+        if (strcmp(argv[i], "-s") == 0){
+            if (!(i < (argc - 1))){
+                std::cout << "-s option requires a value" << std::endl;
+                return -1;
+            }
             speedval = strToInt(argv[i+1]);
         }
-        if (strcmp(argv[i], "-m") == 0 && i < argc - 1){
+        if (strcmp(argv[i], "-m") == 0){
+            if (!(i < (argc - 1))){
+                std::cout << "-m option requires a value" << std::endl;
+                return -1;
+            }
             motor = strToInt(argv[i+1]);
         } 
     }
-    if (speedval > 1023 || speedval < 0){
+    if ((speedval > 1023) || (speedval < 0)){
         std::cout << "speed must be in the range 0:1023" << std::endl;
         return -1;
     }
