@@ -409,7 +409,7 @@ class TC78B011FTG{
         int WAIT_MODE = 0;      // register 19[4]
         int WAIT_CON = 0;       // register 19[3]
         int LOCK_BRK = 0;       // register 19[2]
-        int ALERT_INV = 1;      // register 19[1]
+        int ALERT_INV = 0;      // register 19[1]
         int TSD_MASK = 0;       // register 19[0]
         int TRE = 1;            // register 20[7:5]
         int PRE_TIP = 2;        // register 20[4:3]
