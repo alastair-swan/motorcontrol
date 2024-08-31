@@ -194,7 +194,7 @@ int TC78B011FTG::i2cRead(int reg){
         return -2;
 
     uint8_t outbuf[] = {(uint8_t)reg};
-    if (write(i2cBus, outbuf, 1) != 1){
+    if (write(i2cBus, outbuf, 1) != 3){
         std::cout << "i2cRead error: " << errno << " on read of reg: " << reg << std::endl;
         return -4;
     }
