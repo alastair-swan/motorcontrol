@@ -31,7 +31,7 @@ class TC78B011FTG{
         const int DEFAULT_KP = 30;            // register 13[6:0]
         const int DEFAULT_STBY_MODE = 0;      // register 14[7]
         const int DEFAULT_DIR = 1;            // register 14[6]
-        const int DEFAULT_POLEPAIR = 1;       // register 14[5:3]
+        const int DEFAULT_POLEPAIR = 6;       // register 14[5:3]
         const int DEFAULT_MAXSPEED = 0;       // register 14[2:1]
         const int DEFAULT_FG_ON = 0;          // register 14[0]
         const int DEFAULT_FGSEL = 0;          // register 15[7:5]
