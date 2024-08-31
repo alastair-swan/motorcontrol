@@ -383,7 +383,7 @@ class TC78B011FTG{
         int KPX_REG = 0;        // register 13[7]
         int KP_REG = 30;        // register 13[6:0]
         int STBY_MODE = 0;      // register 14[7]
-        int DIR = 0;            // register 14[6]
+        int DIR = 1;            // register 14[6]
         int POLEPAIR = 6;       // register 14[5:3]
         int MAXSPEED = 0;       // register 14[2:1]
         int FG_ON = 0;          // register 14[0]
