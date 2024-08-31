@@ -176,7 +176,7 @@ int TC78B011FTG::i2cWrite(int reg, uint8_t data){
     databuffer[1] = data;
 
     if (write(i2cBus, databuffer, 2) != 3){
-        std::cout << errno << std::endl;
+        std::cout << "i2cWrite error: " << errno << " on write of " << data << " to " << reg << std::endl;
         return -3;
     }
     close(i2cBus);
@@ -195,7 +195,7 @@ int TC78B011FTG::i2cRead(int reg){
 
     uint8_t outbuf[] = {(uint8_t)reg};
     if (write(i2cBus, outbuf, 1) != 1){
-        std::cout << errno << std::endl;
+        std::cout << "i2cRead error: " << errno << " on read of reg: " << reg << std::endl;
         return -4;
     }
 
