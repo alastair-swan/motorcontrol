@@ -417,7 +417,7 @@ class TC78B011FTG{
         int LA = 12;            // register 21[7:4]
         int FMAX = 0;           // register 21[3:2]
         int FST = 0;            // register 21[1:0]
-        int FPWM = 0;           // register 22[4:2]
+        int FPWM = 4;           // register 22[4:2]
         int DEADTIME = 1;       // register 22[1:0]
         int ISD_LVL = 1;        // register 23[7]
         int OCP_LVL = 1;        // register 23[6]
