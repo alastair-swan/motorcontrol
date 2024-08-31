@@ -53,12 +53,15 @@ int main (int argc, char* argv[]){
     int speedval = 0;
     int motor = 0;
     for (int i = 0; i < argc; i++){
+        if (strcmp(argv[i], "-g") == 0){
+
+        }
         if (strcmp(argv[i], "-s") == 0 && i < argc - 1){
             speedval = strToInt(argv[i+1]);
         }
         if (strcmp(argv[i], "-m") == 0 && i < argc - 1){
             motor = strToInt(argv[i+1]);
-        }
+        } 
     }
     if (speedval > 1023 || speedval < 0){
         std::cout << "speed must be in the range 0:1023" << std::endl;
@@ -656,6 +659,11 @@ int TC78B011FTG::setSpeed(int speed)
     int status3 = i2cWrite(27, (uint8_t)(SPEED >> 2));
     int status4 = i2cWrite(28, (uint8_t)(SPEED << 6));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
+}
+
+int TC78B011FTG::getSpeed()
+{
+    return (i2cRead(29) << 8) | i2cRead(30);
 }
 
 int TC78B011FTG::writeNVM()

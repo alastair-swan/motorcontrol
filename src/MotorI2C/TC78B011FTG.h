@@ -360,6 +360,8 @@ class TC78B011FTG{
         /// @return returns a negative number on error
         int setSpeed(int speed);
 
+        int getSpeed();
+
         int writeNVM();
 
     private:
