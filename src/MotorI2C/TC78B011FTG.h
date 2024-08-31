@@ -62,7 +62,7 @@ class TC78B011FTG{
         const int DEFAULT_PRE_TIP = 2;        // register 20[4:3]
         const int DEFAULT_TIP = 3;            // register 20[2:0]
         const int DEFAULT_LA = 12;            // register 21[7:4]
-        const int DEFAULT_FMAX = 0;           // register 21[3:2]
+        const int DEFAULT_FMAX = 2;           // register 21[3:2]
         const int DEFAULT_FST = 0;            // register 21[1:0]
         const int DEFAULT_FPWM = 7;           // register 22[4:2]
         const int DEFAULT_DEADTIME = 1;       // register 22[1:0]
