@@ -35,7 +35,7 @@ int strToInt(char* str){
             case '7':
             case '8':
             case '9':
-                num += (int)pow(10, len - i - 1) * (0x07 & ((uint8_t)str[i]));
+                num += (int)pow(10, len - i - 1) * (((uint8_t)str[i]) - (uint8_t)'0');
                 break;
             default:
                 throw new std::invalid_argument("invalid character");
