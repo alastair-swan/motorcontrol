@@ -306,7 +306,7 @@ int TC78B011FTG::setMaxOpen(bool maxopen)
 int TC78B011FTG::setMaxOff(bool maxoff)
 {
     MAXOFF = (int)maxoff;
-    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
+    return i2cWrite(9, (uint8_t)(0xFF & (((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01))));
 }
 
 int TC78B011FTG::setSpeedSlope2(int speedslope2)
