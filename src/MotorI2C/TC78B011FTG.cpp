@@ -49,7 +49,7 @@ int strToInt(char* str){
 
 int main (int argc, char* argv[]){
     TC78B011FTG motor0 = TC78B011FTG(1, 0x29);
-    TC78B011FTG motor1 = TC78B011FTG(1, 0x32);
+    // TC78B011FTG motor1 = TC78B011FTG(1, 0x32);
     int speedval = 0;
     int motor = 0;
     for (int i = 0; i < argc; i++){
@@ -68,9 +68,9 @@ int main (int argc, char* argv[]){
         case 0:
             motor0.setSpeed(speedval);
             break;
-        case 1:
-            motor1.setSpeed(speedval);
-            break;
+        // case 1:
+        //     motor1.setSpeed(speedval);
+        //     break;
         default:
             throw new std::invalid_argument("motor number not recognised");
     }
@@ -176,7 +176,7 @@ int TC78B011FTG::i2cWrite(int reg, uint8_t data){
     databuffer[1] = data;
 
     int i2cWriteResult = write(i2cBus, databuffer, 2);
-    if (i2cWriteResult != 3){ 
+    if (i2cWriteResult != 2){ 
         std::cout << "i2cWrite error: " << errno << " on write of " << numToBin(data) << " to " << reg << ". Write returned: " << i2cWriteResult << std::endl;
         return -3;
     }
