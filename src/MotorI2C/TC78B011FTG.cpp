@@ -155,9 +155,9 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
     i2cWrite(6,     (uint8_t)(0xFF & (STARTRPM >> 4)));
     i2cWrite(7,     (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) | (0x0F & MAXDUTYHYS))));
     i2cWrite(8,     (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    i2cWrite(9,     (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
+    i2cWrite(9,     (uint8_t)(0xFF & (((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01))));
     i2cWrite(10,    (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    i2cWrite(11,    (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
+    i2cWrite(11,    (uint8_t)(0xFF & (((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01))));
     i2cWrite(12,    (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) | (KI_REG & 0x7F))));
     i2cWrite(13,    (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) | (KP_REG & 0x7F))));
     i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
@@ -293,14 +293,14 @@ int TC78B011FTG::setSpeedSlope(int speedslope)
     }
     SPEEDSLOP = speedslope;
     int status1 = i2cWrite(8, (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    int status2 = i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
+    int status2 = i2cWrite(9, (uint8_t)(0xFF & (((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
 int TC78B011FTG::setMaxOpen(bool maxopen)
 {
     MAXOPEN = (int)maxopen;
-    return i2cWrite(9, (uint8_t)(0xFF & ((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01)));
+    return i2cWrite(9, (uint8_t)(0xFF & (((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01))));
 }
 
 int TC78B011FTG::setMaxOff(bool maxoff)
@@ -316,20 +316,20 @@ int TC78B011FTG::setSpeedSlope2(int speedslope2)
     }
     SPEEDSLOP2 = speedslope2;
     int status1 = i2cWrite(10, (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    int status2 = i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
+    int status2 = i2cWrite(11, (uint8_t)(0xFF & (((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
 int TC78B011FTG::setChargePumpVCP(bool VCP)
 {
     VCP_MASK = (int)VCP;
-    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
+    return i2cWrite(11, (uint8_t)(0xFF & (((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01))));
 }
 
 int TC78B011FTG::setOpenLoop(bool openLoop)
 {
     OPENLOOP = (int)openLoop;
-    return i2cWrite(11, (uint8_t)(0xFF & ((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01)));
+    return i2cWrite(11, (uint8_t)(0xFF & (((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01))));
 }
 
 int TC78B011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
