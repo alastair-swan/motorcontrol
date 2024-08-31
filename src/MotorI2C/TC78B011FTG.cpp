@@ -13,24 +13,68 @@ char* numToBin(uint8_t num){
     return bin;
 }
 
-int motorTest(){
-    TC78B011FTG motor0 = TC78B011FTG(1, 0x29);
-    TC78B011FTG motor1 = TC78B011FTG(1, 0x32);
-
-    for (int i = 0; i < 512; i++){
-        motor0.setSpeed(i);
-        // delay 20ms
+int strToInt(char* str){
+    int len = strlen(str);
+    if (len <= 0){
+        throw new std::invalid_argument("empty string");
     }
-    for (int i = 511; i >= 0; i++){
-        motor0.setSpeed(i);
-        // delay 20ms
+    int num = 0;
+    int i = 0;
+    if (str[0] == '-'){
+        i++;
     }
-
-    return 0;
+    for (; i < len; i++){
+        switch (str[i]){
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                num += (int)pow(10, len - i - 1) * (0x07 & ((uint8_t)str[i]));
+                break;
+            default:
+                throw new std::invalid_argument("invalid character");
+        }
+    }
+    if (str[0] == '-'){
+        return -num;
+    }
+    return num;
 }
 
 int main (int argc, char* argv[]){
-    std::cout << motorTest() << std::endl;
+    TC78B011FTG motor0 = TC78B011FTG(1, 0x29);
+    TC78B011FTG motor1 = TC78B011FTG(1, 0x32);
+    int speedval = 0;
+    int motor = 0;
+    for (int i = 0; i < argc; i++){
+        if (strcmp(argv[i], "-s") == 0 && i < argc - 1){
+            speedval = strToInt(argv[i+1]);
+        }
+        if (strcmp(argv[i], "-m") == 0 && i < argc - 1){
+            motor = strToInt(argv[i+1]);
+        }
+    }
+    if (speedval > 1023 || speedval < 0){
+        std::cout << "speed must be in the range 0:1023" << std::endl;
+        return -1;
+    }
+    switch (motor){
+        case 0:
+            motor0.setSpeed(speedval);
+            break;
+        case 1:
+            motor1.setSpeed(speedval);
+            break;
+        default:
+            throw new std::invalid_argument("motor number not recognised");
+    }
+    //std::cout << motorTest() << std::endl;
     return 0;
 }
 

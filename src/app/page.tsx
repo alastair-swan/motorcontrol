@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Motor } from "src/app/Motor"
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-top bg-gradient-to-b from-[#5c67ad] to-[#d2d3e6] text-white">
+    <main className="flex min-h-screen flex-col items-center justify-top bg-gradient-to-b from-[#5c67ad] to-[#a7a7cc] text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Motor Controller

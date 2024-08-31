@@ -8,6 +8,7 @@
 #include <ostream>
 #include <iostream>
 #include <cmath>
+#include <cstring>
 
 class TC78B011FTG{ 
     public:
