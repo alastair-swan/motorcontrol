@@ -38,7 +38,7 @@ export function ClientMotorStartDutySlider (){
             min={0} 
             max={255}
             step={1}
-            scale={(value: number) => { return ((value + 257)/512) }}
+            scale={(value: number) => { return (value/512) }}
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
