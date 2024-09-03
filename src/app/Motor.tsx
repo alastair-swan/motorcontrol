@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button'
-import Grid from "@mui/material/Grid2";
+import Grid2 from "@mui/material/Grid2";
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch'
+
+
 function ChargePumpState(){
     return (
         "Good"
@@ -23,205 +26,174 @@ function CurrentState(){
 
 function RotationState(){
     return (
-        "Good"
+        "Within Limits"
     )
 }
 
 function StartupState(){
     return (
-        "Good"
+        "Successful"
     )
 }
 
+const fullWidth = 600
+const sectionbgColor = 'rgba(255,255,255,0.2)'
+const itembgColor = 'rgba(255,255,255,0.2)'
+const itembgHoverColor = 'rgba(255,255,255,0.4)'
+
 function ErrorState(){
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Charge Pump:</Grid>
-                <Grid size={3}><ChargePumpState /></Grid>
-                <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}><Box>Temperature: </Box></Grid>
-                <Grid size={3}><TemperatureState /></Grid>
-                <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}><Box>Current: </Box></Grid>
-                <Grid size={3}><CurrentState /></Grid>
-                <Grid size={5}><Checkbox />Disable Error Tracking</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}><Box>Rotation: </Box></Grid>
-                <Grid size={3}><RotationState /></Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}><Box>Startup: </Box></Grid>
-                <Grid size={3}><StartupState /></Grid>
-            </Grid>
-        </Box>
+        <Grid2 sx={{ width: '100%', bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
+            <Box sx={{ flex: 1, height: '100%', borderWidth: 0, padding: 1 }}>
+                <Grid2 container spacing={1} sx={{ alignItems: 'stretch', height: "100%" }}>
+                    <Grid2 size={1} sx={{ width: '30vh' }}>
+                        <Box sx={{ flex: 1 }}>
+                            <Grid2 container spacing={'inherit'} sx={{ flex: 1, alignItems: 'stretch' }}>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Charge Pump Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Temperature Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Current Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Rotation Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Startup Monitoring
+                                    </Box>
+                                </Grid2>
+                            </Grid2>
+                        </Box>
+                    </Grid2>
+                    <Grid2 size={1} sx={{ flex: 1, height:'100%' }}>
+                        <Box sx={{ height: '100%', width: '100%', flex: 1, justifyContent: 'center', bgcolor: sectionbgColor, borderRadius: 2, borderWidth: 0}}>
+                            <Box sx={{ flex: 1, height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                Charge Pump: <ChargePumpState/><br/>
+                                Temperature: <TemperatureState/><br/>
+                                Current: <CurrentState/><br/>
+                                RPM State: <RotationState/><br/>
+                                Startup: <StartupState/>
+                            </Box>
+                        </Box>
+                    </Grid2>
+                </Grid2>
+            </Box>
+        </Grid2>
     )
 }
 
 function DutyControl(){
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>NoStop: </Grid>
-                <Grid size={3}><Checkbox />Enabled</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Stop Duty</Grid>
-                <Grid size={8}>
-                    <Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={127}
-                    />
-                </Grid>
-                <Grid size={5}><output id="stopdutyvalue"></output></Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Start Duty</Grid>
-                <Grid size={8}>
-                    <Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={255}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Change Duty</Grid>
-                <Grid size={8}>
-                    <Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={255}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Max Duty</Grid>
-                <Grid size={8}>
-                    <Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={255}
-                    />
-                </Grid>
-            </Grid>
-        </Box>
+        <Grid2 sx={{ width: '100%', bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
+            <Box sx={{ flex: 1, height: '100%', borderWidth: 0, padding: 1 }}>
+                <Grid2 container spacing={1} sx={{ alignItems: 'stretch', height: "100%" }}>
+                    <Grid2 size={1} sx={{ width: '30vh' }}>
+                        <Box sx={{ flex: 1 }}>
+                            <Grid2 container spacing={'inherit'} sx={{ flex: 1, alignItems: 'stretch' }}>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        <Slider valueLabelDisplay='auto' max={100} min={0} step={1}/> 
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Checkbox defaultChecked /> Temperature Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Checkbox defaultChecked /> Current Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Checkbox defaultChecked /> Rotation Monitoring
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Checkbox defaultChecked /> Startup Monitoring
+                                    </Box>
+                                </Grid2>
+                            </Grid2>
+                        </Box>
+                    </Grid2>
+                    <Grid2 size={1} sx={{ flex: 1, height:'100%' }}>
+                        <Box sx={{ height: '100%', width: '100%', flex: 1, justifyContent: 'center', bgcolor: sectionbgColor, borderRadius: 2, borderWidth: 0}}>
+                            <Box sx={{ flex: 1, height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                Charge Pump: <ChargePumpState/><br/>
+                                Temperature: <TemperatureState/><br/>
+                                Current: <CurrentState/><br/>
+                                RPM State: <RotationState/><br/>
+                                Startup: <StartupState/>
+                            </Box>
+                        </Box>
+                    </Grid2>
+                </Grid2>
+            </Box>
+        </Grid2>
     )
 }
 
 function SpeedControl(){
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Start RPM</Grid>
-                <Grid size={8}>
-                    <Slider 
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={4095}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Max Duty Hysteresis</Grid>
-                <Grid size={8}>
-                    <Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        marks
-                        min={0}
-                        max={15}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Speed Slope</Grid>
-                <Grid size={8}>
-                    <Slider 
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={16383}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Speed Slope 2</Grid>
-                <Grid size={8}>
-                    <Slider 
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={16383}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Max Open</Grid>
-                <Grid size={3}><Checkbox />Enabled</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Max Off</Grid>
-                <Grid size={3}><Checkbox />Enabled</Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>Open Loop Control</Grid>
-                <Grid size={3}><Checkbox />Forced</Grid>
-            </Grid>
-        </Box>
+        <Grid2 size={fullWidth}>
+            <Grid2 container width={fullWidth}>
+                <Grid2 size={fullWidth / 2}>
+                    <Box minWidth={fullWidth / 2}>
+                        SpeedControl Controls
+                    </Box>
+                </Grid2>
+                <Grid2 size={fullWidth / 2}>
+                    <Box minWidth={fullWidth / 2}>
+                        SpeedControl Info
+                    </Box>
+                </Grid2>
+            </Grid2>
+        </Grid2>
     )
 }
 
 function PID (){
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>KI</Grid>
-                <Grid size={3}><Checkbox />8x</Grid>
-                <Grid size={5}><Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={127}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} minWidth={8}>
-                <Grid size={4}>KP</Grid>
-                <Grid size={3}><Checkbox />8x</Grid>
-                <Grid size={5}><Slider
-                        step={1}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={127}
-                    />
-                </Grid>
-            </Grid>
-        </Box>
+        <Grid2 size={fullWidth}>
+            <Grid2 container width={fullWidth}>
+                <Grid2 size={fullWidth / 2}>
+                    <Box minWidth={fullWidth / 2}>
+                        PID Controls
+                    </Box>
+                </Grid2>
+                <Grid2 size={fullWidth / 2}>
+                    <Box minWidth={fullWidth / 2}>
+                        PID Info
+                    </Box>
+                </Grid2>
+            </Grid2>
+        </Grid2>    
     )
 }
 
 export function Motor (){
     return (
-        <div>
-            <ErrorState />
-            <br/>
-            <DutyControl />
-            <br/>
-            <SpeedControl />
-            <br/>
-            <PID />
-        </div>
+        <Box sx={{width: '100%'}}>
+            <Grid2 container spacing={1} width={1}>
+                <ErrorState />
+                <DutyControl />
+                <SpeedControl />
+                <PID />
+            </Grid2>
+        </Box>
     )
 }
