@@ -1,11 +1,16 @@
 import * as React from 'react';
-import Slider from '@mui/material/Slider';
-import Button from '@mui/material/Button'
 import Grid2 from "@mui/material/Grid2";
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch'
-
+import { 
+    ClientMotorOffSpeedSlider, 
+    ClientMotorMaxDutySlider, 
+    ClientMotorStartDutySlider,
+    ClientMotorStartRPMSlider,
+    ClientMotorSpeedSlopeSlider,
+    ClientMotorDutyChangeSlider
+} from './MotorClient'
 
 function ChargePumpState(){
     return (
@@ -94,7 +99,7 @@ function ErrorState(){
     )
 }
 
-function DutyControl(){
+function MotorSpeedControlSettings(){
     return (
         <Grid2 sx={{ width: '100%', bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Box sx={{ flex: 1, height: '100%', borderWidth: 0, padding: 1 }}>
@@ -102,29 +107,65 @@ function DutyControl(){
                     <Grid2 size={1} sx={{ width: '30vh' }}>
                         <Box sx={{ flex: 1 }}>
                             <Grid2 container spacing={'inherit'} sx={{ flex: 1, alignItems: 'stretch' }}>
+                            <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
+                                        <Switch defaultChecked /> Motor Auto Stop {/* NOSTOP register control */}
+                                    </Box>
+                                </Grid2>
                                 <Grid2 sx={{ width: '100%' }}>
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                                        <Slider valueLabelDisplay='auto' max={100} min={0} step={1}/> 
+                                        Motor Off Input Value<br/>
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorOffSpeedSlider />
+                                        </Box>
                                     </Box>
                                 </Grid2>
                                 <Grid2 sx={{ width: '100%' }}>
-                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
-                                        <Checkbox defaultChecked /> Temperature Monitoring
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Max Input Value
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorMaxDutySlider/>
+                                        </Box>
                                     </Box>
                                 </Grid2>
                                 <Grid2 sx={{ width: '100%' }}>
-                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
-                                        <Checkbox defaultChecked /> Current Monitoring
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor On Input Value
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorStartDutySlider/>
+                                        </Box>
                                     </Box>
                                 </Grid2>
                                 <Grid2 sx={{ width: '100%' }}>
-                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
-                                        <Checkbox defaultChecked /> Rotation Monitoring
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Start RPM
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorStartRPMSlider/>
+                                        </Box>
                                     </Box>
                                 </Grid2>
                                 <Grid2 sx={{ width: '100%' }}>
-                                    <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0}}>
-                                        <Checkbox defaultChecked /> Startup Monitoring
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Low Speed Slope
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorSpeedSlopeSlider/>
+                                        </Box>
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor High Speed Slope
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorSpeedSlopeSlider/>
+                                        </Box>
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Low/High Transition Speed
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorDutyChangeSlider/>
+                                        </Box>
                                     </Box>
                                 </Grid2>
                             </Grid2>
@@ -147,7 +188,7 @@ function DutyControl(){
     )
 }
 
-function SpeedControl(){
+function MotorTuning(){
     return (
         <Grid2 size={fullWidth}>
             <Grid2 container width={fullWidth}>
@@ -190,8 +231,8 @@ export function Motor (){
         <Box sx={{width: '100%'}}>
             <Grid2 container spacing={1} width={1}>
                 <ErrorState />
-                <DutyControl />
-                <SpeedControl />
+                <MotorSpeedControlSettings />
+                <MotorTuning />
                 <PID />
             </Grid2>
         </Box>
