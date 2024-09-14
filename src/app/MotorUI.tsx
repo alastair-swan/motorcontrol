@@ -1,6 +1,7 @@
+"use server"
+
 import * as React from 'react';
 import Grid2 from "@mui/material/Grid2";
-import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch'
 import { 
@@ -9,7 +10,8 @@ import {
     ClientMotorStartDutySlider,
     ClientMotorStartRPMSlider,
     ClientMotorSpeedSlopeSlider,
-    ClientMotorDutyChangeSlider
+    ClientMotorChangeDutySlider,
+    ClientMotorSpeedSlider
 } from './MotorClient'
 
 function ChargePumpState(){
@@ -164,7 +166,15 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Low/High Transition Speed
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorDutyChangeSlider/>
+                                            <ClientMotorChangeDutySlider/>
+                                        </Box>
+                                    </Box>
+                                </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Speed
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <ClientMotorSpeedSlider/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -226,7 +236,7 @@ function PID (){
     )
 }
 
-export function Motor (){
+export async function Motor (){
     return (
         <Box sx={{width: '100%'}}>
             <Grid2 container spacing={1} width={1}>
