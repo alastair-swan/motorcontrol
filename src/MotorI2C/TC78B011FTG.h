@@ -68,7 +68,7 @@
 #define DEFAULT_MAXDUTYHYS 3     // register 7[3:0]
 #define MAXDUTYHYS_MASK 0x0F
 #define MAXDUTYHYS_OFFSET 0
-#define MADDUTYHYS_REGISTER 7
+#define MAXDUTYHYS_REGISTER 7
 
 #define DEFAULT_SPEEDSLOP 815    // register 8[7:0]9[7:2]
 #define SPEEDSLOP_MASK 0xFFFC
@@ -744,7 +744,7 @@ class TC78B011FTG{
         int setMaxRPM(int maxRPMMode);
         /// @brief Gets the FMAX register (21[3:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the FMAX register. returns a negative number on error
-        int setMaxRPM();
+        int getMaxRPM();
 
         /// @brief Sets the FST register (21[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param comutationMode sets the electrical angle frequency during forced comutation. 0: 1.6Hz, 1: 3.2Hz, 2: 6.4Hz, 3: 12.8Hz
@@ -893,6 +893,4 @@ class TC78B011FTG{
 
         int i2cWrite(int reg, uint8_t data);
         int i2cRead(int reg);
-        int setup();
-
 };
