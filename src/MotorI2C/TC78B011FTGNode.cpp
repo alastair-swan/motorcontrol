@@ -6,8 +6,7 @@ using namespace Napi;
 TC78B011FTG motors[] = {TC78B011FTG(1, 0x29), TC78B011FTG(1, 0x32)};
 
 Number testGetter(const CallbackInfo &info){
-    std::cout << "get test" << std::endl;
-    return Number::New(info.Env(), (double)100);
+    return Number::New(info.Env(), motors[0].getBrakeMode());
 }
 
 void testSetter(const CallbackInfo &info){
@@ -860,7 +859,7 @@ Number getRPM(const CallbackInfo &info){
     }
     return Number::New(info.Env(), motors[motorNum].getRPM());
 }
-/*
+
 Function MotorGetParam(Env env){
     return Function::New(env, testGetter);
 }
@@ -868,4 +867,3 @@ Function MotorGetParam(Env env){
 Function MotorSetParam(Env env){
     return Function::New(env, testSetter);
 }
-*/

@@ -4,8 +4,8 @@
       "target_name": "native",
       "sources": [
         "src/MotorI2C/TC78B011FTGNode.cpp",
-        "src/MotorI2C/TC78B011FTG.cpp",
         "src/MotorI2C/TC78B011FTG.h",
+        "src/MotorI2C/TC78B011FTG.cpp",
         "binding.cpp"
       ],
       "include_dirs": [

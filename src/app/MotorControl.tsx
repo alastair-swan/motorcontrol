@@ -1,16 +1,14 @@
 "use server"
 
-const setter = __non_webpack_require__('../../../build/Release/native.node').setParam
-const getter = __non_webpack_require__('../../../build/Release/native.node').getParam
+const native = __non_webpack_require__('../../../build/Release/native.node')
 
 export async function UpdateParam(paramName: string, paramValue: number | string): Promise<string> {
-    setter('test', 'test2')
-    console.log(getter())
+    console.log(native.getParam())
     switch (paramName){
         case 'NOSTOP':
             if (typeof paramValue === 'string'){
-                console.log(paramValue)
                 if (paramValue === 'on'){
+
                     return 'nostop enabled'
                 }
                 if (paramValue === 'off'){
