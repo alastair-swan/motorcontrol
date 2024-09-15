@@ -4,8 +4,8 @@ const setter = __non_webpack_require__('../../../build/Release/native.node').set
 const getter = __non_webpack_require__('../../../build/Release/native.node').getParam
 
 export async function UpdateParam(paramName: string, paramValue: number | string): Promise<string> {
-    setter()
-    getter()
+    setter('test', 'test2')
+    console.log(getter())
     switch (paramName){
         case 'NOSTOP':
             if (typeof paramValue === 'string'){
