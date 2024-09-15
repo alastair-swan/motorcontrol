@@ -10,68 +10,349 @@
 #include <cmath>
 #include <cstring>
 
+#define ERR_CP_LOW_MASK 0x20
+#define ERR_CP_LOW_OFFSET 5
+#define ERR_CP_LOW_REGISTER 0
+
+#define ERR_TSD_MASK 0x10
+#define ERR_TSD_OFFSET 4
+#define ERR_TSD_REGISTER 0
+
+#define ERR_ISD_STATE_MASK 0x08
+#define ERR_ISD_STATE_OFFSET 3
+#define ERR_ISD_REGISTER 0
+
+#define ERR_OV_SPD_MASK 0x04
+#define ERR_OV_SPD_OFFSET 2
+#define ERR_OV_SPD_REGISTER 0
+
+#define ERR_UD_SPD_MASK 0x02
+#define ERR_UD_SPD_OFFSET 1
+#define ERR_UD_SPD_REGISTER 0
+
+#define ERR_ST_FAIL_MASK 0x01
+#define ERR_ST_FAIL_OFFSET 0
+#define ERR_ST_FAIL_REGISTER 0
+
+#define DEFAULT_NOSTOP 0         // register 2[7]            // 0: disable, 1: enable
+#define NOSTOP_MASK 0x80
+#define NOSTOP_OFFSET 7
+#define NOSTOP_REGISTER 2
+
+#define DEFAULT_STOPDUTY 0      // register 2[6:0]          // STOPDUTY * 2 / 512
+#define STOPDUTY_MASK 0x7F
+#define STOPDUTY_OFFSET 0
+#define STOPDUTY_REGISTER 2
+
+#define DEFAULT_STARTDUTY 1     // register 3[7:0]          // STARTDUTY / 512
+#define STARTDUTY_MASK 0xFF
+#define STARTDUTY_OFFSET 0
+#define STARTDUTY_REGISTER 3
+
+#define DEFAULT_CHANGEDUTY 120   // register 4[7:0]          // CHANGEDUTY * 2 / 512
+#define CHANGEDUTY_MASK 0xFF
+#define CHANGEDUTY_OFFSET 0
+#define CHANGEDUTY_REGISTER 4
+
+#define DEFAULT_MAXDUTY 255      // register 5[7:0]          // (MAXDUTY + 257) / 512
+#define MAXDUTY_MASK 0xFF
+#define MAXDUTY_OFFSET 0
+#define MAXDUTY_REGISTER 5
+
+#define DEFAULT_STARTRPM 857     // register 6[7:0]7[7:4]
+#define STARTRPM_MASK 0xFFF0
+#define STARTRPM_OFFSET 4
+#define STARTRPM_REGISTER_H 6
+#define STARTRPM_REGISTER_L 7
+
+#define DEFAULT_MAXDUTYHYS 3     // register 7[3:0]
+#define MAXDUTYHYS_MASK 0x0F
+#define MAXDUTYHYS_OFFSET 0
+#define MADDUTYHYS_REGISTER 7
+
+#define DEFAULT_SPEEDSLOP 815    // register 8[7:0]9[7:2]
+#define SPEEDSLOP_MASK 0xFFFC
+#define SPEEDSLOP_OFFSET 2
+#define SPEEDSLOP_REGISTER_H 8
+#define SPEEDSLOP_REGISTER_L 9
+
+#define DEFAULT_MAXOPEN 0        // register 9[1]
+#define MAXOPEN_MASK 0x02
+#define MAXOPEN_OFFSET 1
+#define MAXOPEN_REGISTER 9
+
+#define DEFAULT_MAXOFF 0         // register 9[0]
+#define MAXOFF_MASK 0x01
+#define MAXOFF_OFFSET 0
+#define MAXOFF_REGISTER 9
+
+#define DEFAULT_SPEEDSLOP2 1795  // register 10[7:0]11[7:2]
+#define SPEEDSLOP2_MASK 0xFFFC
+#define SPEEDSLOP2_OFFSET 2
+#define SPEEDSLOP2_REGISTER_H 10
+#define SPEEDSLOP2_REGISTER_L 11
+
+#define DEFAULT_VCP_MASK 0       // register 11[1]
+#define VCP_MASK_MASK 0x02
+#define VCP_MASK_OFFSET 1
+#define VCP_MASK_REGISTER 11
+
+#define DEFAULT_OPENLOOP 1       // register 11[0]
+#define OPENLOOP_MASK 0x01
+#define OPENLOOP_OFFSET 0
+#define OPENLOOP_REGISTER 11
+
+#define DEFAULT_KIX 0            // register 12[7]
+#define KIX_MASK 0x80
+#define KIX_OFFSET 7
+#define KIX_REGISTER 12
+
+#define DEFAULT_KI 40            // register 12[6:0]
+#define KI_MASK 0x7F
+#define KI_OFFSET 0
+#define KI_REGISTER 12
+
+#define DEFAULT_KPX 0            // register 13[7]
+#define KPX_MASK 0x80
+#define KPX_OFFSET 7
+#define KPX_REGISTER 13
+
+#define DEFAULT_KP 30            // register 13[6:0]
+#define KP_MASK 0x7F
+#define KP_OFFSET 0
+#define KP_REGISTER 13
+
+#define DEFAULT_STBY_MODE 0      // register 14[7]
+#define STBY_MODE_MASK 0x80
+#define STBY_MODE_OFFSET 7
+#define STBY_MODE_REGISTER 14
+
+#define DEFAULT_DIR 1            // register 14[6]
+#define DIR_MASK 0x40
+#define DIR_OFFSET 6
+#define DIR_REGISTER 14
+
+#define DEFAULT_POLEPAIR 6       // register 14[5:3]
+#define POLEPAIR_MASK 0x38
+#define POLEPAIR_OFFSET 3
+#define POLEPAIR_REGISTER 14
+
+#define DEFAULT_MAXSPEED 0       // register 14[2:1]
+#define MAXSPEED_MASK 0x06
+#define MAXSPEED_OFFSET 1
+#define MAXSPEED_REGISTER 14
+
+#define DEFAULT_FG_ON 0          // register 14[0]
+#define FG_ON_MASK 0x01 
+#define FG_ON_OFFSET 0
+#define FG_ON_REGISTER 14
+
+#define DEFAULT_FGSEL 0          // register 15[7:5]
+#define FGSEL_MASK 0xE0
+#define FGSEL_OFFSET 5
+#define FGSEL_REGISTER 15
+
+#define DEFAULT_TSPSEL 0         // register 15[4]
+#define TSPSEL_MASK 0x10
+#define TSPSEL_OFFSET 4
+#define TSPSEL_REGISTER 15
+
+#define DEFAULT_SPDINV 0         // register 15[3]
+#define SPDINV_MASK 0x08
+#define SPDINV_OFFSET 3
+#define SPDINV_REGISTER 15
+
+#define DEFAULT_LATCH 0          // register 15[2]
+#define LATCH_MASK 0x04
+#define LATCH_OFFSET 2
+#define LATCH_REGISTER 15
+
+#define DEFAULT_OCPMASK 0        // register 15[1:0]
+#define OCPMASK_MASK 0x03
+#define OCPMASK_OFFSET 0
+#define OCPMASK_REGISTER 15
+
+#define DEFAULT_LOCKDIS 0        // register 16[7]
+#define LOCKDIS_MASK 0x80
+#define LOCKDIS_OFFSET 7
+#define LOCKDIS_REGISTER 16
+
+#define DEFAULT_DUTYCHGLIMIT 3  // register 16[6:4]
+#define DUTYCHGLIMIT_MASK 0x70
+#define DUTYCHGLIMIT_OFFSET 4
+#define DUTYCHGLIMIT_REGISTER 16
+
+#define DEFAULT_STARTCURRENT 2   // register 16[3:1]
+#define STARTCURRENT_MASK 0x0E
+#define STARTCURRENT_OFFSET 1
+#define STARTCURRENT_REGISTER 16
+
+#define DEFAULT_OCPDIS 0        // register 16[0]
+#define OCPDIS_MASK 0x01
+#define OCPDIS_OFFSET 0
+#define OCPDIS_REGISTER 16
+
+#define DEFAULT_SS_ADD_SEL 1     // register 17[7:6]
+#define SS_ADD_SEL_MASK 0xC0
+#define SS_ADD_SEL_OFFSET 6
+#define SS_ADD_SEL_REGISTER 17
+
+#define DEFAULT_SS_UP_SEL 1      // register 17[5:4]
+#define SS_UP_SEL_MASK 0x30
+#define SS_UP_SEL_OFFSET 4
+#define SS_UP_SEL_REGISTER 17
+
+#define DEFAULT_SS_DUTYCHGLIMIT 2// register 17[3:1]
+#define SS_DUTYCHGLIMIT_MASK 0x0E
+#define SS_DUTYCHGLIMIT_OFFSET 1
+#define SS_DUTYCHGLIMIT_REGISTER 17
+
+#define DEFAULT_DUTY_UP_TIME 0   // register 17[0]
+#define DUTY_UP_TIME_MASK 0x01
+#define DUTY_UP_TIME_OFFSET 0
+#define DUTY_UP_TIME_REGISTER 17
+
+#define DEFAULT_RPMLIMIT 2       // register 18[7:5]
+#define RPMLIMIT_MASK 0xE0
+#define RPMLIMIT_OFFSET 5
+#define RPMLIMIT_REGISTER 18
+
+#define DEFAULT_BRK_INV 0        // register 18[4]
+#define BRK_INV_MASK 0x10
+#define BRK_INV_OFFSET 4
+#define BRK_INV_REGISTER 18
+
+#define DEFAULT_ISD_MASK 0       // register 18[3]
+#define ISD_MASK_MASK 0x80
+#define ISD_MASK_OFFSET 3
+#define ISD_MASK_REGISTER 18
+
+#define DEFAULT_RS_SEL 0         // register 18[2:1]
+#define RS_SEL_MASK 0x06
+#define RS_SEL_OFFSET 1
+#define RS_SEL_REGISTER 18
+
+#define DEFAULT_ANTITHROUGH 0    // register 18[0]
+#define ANTITHROUGH_MASK 0x01
+#define ANTITHROUGH_OFFSET 0
+#define ANTITHROUGH_REGISTER 18
+
+#define DEFAULT_WAIT_TIME 2      // register 19[7:5]
+#define WAIT_TIME_MASK 0xE0
+#define WAIT_TIME_OFFSET 5
+#define WAIT_TIME_REGISTER 19
+
+#define DEFAULT_WAIT_MODE 0      // register 19[4]
+#define WAIT_MODE_MASK 0x10
+#define WAIT_MODE_OFFSET 4
+#define WAIT_MODE_REGISTER 19
+
+#define DEFAULT_WAIT_CON 0       // register 19[3]
+#define WAIT_CON_MASK 0x08
+#define WAIT_CON_OFFSET 3
+#define WAIT_CON_REGISTER 19
+
+#define DEFAULT_LOCK_BRK 0       // register 19[2]
+#define LOCK_BRK_MASK 0x04
+#define LOCK_BRK_OFFSET 2
+#define LOCK_BRK_REGISTER 19
+
+#define DEFAULT_ALERT_INV 1      // register 19[1]
+#define ALERT_INV_MASK 0x02
+#define ALERT_INV_OFFSET 1
+#define ALERT_INV_REGISTER 19
+
+#define DEFAULT_TSD_MASK 0       // register 19[0]
+#define TSD_MASK_MASK 0x01
+#define TSD_MASK_OFFSET 0
+#define TSD_MASK_REGISTER 19
+
+#define DEFAULT_TRE 1           // register 20[7:5]
+#define TRE_MASK 0xE0
+#define TRE_OFFSET 5
+#define TRE_REGISTER 20
+
+#define DEFAULT_PRE_TIP 2        // register 20[4:3]
+#define PRE_TIP_MASK 0x18
+#define PRE_TIP_OFFSET 3
+#define PRE_TIP_REGISTER 20
+
+#define DEFAULT_TIP 3            // register 20[2:0]
+#define TIP_MASK 0x07
+#define TIP_OFFSET 0
+#define TIP_REGISTER 20
+
+#define DEFAULT_LA 12           // register 21[7:4]
+#define LA_MASK 0xF0
+#define LA_OFFSET 4
+#define LA_REGISTER 21
+
+#define DEFAULT_FMAX 2           // register 21[3:2]
+#define FMAX_MASK 0x0C
+#define FMAX_OFFSET 2
+#define FMAX_REGISTER 21
+
+#define DEFAULT_FST 0            // register 21[1:0]
+#define FST_MASK 0x03
+#define FST_OFFSET 0
+#define FST_REGISTER 21
+
+#define DEFAULT_FPWM 7           // register 22[4:2]
+#define FPWM_MASK 0x1C
+#define FPWM_OFFSET 2
+#define FPWM_REGISTER 22
+
+#define DEFAULT_DEADTIME 1       // register 22[1:0]
+#define DEADTIME_MASK 0x03
+#define DEADTIME_OFFSET 0
+#define DEADTIME_REGISTER 22
+
+#define DEFAULT_ISD_LVL 1        // register 23[7]
+#define ISD_LVL_MASK 0x80
+#define ISD_LVL_OFFSET 7
+#define ISD_LVL_REGISTER 23
+
+#define DEFAULT_OCP_LVL 1        // register 23[6]
+#define OCP_LVL_MASK 0x40
+#define OCP_LVL_OFFSET 6
+#define OCP_LVL_REGISTER 23
+
+#define DEFAULT_SOURCE 0       // register 23[5:3]
+#define SOURCE_MASK 0x38
+#define SOURCE_OFFSET 3
+#define SOURCE_REGISTER 23
+
+#define DEFAULT_SINK 0         // register 23[2:0]
+#define SINK_MASK 0x07
+#define SINK_OFFSET 0
+#define SINK_REGISTER 23
+
+#define DEFAULT_COMP_HYS 1       // register 24[7:6]
+#define COMP_HYS_MASK 0xC0
+#define COMP_HYS_OFFSET 6
+#define COMP_HYS_REGISTER 24
+
+#define DEFAULT_SPD 0
+#define SPD_MASK 0xFFC0
+#define SPD_OFFSET 6
+#define SPD_REGISTER_H 27
+#define SPD_REGISTER_L 28
+
+#define HZ_CNT_MASK 0xFFFF
+#define HZ_CNT_OFFSET 0
+#define HZ_CNT_REGISTER_H 29
+#define HZ_CNT_REGISTER_L 30
+
+#define NVM_RW_MASK 0x01
+#define NVM_RW_OFFSET 0
+#define NVM_RW_REGISTER 86
+
+#define NVM_ST_MASK 0x01
+#define NVM_ST_OFFSET 0
+#define NVM_ST_REGISTER 87
+
 class TC78B011FTG{ 
     public:
-        const int DEFAULT_NOSTOP = 0;         // register 2[7]            // 0: disable, 1: enable
-        const int DEFAULT_STOPDUTY = 0;      // register 2[6:0]          // STOPDUTY * 2 / 512
-        const int DEFAULT_STARTDUTY = 1;     // register 3[7:0]          // STARTDUTY / 512
-        const int DEFAULT_CHANGEDUTY = 120;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
-        const int DEFAULT_MAXDUTY = 255;      // register 5[7:0]          // (MAXDUTY + 257) / 512
-        const int DEFAULT_STARTRPM = 857;     // register 6[7:0]7[7:4]
-        const int DEFAULT_MAXDUTYHYS = 3;     // register 7[3:0]
-        const int DEFAULT_SPEEDSLOP = 815;    // register 8[7:0]9[7:2]
-        const int DEFAULT_MAXOPEN = 0;        // register 9[1]
-        const int DEFAULT_MAXOFF = 0;         // register 9[0]
-        const int DEFAULT_SPEEDSLOP2 = 1795;  // register 10[7:0]11[7:2]
-        const int DEFAULT_VCP_MASK = 0;       // register 11[1]
-        const int DEFAULT_OPENLOOP = 1;       // register 11[0]
-        const int DEFAULT_KIX = 0;            // register 12[7]
-        const int DEFAULT_KI = 40;            // register 12[6:0]
-        const int DEFAULT_KPX = 0;            // register 13[7]
-        const int DEFAULT_KP = 30;            // register 13[6:0]
-        const int DEFAULT_STBY_MODE = 0;      // register 14[7]
-        const int DEFAULT_DIR = 1;            // register 14[6]
-        const int DEFAULT_POLEPAIR = 6;       // register 14[5:3]
-        const int DEFAULT_MAXSPEED = 0;       // register 14[2:1]
-        const int DEFAULT_FG_ON = 0;          // register 14[0]
-        const int DEFAULT_FGSEL = 0;          // register 15[7:5]
-        const int DEFAULT_TSPSEL = 0;         // register 15[4]
-        const int DEFAULT_SPDINV = 0;         // register 15[3]
-        const int DEFAULT_LATCH = 0;          // register 15[2]
-        const int DEFAULT_OCPMASK = 0;        // register 15[1:0]
-        const int DEFAULT_LOCKDIS = 0;        // register 16[7]
-        const int DEFAULT_DUTYCHGLIMIT = 3;   // register 16[6:4]
-        const int DEFAULT_STARTCURRENT = 2;   // register 16[3:1]
-        const int DEFAULT_OCPDIS = 0;         // register 16[0]
-        const int DEFAULT_SS_ADD_SEL = 1;     // register 17[7:6]
-        const int DEFAULT_SS_UP_SEL = 1;      // register 17[5:4]
-        const int DEFAULT_SS_DUTYCHGLIMIT = 2;// register 17[3:1]
-        const int DEFAULT_DUTY_UP_TIME = 0;   // register 17[0]
-        const int DEFAULT_RPMLIMIT = 2;       // register 18[7:5]
-        const int DEFAULT_BRK_INV = 0;        // register 18[4]
-        const int DEFAULT_ISD_MASK = 0;       // register 18[3]
-        const int DEFAULT_RS_SEL = 0;         // register 18[2:1]
-        const int DEFAULT_ANTITHROUGH = 0;    // register 18[0]
-        const int DEFAULT_WAIT_TIME = 2;      // register 19[7:5]
-        const int DEFAULT_WAIT_MODE = 0;      // register 19[4]
-        const int DEFAULT_WAIT_CON = 0;       // register 19[3]
-        const int DEFAULT_LOCK_BRK = 0;       // register 19[2]
-        const int DEFAULT_ALERT_INV = 1;      // register 19[1]
-        const int DEFAULT_TSD_MASK = 0;       // register 19[0]
-        const int DEFAULT_TRE = 1;            // register 20[7:5]
-        const int DEFAULT_PRE_TIP = 2;        // register 20[4:3]
-        const int DEFAULT_TIP = 3;            // register 20[2:0]
-        const int DEFAULT_LA = 12;            // register 21[7:4]
-        const int DEFAULT_FMAX = 2;           // register 21[3:2]
-        const int DEFAULT_FST = 0;            // register 21[1:0]
-        const int DEFAULT_FPWM = 7;           // register 22[4:2]
-        const int DEFAULT_DEADTIME = 1;       // register 22[1:0]
-        const int DEFAULT_ISD_LVL = 1;        // register 23[7]
-        const int DEFAULT_OCP_LVL = 1;        // register 23[6]
-        const int DEFAULT_SOURCE = 0;         // register 23[5:3]
-        const int DEFAULT_SINK = 0;           // register 23[2:0]
-        const int DEFAULT_COMP_HYS = 1;       // register 24[7:6]
-
         int i2cBusNumber;
         int i2cAddress;
 
@@ -549,66 +830,66 @@ class TC78B011FTG{
         int readNVM();
 
     private:
-        int NOSTOP = DEFAULT_NOSTOP;         // register 2[7]            // 0: disable, 1: enable
-        int STOPDUTY = DEFAULT_STOPDUTY;      // register 2[6:0]          // STOPDUTY * 2 / 512
-        int STARTDUTY = DEFAULT_STARTDUTY;     // register 3[7:0]          // STARTDUTY / 512
-        int CHANGEDUTY = DEFAULT_CHANGEDUTY;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
-        int MAXDUTY = DEFAULT_MAXDUTY;      // register 5[7:0]          // (MAXDUTY + 257) / 512
-        int STARTRPM = DEFAULT_STARTRPM;     // register 6[7:0]7[7:4]
-        int MAXDUTYHYS = DEFAULT_MAXDUTYHYS;     // register 7[3:0]
-        int SPEEDSLOP = DEFAULT_SPEEDSLOP;    // register 8[7:0]9[7:2]
-        int MAXOPEN = DEFAULT_MAXOPEN;        // register 9[1]
-        int MAXOFF = DEFAULT_MAXOFF;         // register 9[0]
-        int SPEEDSLOP2 = DEFAULT_SPEEDSLOP2;  // register 10[7:0]11[7:2]
-        int VCP_MASK = DEFAULT_VCP_MASK;       // register 11[1]
-        int OPENLOOP = DEFAULT_OPENLOOP;       // register 11[0]
-        int KIX_REG = DEFAULT_KIX;        // register 12[7]
-        int KI_REG = DEFAULT_KI;        // register 12[6:0]
-        int KPX_REG = DEFAULT_KPX;        // register 13[7]
-        int KP_REG = DEFAULT_KP;        // register 13[6:0]
-        int STBY_MODE = DEFAULT_STBY_MODE;      // register 14[7]
-        int DIR = DEFAULT_DIR;            // register 14[6]
-        int POLEPAIR = DEFAULT_POLEPAIR;       // register 14[5:3]
-        int MAXSPEED = DEFAULT_MAXSPEED;       // register 14[2:1]
-        int FG_ON = DEFAULT_FG_ON;          // register 14[0]
-        int FGSEL = DEFAULT_FGSEL;          // register 15[7:5]
-        int TSPSEL = DEFAULT_TSPSEL;         // register 15[4]
-        int SPDINV = DEFAULT_SPDINV;         // register 15[3]
-        int LATCH = DEFAULT_LATCH;          // register 15[2]
-        int OCPMASK = DEFAULT_OCPMASK;        // register 15[1:0]
-        int LOCKDIS = DEFAULT_LOCKDIS;        // register 16[7]
-        int DUTYCHGLIMIT = DEFAULT_DUTYCHGLIMIT;   // register 16[6:4]
-        int STARTCURRENT = DEFAULT_STARTCURRENT;   // register 16[3:1]
-        int OCPDIS = DEFAULT_OCPDIS;         // register 16[0]
-        int SS_ADD_SEL = DEFAULT_SS_ADD_SEL;     // register 17[7:6]
-        int SS_UP_SEL = DEFAULT_SS_UP_SEL;      // register 17[5:4]
-        int SS_DUTYCHGLIMIT = DEFAULT_SS_DUTYCHGLIMIT;// register 17[3:1]
-        int DUTY_UP_TIME = DEFAULT_DUTY_UP_TIME;   // register 17[0]
-        int RPMLIMIT = DEFAULT_RPMLIMIT;       // register 18[7:5]
-        int BRK_INV = DEFAULT_BRK_INV;        // register 18[4]
-        int ISD_MASK = DEFAULT_ISD_MASK;       // register 18[3]
-        int RS_SEL = DEFAULT_RS_SEL;         // register 18[2:1]
-        int ANTITHROUGH = DEFAULT_ANTITHROUGH;    // register 18[0]
-        int WAIT_TIME = DEFAULT_WAIT_TIME;      // register 19[7:5]
-        int WAIT_MODE = DEFAULT_WAIT_MODE;      // register 19[4]
-        int WAIT_CON = DEFAULT_WAIT_CON;       // register 19[3]
-        int LOCK_BRK = DEFAULT_LOCK_BRK;       // register 19[2]
-        int ALERT_INV = DEFAULT_ALERT_INV;      // register 19[1]
-        int TSD_MASK = DEFAULT_TSD_MASK;       // register 19[0]
-        int TRE = DEFAULT_TRE;            // register 20[7:5]
-        int PRE_TIP = DEFAULT_PRE_TIP;        // register 20[4:3]
-        int TIP = DEFAULT_TIP;            // register 20[2:0]
-        int LA = DEFAULT_LA;            // register 21[7:4]
-        int FMAX = DEFAULT_FMAX;           // register 21[3:2]
-        int FST = DEFAULT_FST;            // register 21[1:0]
-        int FPWM = DEFAULT_FPWM;           // register 22[4:2]
-        int DEADTIME = DEFAULT_DEADTIME;       // register 22[1:0]
-        int ISD_LVL = DEFAULT_ISD_LVL;        // register 23[7]
-        int OCP_LVL = DEFAULT_OCP_LVL;        // register 23[6]
-        int SOURCE = DEFAULT_SOURCE;         // register 23[5:3]
-        int SINK = DEFAULT_SINK;           // register 23[2:0]
-        int COMP_HYS = DEFAULT_COMP_HYS;       // register 24[7:6]
-        int SPEED = 0;          // register 27[7:0]28[7:6]
+        int NOSTOP;         // register 2[7]            // 0: disable, 1: enable
+        int STOPDUTY;      // register 2[6:0]          // STOPDUTY * 2 / 512
+        int STARTDUTY;     // register 3[7:0]          // STARTDUTY / 512
+        int CHANGEDUTY;   // register 4[7:0]          // CHANGEDUTY * 2 / 512
+        int MAXDUTY;      // register 5[7:0]          // (MAXDUTY + 257) / 512
+        int STARTRPM;     // register 6[7:0]7[7:4]
+        int MAXDUTYHYS;     // register 7[3:0]
+        int SPEEDSLOP;    // register 8[7:0]9[7:2]
+        int MAXOPEN;        // register 9[1]
+        int MAXOFF;         // register 9[0]
+        int SPEEDSLOP2;  // register 10[7:0]11[7:2]
+        int VCP_MASK;       // register 11[1]
+        int OPENLOOP;       // register 11[0]
+        int KIX_REG;        // register 12[7]
+        int KI_REG;        // register 12[6:0]
+        int KPX_REG;        // register 13[7]
+        int KP_REG;        // register 13[6:0]
+        int STBY_MODE;      // register 14[7]
+        int DIR;            // register 14[6]
+        int POLEPAIR;       // register 14[5:3]
+        int MAXSPEED;       // register 14[2:1]
+        int FG_ON;          // register 14[0]
+        int FGSEL;          // register 15[7:5]
+        int TSPSEL;         // register 15[4]
+        int SPDINV;         // register 15[3]
+        int LATCH;          // register 15[2]
+        int OCPMASK;        // register 15[1:0]
+        int LOCKDIS;        // register 16[7]
+        int DUTYCHGLIMIT;   // register 16[6:4]
+        int STARTCURRENT;   // register 16[3:1]
+        int OCPDIS;         // register 16[0]
+        int SS_ADD_SEL;     // register 17[7:6]
+        int SS_UP_SEL;      // register 17[5:4]
+        int SS_DUTYCHGLIMIT;// register 17[3:1]
+        int DUTY_UP_TIME;   // register 17[0]
+        int RPMLIMIT;       // register 18[7:5]
+        int BRK_INV;        // register 18[4]
+        int ISD_MASK;       // register 18[3]
+        int RS_SEL;         // register 18[2:1]
+        int ANTITHROUGH;    // register 18[0]
+        int WAIT_TIME;      // register 19[7:5]
+        int WAIT_MODE;      // register 19[4]
+        int WAIT_CON;       // register 19[3]
+        int LOCK_BRK;       // register 19[2]
+        int ALERT_INV;      // register 19[1]
+        int TSD_MASK;       // register 19[0]
+        int TRE;            // register 20[7:5]
+        int PRE_TIP;        // register 20[4:3]
+        int TIP;            // register 20[2:0]
+        int LA;            // register 21[7:4]
+        int FMAX;           // register 21[3:2]
+        int FST;            // register 21[1:0]
+        int FPWM;           // register 22[4:2]
+        int DEADTIME;       // register 22[1:0]
+        int ISD_LVL;        // register 23[7]
+        int OCP_LVL;        // register 23[6]
+        int SOURCE;         // register 23[5:3]
+        int SINK;           // register 23[2:0]
+        int COMP_HYS;       // register 24[7:6]
+        int SPEED;          // register 27[7:0]28[7:6]
 
         int i2cWrite(int reg, uint8_t data);
         int i2cRead(int reg);

@@ -54,7 +54,7 @@ int main (int argc, char* argv[]){
     int motor = 0;
     for (int i = 0; i < argc; i++){
         if (strcmp(argv[i], "-g") == 0){
-            std::cout << "Speed: " << motor0.getSpeed() << std::endl;
+            std::cout << "Speed: " << motor0.getSpeedSetting() << std::endl;
             return 0;
         }
         if (strcmp(argv[i], "-s") == 0){
@@ -671,7 +671,7 @@ int TC78B011FTG::setSpeed(int speed)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
 }
 
-int TC78B011FTG::getSpeed()
+int TC78B011FTG::getSpeedSetting()
 {
     return 250000 / (((uint16_t)(i2cRead(29)) << 8) | (uint16_t)i2cRead(30)) * 60;
 }
