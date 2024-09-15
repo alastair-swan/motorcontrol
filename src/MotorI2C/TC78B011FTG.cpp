@@ -148,29 +148,90 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
     SINK            = DEFAULT_SINK;
     COMP_HYS        = DEFAULT_COMP_HYS;
     
-    i2cWrite(2,     (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) | (STOPDUTY & 0x7F))));
-    i2cWrite(3,     (uint8_t)(0xFF & STARTDUTY));
-    i2cWrite(4,     (uint8_t)(0xFF & CHANGEDUTY));
-    i2cWrite(5,     (uint8_t)(0xFF & MAXDUTY));
-    i2cWrite(6,     (uint8_t)(0xFF & (STARTRPM >> 4)));
-    i2cWrite(7,     (uint8_t)(0xFF & (((STARTRPM & 0x0F) << 4) | (0x0F & MAXDUTYHYS))));
-    i2cWrite(8,     (uint8_t)(0xFF & (SPEEDSLOP >> 6)));
-    i2cWrite(9,     (uint8_t)(0xFF & (((SPEEDSLOP & 0x3F) << 2) | ((MAXOPEN & 0x01) << 1) | (MAXOFF & 0x01))));
-    i2cWrite(10,    (uint8_t)(0xFF & (SPEEDSLOP2 >> 6)));
-    i2cWrite(11,    (uint8_t)(0xFF & (((SPEEDSLOP2 & 0x3F) << 2) | ((VCP_MASK & 0x01) << 1) | (OPENLOOP & 0x01))));
-    i2cWrite(12,    (uint8_t)(0xFF & (((KIX_REG & 0x01) << 7) | (KI_REG & 0x7F))));
-    i2cWrite(13,    (uint8_t)(0xFF & (((KPX_REG & 0x01) << 7) | (KP_REG & 0x7F))));
-    i2cWrite(14,    (uint8_t)(0xFF & (((STBY_MODE & 0x01) << 7) | ((DIR & 0x01) << 6) | ((POLEPAIR & 0x07) << 3) | ((MAXSPEED & 0x03) << 1) | (FG_ON & 0x01))));
-    i2cWrite(15,    (uint8_t)(0xFF & (((FGSEL & 0x07) << 5) | ((TSPSEL & 0x01) << 4) | ((SPDINV & 0x01) << 3) | ((LATCH & 0x01) << 2) | (OCPMASK & 0x03))));
-    i2cWrite(16,    (uint8_t)(0xFF & (((LOCKDIS & 0x01) << 7) | ((DUTYCHGLIMIT & 0x07) << 4) | ((STARTCURRENT & 0x07) << 1) | (OCPDIS & 0x01))));
-    i2cWrite(17,    (uint8_t)(0xFF & (((SS_ADD_SEL & 0x03) << 6) | ((SS_UP_SEL & 0x03) << 4) | ((SS_DUTYCHGLIMIT & 0x07) << 1) | (DUTY_UP_TIME & 0x01))));
-    i2cWrite(18,    (uint8_t)(0xFF & (((RPMLIMIT & 0x07) << 5) | ((BRK_INV & 0x01) << 4) | ((ISD_MASK & 0x01) << 3) | ((RS_SEL & 0x03) << 1) | (ANTITHROUGH & 0x01))));
-    i2cWrite(19,    (uint8_t)(0xFF & (((WAIT_TIME & 0x07) << 5) | ((WAIT_MODE & 0x01) << 4) | ((WAIT_CON & 0x01) << 3) | ((LOCK_BRK & 0x01) << 2) | ((ALERT_INV & 0x01) << 1) | (TSD_MASK & 0x01))));
-    i2cWrite(20,    (uint8_t)(0xFF & (((TRE & 0x07) << 5) | ((PRE_TIP & 0x03) << 3) | (TIP & 0x07))));
-    i2cWrite(21,    (uint8_t)(0xFF & (((LA & 0x0F) << 4) | ((FMAX & 0x03) << 2) | (FST & 0x03))));
-    i2cWrite(22,    (uint8_t)(0xFF & (((FPWM & 0x07) << 2) | (DEADTIME & 0x03))));
-    i2cWrite(23,    (uint8_t)(0xFF & (((ISD_LVL & 0x01) << 7) | ((OCP_LVL & 0x01) << 6) | ((SOURCE & 0x07) << 3) | (SINK & 0x07))));
-    i2cWrite(24,    (uint8_t)(0xFF & (((COMP_HYS & 0x03) << 6))));
+    i2cWrite(2,     (uint8_t)(0xFF & (
+        ((NOSTOP << NOSTOP_OFFSET) & NOSTOP_MASK) | 
+        ((STOPDUTY << STOPDUTY_OFFSET) & STOPDUTY_MASK))));
+    i2cWrite(3,     (uint8_t)(0xFF & (
+        (STARTDUTY << STARTDUTY_OFFSET) & STARTDUTY_MASK)));
+    i2cWrite(4,     (uint8_t)(0xFF & (
+        (CHANGEDUTY << CHANGEDUTY_OFFSET) & CHANGEDUTY_MASK)));
+    i2cWrite(5,     (uint8_t)(0xFF & (
+        (MAXDUTY << MAXDUTY_OFFSET) & MAXDUTY_MASK)));
+    i2cWrite(6,     (uint8_t)(0xFF & (
+        ((STARTRPM << STARTRPM_OFFSET) & STARTRPM_MASK) >> 8)));
+    i2cWrite(7,     (uint8_t)(0xFF & (
+        (STARTRPM << STARTRPM_OFFSET) & STARTRPM_MASK)));
+    i2cWrite(8,     (uint8_t)(0xFF & (
+        ((SPEEDSLOP << SPEEDSLOP_OFFSET) & SPEEDSLOP_MASK) >> 8)));
+    i2cWrite(9,     (uint8_t)(0xFF & (
+        (((SPEEDSLOP << SPEEDSLOP_OFFSET) & SPEEDSLOP_MASK) & 0xFF) | 
+        ((MAXOPEN << MAXOPEN_OFFSET) & MAXOPEN_MASK) | 
+        ((MAXOFF << MAXOFF_OFFSET) & MAXOFF_MASK))));
+    i2cWrite(10,    (uint8_t)(0xFF & (
+        ((SPEEDSLOP2 << SPEEDSLOP2_OFFSET) & SPEEDSLOP2_MASK) >> 8)));
+    i2cWrite(11,    (uint8_t)(0xFF & (
+        (((SPEEDSLOP2 << SPEEDSLOP2_OFFSET) & SPEEDSLOP2_MASK) & 0xFF) | 
+        ((VCP_MASK << VCP_MASK_OFFSET) & VCP_MASK_MASK) | 
+        ((OPENLOOP << OPENLOOP_OFFSET) & OPENLOOP_MASK))));
+    i2cWrite(12,    (uint8_t)(0xFF & (
+        ((KIX_REG << KIX_OFFSET) & KIX_MASK) | 
+        ((KI_REG << KI_OFFSET) & KI_MASK))));
+    i2cWrite(13,    (uint8_t)(0xFF & (
+        ((KPX_REG << KPX_OFFSET) & KPX_MASK) | 
+        ((KP_REG << KP_OFFSET) & KP_MASK))));
+    i2cWrite(14,    (uint8_t)(0xFF & (
+        ((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | 
+        ((DIR << DIR_OFFSET) & DIR_MASK) | 
+        ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | 
+        ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | 
+        ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
+    i2cWrite(15,    (uint8_t)(0xFF & (
+        ((FGSEL << FGSEL_OFFSET) & FGSEL_MASK) | 
+        ((TSPSEL << TSPSEL_OFFSET) & TSPSEL_MASK) | 
+        ((SPDINV << SPDINV_OFFSET) & SPDINV_MASK) | 
+        ((LATCH << LATCH_OFFSET) & LATCH_MASK) | 
+        ((OCPMASK << OCPMASK_OFFSET) & OCPMASK_MASK))));
+    i2cWrite(16,    (uint8_t)(0xFF & (
+        ((LOCKDIS << LOCKDIS_OFFSET) & LOCKDIS_MASK) | 
+        ((DUTYCHGLIMIT << DUTYCHGLIMIT_OFFSET) & DUTYCHGLIMIT_MASK) | 
+        ((STARTCURRENT << STARTCURRENT_OFFSET) & STARTCURRENT_MASK) | 
+        ((OCPDIS << OCPDIS_OFFSET) & OCPDIS_MASK))));
+    i2cWrite(17,    (uint8_t)(0xFF & (
+        ((SS_ADD_SEL << SS_ADD_SEL_OFFSET) & SS_ADD_SEL_MASK) | 
+        ((SS_UP_SEL << SS_UP_SEL_OFFSET) & SS_UP_SEL_MASK) | 
+        ((SS_DUTYCHGLIMIT << SS_DUTYCHGLIMIT_OFFSET) & SS_DUTYCHGLIMIT_MASK) | 
+        ((DUTY_UP_TIME << DUTY_UP_TIME_OFFSET) & DUTY_UP_TIME_MASK))));
+    i2cWrite(18,    (uint8_t)(0xFF & (
+        ((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | 
+        ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | 
+        ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | 
+        ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | 
+        ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
+    i2cWrite(19,    (uint8_t)(0xFF & (
+        ((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | 
+        ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | 
+        ((WAIT_CON << WAIT_CON_OFFSET) & WAIT_CON_MASK) | 
+        ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | 
+        ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | 
+        ((TSD_MASK << TSD_MASK_OFFSET) & TSD_MASK_MASK))));
+    i2cWrite(20,    (uint8_t)(0xFF & (
+        ((TRE << TRE_OFFSET) & TRE_MASK) | 
+        ((PRE_TIP << PRE_TIP_OFFSET) & PRE_TIP_MASK) | 
+        ((TIP << TIP_OFFSET) & TIP_MASK))));
+    i2cWrite(21,    (uint8_t)(0xFF & (
+        ((LA << LA_OFFSET) & LA_MASK) | 
+        ((FMAX << FMAX_OFFSET) & FMAX_MASK) | 
+        ((FST << FST_OFFSET) & FST_MASK))));
+    i2cWrite(22,    (uint8_t)(0xFF & (
+        ((FPWM << FPWM_OFFSET) & FPWM_MASK) | 
+        ((DEADTIME << DEADTIME_OFFSET) & DEADTIME_MASK))));
+    i2cWrite(23,    (uint8_t)(0xFF & (
+        ((ISD_LVL << ISD_LVL_OFFSET) & ISD_LVL_MASK) | 
+        ((OCP_LVL << OCP_LVL_OFFSET) & OCP_LVL_MASK) | 
+        ((SOURCE << SOURCE_OFFSET) & SOURCE_MASK) | 
+        ((SINK << SINK_OFFSET) & SINK_MASK))));
+    i2cWrite(24,    (uint8_t)(0xFF & (
+        ((COMP_HYS << COMP_HYS_OFFSET) & COMP_HYS_MASK))));
     
 }
 
@@ -227,7 +288,14 @@ int TC78B011FTG::i2cRead(int reg){
 int TC78B011FTG::setNoStop(bool nostop)
 {
     NOSTOP = (int)nostop;
-    return i2cWrite(2, (uint8_t)(0xFF & (((NOSTOP & 0x01) << 7) | (STOPDUTY & 0x7F))));
+    return i2cWrite(NOSTOP_REGISTER, (uint8_t)(0xFF & (((NOSTOP << NOSTOP_OFFSET) & NOSTOP_MASK) | ((STOPDUTY << STOPDUTY_OFFSET) & STOPDUTY_MASK))));
+}
+int TC78B011FTG::getNoStop(){
+    int regVal = i2cRead(NOSTOP_REGISTER);
+    if (regVal < 0){
+        return -1;
+    }
+    return (regVal & NOSTOP_MASK) >> NOSTOP_OFFSET;
 }
 
 int TC78B011FTG::setStopDuty(int stopduty)
