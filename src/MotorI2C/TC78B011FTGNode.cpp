@@ -17,7 +17,7 @@ void testSetter(const CallbackInfo &info){
     std::cout << data2 << std::endl;
 }
 
-Number setNostop(const CallbackInfo &info){
+Number setNoStop(const CallbackInfo &info){
     int motorNum = info[0].As<Number>().Int32Value();
     bool param = info[1].As<Boolean>();
     if (motorNum < 0 || motorNum > 1){ 
@@ -860,9 +860,7 @@ Number getRPM(const CallbackInfo &info){
     }
     return Number::New(info.Env(), motors[motorNum].getRPM());
 }
-
-
-
+/*
 Function MotorGetParam(Env env){
     return Function::New(env, testGetter);
 }
@@ -870,3 +868,4 @@ Function MotorGetParam(Env env){
 Function MotorSetParam(Env env){
     return Function::New(env, testSetter);
 }
+*/
