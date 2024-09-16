@@ -34,6 +34,10 @@
 #define ERR_ST_FAIL_OFFSET 0
 #define ERR_ST_FAIL_REGISTER 0
 
+#define USERID_MASK 0xFF
+#define USERID_OFFSET 0
+#define USERID_REGISTER 1
+
 #define DEFAULT_NOSTOP 0         // register 2[7]            // 0: disable, 1: enable
 #define NOSTOP_MASK 0x80
 #define NOSTOP_OFFSET 7

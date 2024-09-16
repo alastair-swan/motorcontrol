@@ -1161,7 +1161,7 @@ int TC78B011FTG::setSpeed(int speed)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
 }
 int TC78B011FTG::getSpeedSetting(){
-   int regValH = i2cRead(SPD_REGISTER_H);
+    int regValH = i2cRead(SPD_REGISTER_H);
     if (regValH < 0){
         return regValH;
     }
@@ -1208,4 +1208,75 @@ int TC78B011FTG::writeNVM()
         }
     }
     return 0;
+}
+
+int TC78B011FTG::getChargePumpErrorState()
+{
+    int regVal = i2cRead(ERR_CP_LOW_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_CP_LOW_MASK) >> ERR_CP_LOW_OFFSET;
+}
+
+int TC78B011FTG::getTemperatureErrorState()
+{
+        int regVal = i2cRead(ERR_TSD_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_TSD_MASK) >> ERR_TSD_OFFSET;
+}
+
+int TC78B011FTG::getCurrentErrorState()
+{
+    int regVal = i2cRead(ERR_ISD_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_ISD_STATE_MASK) >> ERR_ISD_STATE_OFFSET;
+}
+
+int TC78B011FTG::getOverspeedErrorState()
+{
+    int regVal = i2cRead(ERR_OV_SPD_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_OV_SPD_MASK) >> ERR_OV_SPD_OFFSET;
+}
+
+int TC78B011FTG::getUnderspeedErrorState()
+{
+    int regVal = i2cRead(ERR_UD_SPD_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_UD_SPD_MASK) >> ERR_UD_SPD_OFFSET;
+}
+
+int TC78B011FTG::getStartupErrorState()
+{
+    int regVal = i2cRead(ERR_ST_FAIL_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & ERR_ST_FAIL_MASK) >> ERR_ST_FAIL_OFFSET;
+}
+
+int TC78B011FTG::setUserID(int UID)
+{
+    if ((UID & (USERID_MASK >> USERID_OFFSET)) != UID){
+        return -10;
+    }
+    return i2cWrite(USERID_REGISTER, (uint8_t)UID);
+}
+
+int TC78B011FTG::getUserID()
+{
+    int regVal = i2cRead(USERID_REGISTER);
+    if (regVal < 0){
+        return regVal;
+    }
+    return (regVal & USERID_MASK) >> USERID_OFFSET;
 }
