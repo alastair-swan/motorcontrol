@@ -3,7 +3,7 @@
 const native = __non_webpack_require__('../../../build/Release/native.node')
 
 export async function UpdateParam(paramName: string, paramValue: number | string): Promise<string> {
-    console.log(native.getParam())
+    console.log(native.getParam(0, paramName))
     switch (paramName){
         case 'NOSTOP':
             if (typeof paramValue === 'string'){

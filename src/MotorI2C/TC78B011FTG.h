@@ -513,6 +513,22 @@ class TC78B011FTG{
         /// @brief Gets the KP register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the KP register. returns a negative number on error
         int getKP();
+        /// @brief Sets the KIX register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @param KIX false: KI * 1, true: KI * 8
+        /// @return Returns the value stored in the KIX register. returns a negative number on error
+        int setKIX(bool KIX);
+        /// @brief Sets the KI register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @param KI only values in the range 0-127 are valid 
+        /// @return Returns the value stored in the KI register. returns a negative number on error
+        int setKI(int KI);
+        /// @brief Sets the KPX register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG        
+        /// @param KPX false: KP * 1, true: KP * 8
+        /// @return Returns the value stored in the KPX register. returns a negative number on error
+        int setKPX(bool KPX);
+        /// @brief Sets the KP register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @param KP only values in the range 0-127 are valid 
+        /// @return Returns the value stored in the KP register. returns a negative number on error
+        int setKP(int KP);
 
         /// @brief Sets the STBY_MODE register (14[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param standbymode controls the behavior of the chip when the STBY pin is low. false: chip goes into standby when STBY is low, true: chip goes into standby when STBY is low and the speed is set to 0
@@ -875,10 +891,10 @@ class TC78B011FTG{
         int SPEEDSLOP2;  // register 10[7:0]11[7:2]
         int VCP_MASK;       // register 11[1]
         int OPENLOOP;       // register 11[0]
-        int KIX_REG;        // register 12[7]
-        int KI_REG;        // register 12[6:0]
-        int KPX_REG;        // register 13[7]
-        int KP_REG;        // register 13[6:0]
+        int KIX_REG_VALUE;        // register 12[7]
+        int KI_REG_VALUE;        // register 12[6:0]
+        int KPX_REG_VALUE;        // register 13[7]
+        int KP_REG_VALUE;        // register 13[6:0]
         int STBY_MODE;      // register 14[7]
         int DIR;            // register 14[6]
         int POLEPAIR;       // register 14[5:3]

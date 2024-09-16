@@ -102,10 +102,10 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
     STARTRPM        = DEFAULT_STARTRPM;
     SPEEDSLOP       = DEFAULT_SPEEDSLOP;
     SPEEDSLOP2      = DEFAULT_SPEEDSLOP2;
-    KIX_REG         = DEFAULT_KIX;
-    KI_REG          = DEFAULT_KI;
-    KPX_REG         = DEFAULT_KPX;
-    KP_REG          = DEFAULT_KP;
+    KIX_REG_VALUE         = DEFAULT_KIX;
+    KI_REG_VALUE          = DEFAULT_KI;
+    KPX_REG_VALUE         = DEFAULT_KPX;
+    KP_REG_VALUE          = DEFAULT_KP;
     STBY_MODE       = DEFAULT_STBY_MODE;
     DIR             = DEFAULT_DIR;
     POLEPAIR        = DEFAULT_POLEPAIR;
@@ -174,11 +174,11 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
         ((VCP_MASK << VCP_MASK_OFFSET) & VCP_MASK_MASK) | 
         ((OPENLOOP << OPENLOOP_OFFSET) & OPENLOOP_MASK))));
     i2cWrite(12,    (uint8_t)(0xFF & (
-        ((KIX_REG << KIX_OFFSET) & KIX_MASK) | 
-        ((KI_REG << KI_OFFSET) & KI_MASK))));
+        ((KIX_REG_VALUE << KIX_OFFSET) & KIX_MASK) | 
+        ((KI_REG_VALUE << KI_OFFSET) & KI_MASK))));
     i2cWrite(13,    (uint8_t)(0xFF & (
-        ((KPX_REG << KPX_OFFSET) & KPX_MASK) | 
-        ((KP_REG << KP_OFFSET) & KP_MASK))));
+        ((KPX_REG_VALUE << KPX_OFFSET) & KPX_MASK) | 
+        ((KP_REG_VALUE << KP_OFFSET) & KP_MASK))));
     i2cWrite(14,    (uint8_t)(0xFF & (
         ((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | 
         ((DIR << DIR_OFFSET) & DIR_MASK) | 
@@ -509,16 +509,40 @@ int TC78B011FTG::getOpenLoop(){
 
 int TC78B011FTG::setPID(bool KIX, int KI, bool KPX, int KP)
 {
-    if (((KI & (KI_MASK >> KI_OFFSET)) != KI) | ((KP & (KP_MASK >> KP_OFFSET)) != KP)){
+    if (((KI & (KI_MASK >> KI_OFFSET)) != KI) || ((KP & (KP_MASK >> KP_OFFSET)) != KP)){
         return -10;
     }
-    KIX_REG = (int)KIX;
-    KI_REG = KI;
-    KPX_REG = (int)KPX;
-    KP_REG = KP;
-    int status1 = i2cWrite(KI_REGISTER, (uint8_t)(0xFF & (((KIX_REG << KIX_OFFSET) & KIX_MASK) | ((KI_REG << KI_OFFSET) & KI_MASK))));
-    int status2 = i2cWrite(KP_REGISTER, (uint8_t)(0xFF & (((KPX_REG << KPX_OFFSET) & KPX_MASK) | ((KP_REG << KP_OFFSET) & KI_MASK))));
+    KIX_REG_VALUE = (int)KIX;
+    KI_REG_VALUE = KI;
+    KPX_REG_VALUE = (int)KPX;
+    KP_REG_VALUE = KP;
+    int status1 = i2cWrite(KI_REGISTER, (uint8_t)(0xFF & (((KIX_REG_VALUE << KIX_OFFSET) & KIX_MASK) | ((KI_REG_VALUE << KI_OFFSET) & KI_MASK))));
+    int status2 = i2cWrite(KP_REGISTER, (uint8_t)(0xFF & (((KPX_REG_VALUE << KPX_OFFSET) & KPX_MASK) | ((KP_REG_VALUE << KP_OFFSET) & KI_MASK))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
+}
+int TC78B011FTG::setKIX(bool KIX)
+{
+    KIX_REG_VALUE = (int)KIX;
+    return i2cWrite(KIX_REGISTER, (uint8_t)(0xFF & (((KIX_REG_VALUE << KIX_OFFSET) & KIX_MASK) | ((KI_REG_VALUE << KI_OFFSET) & KI_MASK))));
+}
+int TC78B011FTG::setKI(int KI)
+{
+    if ((KI & (KI_MASK >> KI_OFFSET)) != KI){
+        return -10;
+    }
+    return i2cWrite(KI_REGISTER, (uint8_t)(0xFF & (((KIX_REG_VALUE << KIX_OFFSET) & KIX_MASK) | ((KI_REG_VALUE << KI_OFFSET) & KI_MASK))));;
+}
+int TC78B011FTG::setKPX(bool KPX)
+{
+    KPX_REG_VALUE = (int)KPX;
+    return i2cWrite(KPX_REGISTER, (uint8_t)(0xFF & (((KPX_REG_VALUE << KPX_OFFSET) & KPX_MASK) | ((KP_REG_VALUE << KP_OFFSET) & KI_MASK))));;
+}
+int TC78B011FTG::setKP(int KP)
+{
+    if ((KP & (KP_MASK >> KP_OFFSET)) != KP){
+        return -10;
+    }
+    return i2cWrite(KP_REGISTER, (uint8_t)(0xFF & (((KPX_REG_VALUE << KPX_OFFSET) & KPX_MASK) | ((KP_REG_VALUE << KP_OFFSET) & KI_MASK))));;
 }
 int TC78B011FTG::getKIX(){
     int regVal = i2cRead(KIX_REGISTER);
