@@ -358,6 +358,34 @@ class TC78B011FTG{
 
         TC78B011FTG(int i2cBus, int address);
 
+        /// @brief Gets the charge pump error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the CP_LOW register. returns a negative number on error.
+        int getChargePumpErrorState();
+        /// @brief Gets the temperature error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the TSD register. returns a negative number on error.
+        int getTemperatureErrorState();
+        /// @brief Gets the current error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the ISD register. returns a negative number on error.
+        int getCurrentErrorState();
+        /// @brief Gets the overspeed error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the OV_SPD register. returns a negative number on error.
+        int getOverspeedErrorState();
+        /// @brief Gets the underspeed error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the UD_SPD register. returns a negative number on error.
+        int getUnderspeedErrorState();
+        /// @brief Gets the startup error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the ST_FAIL register. returns a negative number on error.
+        int getStartupErrorState();
+
+        /// @brief Sets the data stored in the USERID register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @param UID 8 bit value to be stored. The chip does not use this register for anything
+        /// @return returns a negative number on error.
+        int setUserID(int UID);
+        /// @brief Gets the UserID, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
+        /// @return Returns the value stored in the USERID register. returns a negative number on error.
+        int getUserID();
+
+
         /// @brief Sets the NOSTOP behavior, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param nostop false: disable, true: enable
         /// @return returns a negative number on error
