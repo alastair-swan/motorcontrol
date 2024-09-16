@@ -13,6 +13,7 @@ import {
     ClientMotorChangeDutySlider,
     ClientMotorSpeedSlider
 } from './MotorClient'
+import { propagateServerField } from 'next/dist/server/lib/render-server';
 
 function ChargePumpState(){
     return (
@@ -101,7 +102,7 @@ function ErrorState(){
     )
 }
 
-function MotorSpeedControlSettings(){
+function MotorSpeedControlSettings(props: any){
     return (
         <Grid2 sx={{ width: '100%', bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Box sx={{ flex: 1, height: '100%', borderWidth: 0, padding: 1 }}>
@@ -118,7 +119,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Off Input Value<br/>
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorOffSpeedSlider />
+                                            <ClientMotorOffSpeedSlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -126,7 +127,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Max Input Value
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorMaxDutySlider/>
+                                            <ClientMotorMaxDutySlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -134,7 +135,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor On Input Value
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorStartDutySlider/>
+                                            <ClientMotorStartDutySlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -142,7 +143,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Start RPM
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorStartRPMSlider/>
+                                            <ClientMotorStartRPMSlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -150,7 +151,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Low Speed Slope
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorSpeedSlopeSlider/>
+                                            <ClientMotorSpeedSlopeSlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -158,7 +159,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor High Speed Slope
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorSpeedSlopeSlider/>
+                                            <ClientMotorSpeedSlopeSlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -166,7 +167,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Low/High Transition Speed
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorChangeDutySlider/>
+                                            <ClientMotorChangeDutySlider motorNumber = {props.motorNumber} />
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -174,7 +175,7 @@ function MotorSpeedControlSettings(){
                                     <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
                                         Motor Speed
                                         <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
-                                            <ClientMotorSpeedSlider/>
+                                            <ClientMotorSpeedSlider motorNumber = {props.motorNumber}/>
                                         </Box>
                                     </Box>
                                 </Grid2>
@@ -236,12 +237,12 @@ function PID (){
     )
 }
 
-export async function Motor (){
+export async function Motor (props: any){
     return (
         <Box sx={{width: '100%'}}>
             <Grid2 container spacing={1} width={1}>
                 <ErrorState />
-                <MotorSpeedControlSettings />
+                <MotorSpeedControlSettings motorNumber={props.motorNumber}/>
                 <MotorTuning />
                 <PID />
             </Grid2>

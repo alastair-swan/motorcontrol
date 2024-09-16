@@ -11,14 +11,13 @@ export default function HomePage() {
           <div className="flex flex-col gap-4 rounded-xl bg-white/10 p-4 text-white">
             <h3 className="text-2xl font-bold">Motor 0</h3>
             <div className="text-lg">
-              <Motor />
+              <Motor motorNumber={0}/>
             </div>
           </div>
           <div className="flex flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
             <h3 className="text-2xl font-bold">Motor 1</h3>
             <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
+              <Motor motorNumber={1}/>
             </div>
           </div>
         </div>

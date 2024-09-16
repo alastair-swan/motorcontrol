@@ -8,7 +8,7 @@ function asPercentage(value: number):string{
     return Math.round(value * 1000) / 10 + "%"
 }
 
-export function ClientMotorSpeedSlider (){
+export function ClientMotorSpeedSlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -22,14 +22,14 @@ export function ClientMotorSpeedSlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('SPD', newValue)
+                    UpdateParam(props.motorNumber, 'SPD', newValue)
                 }
             }}
         /> 
     )
 }
 
-export function ClientMotorOffSpeedSlider (){
+export function ClientMotorOffSpeedSlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -43,7 +43,7 @@ export function ClientMotorOffSpeedSlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('STOPDUTY', newValue)
+                    UpdateParam(props.motorNumber, 'STOPDUTY', newValue)
                 }
             }}
             valueLabelFormat={asPercentage}
@@ -51,7 +51,7 @@ export function ClientMotorOffSpeedSlider (){
     )
 }
 
-export function ClientMotorStartDutySlider (){
+export function ClientMotorStartDutySlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -65,7 +65,7 @@ export function ClientMotorStartDutySlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('STARTDUTY', newValue)
+                    UpdateParam(props.motorNumber, 'STARTDUTY', newValue)
                 }
             }}
             valueLabelFormat={asPercentage}
@@ -73,7 +73,7 @@ export function ClientMotorStartDutySlider (){
     )
 }
 
-export function ClientMotorStartRPMSlider (){
+export function ClientMotorStartRPMSlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -86,14 +86,14 @@ export function ClientMotorStartRPMSlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('STARTRPM', newValue)
+                    UpdateParam(props.motorNumber, 'STARTRPM', newValue)
                 }
             }}
         /> 
     )
 }
 
-export function ClientMotorSpeedSlopeSlider (){
+export function ClientMotorSpeedSlopeSlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -107,7 +107,7 @@ export function ClientMotorSpeedSlopeSlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('SPEEDSLOP', newValue)
+                    UpdateParam(props.motorNumber, 'SPEEDSLOP', newValue)
                 }
             }}
             valueLabelFormat={(value: number) => {
@@ -117,7 +117,7 @@ export function ClientMotorSpeedSlopeSlider (){
     )
 }
 
-export function ClientMotorMaxDutySlider (){
+export function ClientMotorMaxDutySlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -131,7 +131,7 @@ export function ClientMotorMaxDutySlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('MAXDUTY', newValue)
+                    UpdateParam(props.motorNumber, 'MAXDUTY', newValue)
                 }
             }}
             valueLabelFormat={asPercentage}
@@ -139,7 +139,7 @@ export function ClientMotorMaxDutySlider (){
     )
 }
 
-export function ClientMotorChangeDutySlider (){
+export function ClientMotorChangeDutySlider (props: any){
     const [value, setValue] = React.useState<number>(10);
 
     return (
@@ -153,7 +153,7 @@ export function ClientMotorChangeDutySlider (){
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
-                    UpdateParam('CHANGEDUTY', newValue)
+                    UpdateParam(props.motorNumber, 'CHANGEDUTY', newValue)
                 }
             }}
             valueLabelFormat={(value: number) => {
