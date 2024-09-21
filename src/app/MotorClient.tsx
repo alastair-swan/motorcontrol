@@ -11,11 +11,11 @@ function asPercentage(value: number):string{
 
 // NOSTOP
 export function ClientNoStopSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)        
                 UpdateParam(props.motorNumber, 'NOSTOP', checked)
             }}
         /> 
@@ -24,8 +24,7 @@ export function ClientNoStopSwitch (props: any){
 
 // STOPDUTY
 export function ClientMotorOffSpeedSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -47,8 +46,7 @@ export function ClientMotorOffSpeedSlider (props: any){
 
 //STARTDUTY
 export function ClientMotorStartDutySlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -70,8 +68,7 @@ export function ClientMotorStartDutySlider (props: any){
 
 // CHANGEDUTY
 export function ClientMotorChangeDutySlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -100,8 +97,7 @@ export function ClientMotorChangeDutySlider (props: any){
 
 // MAXDUTY
 export function ClientMotorMaxDutySlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -123,8 +119,7 @@ export function ClientMotorMaxDutySlider (props: any){
 
 // STARTRPM
 export function ClientMotorStartRPMSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -143,8 +138,7 @@ export function ClientMotorStartRPMSlider (props: any){
 }
 
 export function ClientMaxDutyHysteresisSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -164,8 +158,7 @@ export function ClientMaxDutyHysteresisSlider (props: any){
 
 // SPEEDSLOP
 export function ClientMotorSpeedSlopeSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -189,11 +182,11 @@ export function ClientMotorSpeedSlopeSlider (props: any){
 
 // MAXOPEN
 export function ClientMaxOpenSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)        
                 UpdateParam(props.motorNumber, 'MAXOPEN', checked)
             }}
         /> 
@@ -202,11 +195,11 @@ export function ClientMaxOpenSwitch (props: any){
 
 // MAXOFF
 export function ClientMaxOffSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'MAXOFF', checked)
             }}
         /> 
@@ -215,8 +208,7 @@ export function ClientMaxOffSwitch (props: any){
 
 // SPEEDSLOP2
 export function ClientMotorSpeedSlope2Slider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -240,11 +232,11 @@ export function ClientMotorSpeedSlope2Slider (props: any){
 
 // VCP_MASK
 export function ClientChargePumpStateMonitoringSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'VCP_MASK', checked)
             }}
         /> 
@@ -253,11 +245,11 @@ export function ClientChargePumpStateMonitoringSwitch (props: any){
 
 // VCP_MASK
 export function ClientOpenLoopSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'OPENLOOP', checked)
             }}
         /> 
@@ -266,11 +258,11 @@ export function ClientOpenLoopSwitch (props: any){
 
 // KIX
 export function ClientKIXSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'KIX', checked)
             }}
         /> 
@@ -279,7 +271,7 @@ export function ClientKIXSwitch (props: any){
 
 // KI
 export function ClientKISlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
+    const [value, setValue] = React.useState<number>(props.initialState);
 
     return (
         <Slider 
@@ -301,11 +293,11 @@ export function ClientKISlider (props: any){
 
 // KPX
 export function ClientKPXSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'KPX', checked)
             }}
         /> 
@@ -314,8 +306,7 @@ export function ClientKPXSwitch (props: any){
 
 // KP
 export function ClientKPSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -336,11 +327,11 @@ export function ClientKPSlider (props: any){
 
 // STBY_MODE
 export function ClientStandbyModeSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'STBY_MODE', checked)
             }}
         /> 
@@ -349,11 +340,11 @@ export function ClientStandbyModeSwitch (props: any){
 
 // DIR
 export function ClientDirectionSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'DIR', checked)
             }}
         /> 
@@ -362,8 +353,7 @@ export function ClientDirectionSwitch (props: any){
 
 // POLEPAIR
 export function ClientPolesSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -387,8 +377,7 @@ export function ClientPolesSlider (props: any){
 
 // MAXSPEED
 export function ClientMaxSpeedSlider (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
             valueLabelDisplay='auto' 
@@ -413,20 +402,98 @@ export function ClientMaxSpeedSlider (props: any){
 
 // FG_ON
 export function ClientSpeedOutputModeSwitch (props: any){
-    const [value, setValue] = React.useState<number>(10);
-
+    const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
                 UpdateParam(props.motorNumber, 'FG_ON', checked)
             }}
         /> 
     )
 }
 
+// TSPSEL
+export function ClientSpeedInputModeSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'TSPSEL', checked)
+            }}
+        /> 
+    )
+}
+
+// SPDINV
+export function ClientSpeedInputInversionSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'SPDINV', checked)
+            }}
+        /> 
+    )
+}
+
+// LATCH
+export function ClientErrorLatchSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'LATCH', checked)
+            }}
+        /> 
+    )
+}
+
+// OCPMASK
+export function ClientDigitalFilteringSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            scale={(value: number) => { return value * 0.08 }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'OCPMASK', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const speedList = ['OCP: none, ISD: 83ns', 'OCP: 500ns, ISD: 583ns', 'OCP: 666ns, ISD: 750ns', 'OCP: 750ns, ISD: 833ns']
+                return speedList[value]
+            }}
+        /> 
+    )
+}
+
+// LOCKDIS
+export function ClientForceForcedComutationSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'LOCKDIS', checked)
+            }}
+        /> 
+    )
+}
+
+
 // SPD
 export function ClientMotorSpeedSlider (props: any){ 
-    const [value, setValue] = React.useState<number>(10);
+    const [value, setValue] = React.useState<number>(props.initialState);
 
     return (
         <Slider 

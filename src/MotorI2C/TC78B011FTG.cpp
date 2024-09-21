@@ -54,7 +54,7 @@ int main (int argc, char* argv[]){
     int motor = 0;
     for (int i = 0; i < argc; i++){
         if (strcmp(argv[i], "-g") == 0){
-            std::cout << "Speed: " << motor0.getSpeedSetting() << std::endl;
+            std::cout << "Speed: " << motor0.getSpeedSetting(true) << std::endl;
             return 0;
         }
         if (strcmp(argv[i], "-s") == 0){
@@ -102,10 +102,10 @@ TC78B011FTG::TC78B011FTG(int i2cBus, int address)
     STARTRPM        = DEFAULT_STARTRPM;
     SPEEDSLOP       = DEFAULT_SPEEDSLOP;
     SPEEDSLOP2      = DEFAULT_SPEEDSLOP2;
-    KIX_REG_VALUE         = DEFAULT_KIX;
-    KI_REG_VALUE          = DEFAULT_KI;
-    KPX_REG_VALUE         = DEFAULT_KPX;
-    KP_REG_VALUE          = DEFAULT_KP;
+    KIX_REG_VALUE   = DEFAULT_KIX;
+    KI_REG_VALUE    = DEFAULT_KI;
+    KPX_REG_VALUE   = DEFAULT_KPX;
+    KP_REG_VALUE    = DEFAULT_KP;
     STBY_MODE       = DEFAULT_STBY_MODE;
     DIR             = DEFAULT_DIR;
     POLEPAIR        = DEFAULT_POLEPAIR;
@@ -291,7 +291,10 @@ int TC78B011FTG::setNoStop(bool nostop)
     return i2cWrite(NOSTOP_REGISTER, (uint8_t)(0xFF & (((NOSTOP << NOSTOP_OFFSET) & NOSTOP_MASK) | ((STOPDUTY << STOPDUTY_OFFSET) & STOPDUTY_MASK))));
 }
 
-int TC78B011FTG::getNoStop(){
+int TC78B011FTG::getNoStop(bool fromChip){
+    if (!fromChip){
+        return NOSTOP;
+    }
     int regVal = i2cRead(NOSTOP_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -308,7 +311,10 @@ int TC78B011FTG::setStopDuty(int stopduty)
     return i2cWrite(STOPDUTY_REGISTER, (uint8_t)(0xFF & (((NOSTOP << NOSTOP_OFFSET) & NOSTOP_MASK) | ((STOPDUTY << STOPDUTY_OFFSET) & STOPDUTY_MASK))));
 }
 
-int TC78B011FTG::getStopDuty(){
+int TC78B011FTG::getStopDuty(bool fromChip){
+    if (!fromChip){
+        return STOPDUTY;
+    }
     int regVal = i2cRead(STOPDUTY_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -325,7 +331,10 @@ int TC78B011FTG::setStartDuty(int startduty)
     return i2cWrite(STARTDUTY_REGISTER, (uint8_t)(0xFF & ((STARTDUTY << STARTDUTY_OFFSET) & STARTDUTY_MASK)));
 }
 
-int TC78B011FTG::getStartDuty(){
+int TC78B011FTG::getStartDuty(bool fromChip){
+    if (!fromChip){
+        return STARTDUTY;
+    }
     int regVal = i2cRead(STARTDUTY_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -341,7 +350,10 @@ int TC78B011FTG::setChangeDuty(int changeduty)
     CHANGEDUTY = changeduty;
     return i2cWrite(CHANGEDUTY_REGISTER, (uint8_t)(0xFF & ((CHANGEDUTY << CHANGEDUTY_OFFSET) & CHANGEDUTY_MASK)));
 }
-int TC78B011FTG::getChangeDuty(){
+int TC78B011FTG::getChangeDuty(bool fromChip){
+    if (!fromChip){
+        return CHANGEDUTY;
+    }
     int regVal = i2cRead(CHANGEDUTY_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -358,7 +370,10 @@ int TC78B011FTG::setMaxDuty(int maxduty)
     return i2cWrite(MAXDUTY_REGISTER, (uint8_t)(0xFF & ((MAXDUTY << MAXDUTY_OFFSET) & MAXDUTY_MASK)));
 }
 
-int TC78B011FTG::getMaxDuty(){
+int TC78B011FTG::getMaxDuty(bool fromChip){
+    if (!fromChip){
+        return MAXDUTY;
+    }
     int regVal = i2cRead(MAXDUTY_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -377,7 +392,10 @@ int TC78B011FTG::setStartRPM(int startRPM)
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
 
-int TC78B011FTG::getStartRPM(){
+int TC78B011FTG::getStartRPM(bool fromChip){
+    if (!fromChip){
+        return STARTRPM;
+    }
     int regValH = i2cRead(STARTRPM_REGISTER_H);
     if (regValH < 0){
         return regValH;
@@ -399,7 +417,10 @@ int TC78B011FTG::setMaxDutyHysteresis(int hysteresis)
     return i2cWrite(MAXDUTYHYS_REGISTER, (uint8_t)(0xFF & (((STARTRPM << STARTRPM_OFFSET) & STARTRPM_MASK) | ((MAXDUTYHYS << MAXDUTYHYS_OFFSET) & MAXDUTYHYS_MASK))));
 }
 
-int TC78B011FTG::getMaxDutyHysteresis(){
+int TC78B011FTG::getMaxDutyHysteresis(bool fromChip){
+    if (!fromChip){
+        return MAXDUTYHYS;
+    }
     int regVal = i2cRead(MAXDUTYHYS_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -417,7 +438,10 @@ int TC78B011FTG::setSpeedSlope(int speedslope)
     int status2 = i2cWrite(SPEEDSLOP_REGISTER_L, (uint8_t)(0xFF & (((SPEEDSLOP << SPEEDSLOP_OFFSET) & SPEEDSLOP_MASK) | ((MAXOPEN << MAXOPEN_OFFSET) & MAXOPEN_MASK) | ((MAXOFF << MAXOFF_OFFSET) & MAXOFF_MASK))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
-int TC78B011FTG::getSpeedSlope(){
+int TC78B011FTG::getSpeedSlope(bool fromChip){
+    if (!fromChip){
+        return SPEEDSLOP;
+    }
     int regValH = i2cRead(SPEEDSLOP_REGISTER_H);
     if (regValH < 0){
         return regValH;
@@ -436,7 +460,10 @@ int TC78B011FTG::setMaxOpen(bool maxopen)
     return i2cWrite(MAXOPEN_REGISTER, (uint8_t)(0xFF & (((SPEEDSLOP << SPEEDSLOP_OFFSET) & SPEEDSLOP_MASK) | ((MAXOPEN << MAXOPEN_OFFSET) & MAXOPEN_MASK) | ((MAXOFF << MAXOFF_OFFSET) & MAXOFF_MASK))));
 }
 
-int TC78B011FTG::getMaxOpen(){
+int TC78B011FTG::getMaxOpen(bool fromChip){
+    if (!fromChip){
+        return MAXOPEN;
+    }
     int regVal = i2cRead(MAXOPEN_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -450,7 +477,10 @@ int TC78B011FTG::setMaxOff(bool maxoff)
     return i2cWrite(MAXOFF_REGISTER, (uint8_t)(0xFF & (((SPEEDSLOP << SPEEDSLOP_OFFSET) & SPEEDSLOP_MASK) | ((MAXOPEN << MAXOPEN_OFFSET) & MAXOPEN_MASK) | ((MAXOFF << MAXOFF_OFFSET) & MAXOFF_MASK))));
 }
 
-int TC78B011FTG::getMaxOff(){
+int TC78B011FTG::getMaxOff(bool fromChip){
+    if (!fromChip){
+        return MAXOFF;
+    }
     int regVal = i2cRead(MAXOFF_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -468,7 +498,10 @@ int TC78B011FTG::setSpeedSlope2(int speedslope2)
     int status2 = i2cWrite(SPEEDSLOP2_REGISTER_L, (uint8_t)(0xFF & (((SPEEDSLOP2 << SPEEDSLOP2_OFFSET) & SPEEDSLOP2_MASK) | ((VCP_MASK << VCP_MASK_OFFSET) & VCP_MASK_MASK) | ((OPENLOOP << OPENLOOP_OFFSET) & OPENLOOP_MASK))));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : 0;
 }
-int TC78B011FTG::getSpeedSlope2(){
+int TC78B011FTG::getSpeedSlope2(bool fromChip){
+    if (!fromChip){
+        return SPEEDSLOP2;
+    }
     int regValH = i2cRead(SPEEDSLOP2_REGISTER_H);
     if (regValH < 0){
         return regValH;
@@ -486,7 +519,10 @@ int TC78B011FTG::setChargePumpVCP(bool VCP)
     VCP_MASK = (int)VCP;
     return i2cWrite(VCP_MASK_REGISTER, (uint8_t)(0xFF & (((SPEEDSLOP2 << SPEEDSLOP2_OFFSET) & SPEEDSLOP2_MASK) | ((VCP_MASK << VCP_MASK_OFFSET) & VCP_MASK_MASK) | ((OPENLOOP << OPENLOOP_OFFSET) & OPENLOOP_MASK))));
 }
-int TC78B011FTG::getChargePumpVCP(){
+int TC78B011FTG::getChargePumpVCP(bool fromChip){
+    if (!fromChip){
+        return VCP_MASK;
+    }
     int regVal = i2cRead(VCP_MASK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -499,7 +535,10 @@ int TC78B011FTG::setOpenLoop(bool openLoop)
     OPENLOOP = (int)openLoop;
     return i2cWrite(OPENLOOP_REGISTER, (uint8_t)(0xFF & (((SPEEDSLOP2 << SPEEDSLOP2_OFFSET) & SPEEDSLOP2_MASK) | ((VCP_MASK << VCP_MASK_OFFSET) & VCP_MASK_MASK) | ((OPENLOOP << OPENLOOP_OFFSET) & OPENLOOP_MASK))));
 }
-int TC78B011FTG::getOpenLoop(){
+int TC78B011FTG::getOpenLoop(bool fromChip){
+    if (!fromChip){
+        return OPENLOOP;
+    }
     int regVal = i2cRead(OPENLOOP_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -544,28 +583,40 @@ int TC78B011FTG::setKP(int KP)
     }
     return i2cWrite(KP_REGISTER, (uint8_t)(0xFF & (((KPX_REG_VALUE << KPX_OFFSET) & KPX_MASK) | ((KP_REG_VALUE << KP_OFFSET) & KI_MASK))));;
 }
-int TC78B011FTG::getKIX(){
+int TC78B011FTG::getKIX(bool fromChip){
+    if (!fromChip){
+        return KIX_REG_VALUE;
+    }
     int regVal = i2cRead(KIX_REGISTER);
     if (regVal < 0){
         return regVal;
     }
     return (regVal & KIX_MASK) >> KIX_OFFSET;
 }
-int TC78B011FTG::getKI(){
+int TC78B011FTG::getKI(bool fromChip){
+    if (!fromChip){
+        return KI_REG_VALUE;
+    }
     int regVal = i2cRead(KI_REGISTER);
     if (regVal < 0){
         return regVal;
     }
     return (regVal & KI_MASK) >> KI_OFFSET;
 }
-int TC78B011FTG::getKPX(){
+int TC78B011FTG::getKPX(bool fromChip){
+    if (!fromChip){
+        return KPX_REG_VALUE;
+    }
     int regVal = i2cRead(KPX_REGISTER);
     if (regVal < 0){
         return regVal;
     }
     return (regVal & KPX_MASK) >> KPX_OFFSET;
 }
-int TC78B011FTG::getKP(){
+int TC78B011FTG::getKP(bool fromChip){
+    if (!fromChip){
+        return KP_REG_VALUE;
+    }
     int regVal = i2cRead(KP_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -578,7 +629,10 @@ int TC78B011FTG::setStandbyMode(bool standbymode)
     STBY_MODE = (int)standbymode;
     return i2cWrite(STBY_MODE_REGISTER, (uint8_t)(0xFF & (((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | ((DIR << DIR_OFFSET) & DIR_MASK) | ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
 }
-int TC78B011FTG::getStandbyMode(){
+int TC78B011FTG::getStandbyMode(bool fromChip){
+    if (!fromChip){
+        return STBY_MODE;
+    }
     int regVal = i2cRead(STBY_MODE_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -591,7 +645,10 @@ int TC78B011FTG::setDIRMode(bool dirMode)
     DIR = (int)dirMode;
     return i2cWrite(DIR_REGISTER, (uint8_t)(0xFF & (((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | ((DIR << DIR_OFFSET) & DIR_MASK) | ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
 }
-int TC78B011FTG::getDIRMode(){
+int TC78B011FTG::getDIRMode(bool fromChip){
+    if (!fromChip){
+        return DIR;
+    }
     int regVal = i2cRead(DIR_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -607,7 +664,10 @@ int TC78B011FTG::setPoles(int polesMode)
     POLEPAIR = polesMode;
     return i2cWrite(POLEPAIR_REGISTER, (uint8_t)(0xFF & (((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | ((DIR << DIR_OFFSET) & DIR_MASK) | ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
 }
-int TC78B011FTG::getPoles(){
+int TC78B011FTG::getPoles(bool fromChip){
+    if (!fromChip){
+        return POLEPAIR;
+    }
     int regVal = i2cRead(POLEPAIR_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -623,7 +683,10 @@ int TC78B011FTG::setMaxSpeed(int maxSpeedMode)
     MAXSPEED = maxSpeedMode;
     return i2cWrite(MAXSPEED_REGISTER, (uint8_t)(0xFF & (((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | ((DIR << DIR_OFFSET) & DIR_MASK) | ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
 }
-int TC78B011FTG::getMaxSpeed(){
+int TC78B011FTG::getMaxSpeed(bool fromChip){
+    if (!fromChip){
+        return MAXSPEED;
+    }
     int regVal = i2cRead(MAXSPEED_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -636,7 +699,10 @@ int TC78B011FTG::setSpeedOutputMode(bool outputMode)
     FG_ON = (int)outputMode;
     return i2cWrite(FG_ON_REGISTER, (uint8_t)(0xFF & (((STBY_MODE << STBY_MODE_OFFSET) & STBY_MODE_MASK) | ((DIR << DIR_OFFSET) & DIR_MASK) | ((POLEPAIR << POLEPAIR_OFFSET) & POLEPAIR_MASK) | ((MAXSPEED << MAXSPEED_OFFSET) & MAXSPEED_MASK) | ((FG_ON << FG_ON_OFFSET) & FG_ON_MASK))));
 }
-int TC78B011FTG::getSpeedOutputMode(){
+int TC78B011FTG::getSpeedOutputMode(bool fromChip){
+    if (!fromChip){
+        return FG_ON;
+    }
     int regVal = i2cRead(FG_ON_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -649,7 +715,10 @@ int TC78B011FTG::setSpeedControlMode(bool mode)
     TSPSEL = (int)mode;
     return i2cWrite(TSPSEL_REGISTER, (uint8_t)(0xFF & (((FGSEL << FGSEL_OFFSET) & FGSEL_MASK) | ((TSPSEL << TSPSEL_OFFSET) & TSPSEL_MASK) | ((SPDINV << SPDINV_OFFSET) & SPDINV_MASK) | ((LATCH << LATCH_OFFSET) & LATCH_MASK) | ((OCPMASK << OCPMASK_OFFSET) & OCPMASK_MASK))));
 }
-int TC78B011FTG::getSpeedControlMode(){
+int TC78B011FTG::getSpeedControlMode(bool fromChip){
+    if (!fromChip){
+        return TSPSEL;
+    }
     int regVal = i2cRead(TSPSEL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -662,7 +731,10 @@ int TC78B011FTG::setSpeedInversion(bool inverted)
     SPDINV = (int)inverted;
     return i2cWrite(SPDINV_REGISTER, (uint8_t)(0xFF & (((FGSEL << FGSEL_OFFSET) & FGSEL_MASK) | ((TSPSEL << TSPSEL_OFFSET) & TSPSEL_MASK) | ((SPDINV << SPDINV_OFFSET) & SPDINV_MASK) | ((LATCH << LATCH_OFFSET) & LATCH_MASK) | ((OCPMASK << OCPMASK_OFFSET) & OCPMASK_MASK))));
 }
-int TC78B011FTG::getSpeedInversion(){
+int TC78B011FTG::getSpeedInversion(bool fromChip){
+    if (!fromChip){
+        return SPDINV;
+    }
     int regVal = i2cRead(SPDINV_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -675,7 +747,10 @@ int TC78B011FTG::setAutoRecoveryMode(bool autorecovery)
     LATCH = (int)autorecovery;
     return i2cWrite(LATCH_REGISTER, (uint8_t)(0xFF & (((FGSEL << FGSEL_OFFSET) & FGSEL_MASK) | ((TSPSEL << TSPSEL_OFFSET) & TSPSEL_MASK) | ((SPDINV << SPDINV_OFFSET) & SPDINV_MASK) | ((LATCH << LATCH_OFFSET) & LATCH_MASK) | ((OCPMASK << OCPMASK_OFFSET) & OCPMASK_MASK))));
 }
-int TC78B011FTG::getAutoRecoveryMode(){
+int TC78B011FTG::getAutoRecoveryMode(bool fromChip){
+    if (!fromChip){
+        return LATCH;
+    }
     int regVal = i2cRead(LATCH_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -691,7 +766,10 @@ int TC78B011FTG::setDigitalFiltering(int filter)
     OCPMASK = filter;
     return i2cWrite(15, (uint8_t)(0xFF & (((FGSEL << FGSEL_OFFSET) & FGSEL_MASK) | ((TSPSEL << TSPSEL_OFFSET) & TSPSEL_MASK) | ((SPDINV << SPDINV_OFFSET) & SPDINV_MASK) | ((LATCH << LATCH_OFFSET) & LATCH_MASK) | ((OCPMASK << OCPMASK_OFFSET) & OCPMASK_MASK))));
 }
-int TC78B011FTG::getDigitalFiltering(){
+int TC78B011FTG::getDigitalFiltering(bool fromChip){
+    if (!fromChip){
+        return OCPMASK;
+    }
     int regVal = i2cRead(OCPMASK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -704,7 +782,10 @@ int TC78B011FTG::setForcedComutationProtection(bool protectionDisable)
     LOCKDIS = (int)protectionDisable;
     return i2cWrite(LOCKDIS_REGISTER, (uint8_t)(0xFF & (((LOCKDIS << LOCKDIS_OFFSET) & LOCKDIS_MASK) | ((DUTYCHGLIMIT << DUTYCHGLIMIT_OFFSET) & DUTYCHGLIMIT_MASK) | ((STARTCURRENT << STARTCURRENT_OFFSET) & STARTCURRENT_MASK) | ((OCPDIS << OCPDIS_OFFSET) & OCPDIS_MASK))));
 }
-int TC78B011FTG::getForcedComutationProtection(){
+int TC78B011FTG::getForcedComutationProtection(bool fromChip){
+    if (!fromChip){
+        return LOCKDIS;
+    }
     int regVal = i2cRead(LOCKDIS_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -720,7 +801,10 @@ int TC78B011FTG::setDutyChangeLimit(int dutyChange)
     DUTYCHGLIMIT = dutyChange;
     return i2cWrite(DUTYCHGLIMIT_REGISTER, (uint8_t)(0xFF & (((LOCKDIS << LOCKDIS_OFFSET) & LOCKDIS_MASK) | ((DUTYCHGLIMIT << DUTYCHGLIMIT_OFFSET) & DUTYCHGLIMIT_MASK) | ((STARTCURRENT << STARTCURRENT_OFFSET) & STARTCURRENT_MASK) | ((OCPDIS << OCPDIS_OFFSET) & OCPDIS_MASK))));
 }
-int TC78B011FTG::getDutyChangeLimit(){
+int TC78B011FTG::getDutyChangeLimit(bool fromChip){
+    if (!fromChip){
+        return DUTYCHGLIMIT;
+    }
     int regVal = i2cRead(DUTYCHGLIMIT_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -736,7 +820,10 @@ int TC78B011FTG::setStartCurrentLimit(int currentlimit)
     STARTCURRENT = currentlimit;
     return i2cWrite(STARTCURRENT_REGISTER, (uint8_t)(0xFF & (((LOCKDIS << LOCKDIS_OFFSET) & LOCKDIS_MASK) | ((DUTYCHGLIMIT << DUTYCHGLIMIT_OFFSET) & DUTYCHGLIMIT_MASK) | ((STARTCURRENT << STARTCURRENT_OFFSET) & STARTCURRENT_MASK) | ((OCPDIS << OCPDIS_OFFSET) & OCPDIS_MASK))));
 }
-int TC78B011FTG::getStartCurrentLimit(){
+int TC78B011FTG::getStartCurrentLimit(bool fromChip){
+    if (!fromChip){
+        return STARTCURRENT;
+    }
     int regVal = i2cRead(STARTCURRENT_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -749,7 +836,10 @@ int TC78B011FTG::setOCPDisable(bool OCPDisable)
     OCPDIS = (int)OCPDisable;
     return i2cWrite(OCPDIS_REGISTER, (uint8_t)(0xFF & (((LOCKDIS << LOCKDIS_OFFSET) & LOCKDIS_MASK) | ((DUTYCHGLIMIT << DUTYCHGLIMIT_OFFSET) & DUTYCHGLIMIT_MASK) | ((STARTCURRENT << STARTCURRENT_OFFSET) & STARTCURRENT_MASK) | ((OCPDIS << OCPDIS_OFFSET) & OCPDIS_MASK))));
 }
-int TC78B011FTG::getOCPDisable(){
+int TC78B011FTG::getOCPDisable(bool fromChip){
+    if (!fromChip){
+        return OCPDIS;
+    }
     int regVal = i2cRead(OCPDIS_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -765,7 +855,10 @@ int TC78B011FTG::setSoftStartRange(int ssRange)
     SS_ADD_SEL = ssRange;
     return i2cWrite(SS_ADD_SEL_REGISTER, (uint8_t)(0xFF & (((SS_ADD_SEL << SS_ADD_SEL_OFFSET) & SS_ADD_SEL_MASK) | ((SS_UP_SEL << SS_UP_SEL_OFFSET) & SS_UP_SEL_MASK) | ((SS_DUTYCHGLIMIT << SS_DUTYCHGLIMIT_OFFSET) & SS_DUTYCHGLIMIT_MASK) | ((DUTY_UP_TIME << DUTY_UP_TIME_OFFSET) & DUTY_UP_TIME_MASK))));
 }
-int TC78B011FTG::getSoftStartRange(){
+int TC78B011FTG::getSoftStartRange(bool fromChip){
+    if (!fromChip){
+        return SS_ADD_SEL;
+    }
     int regVal = i2cRead(SS_ADD_SEL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -781,7 +874,10 @@ int TC78B011FTG::setSoftStartStepSize(int ssStepSize)
     SS_UP_SEL = ssStepSize;
     return i2cWrite(SS_UP_SEL_REGISTER, (uint8_t)(0xFF & (((SS_ADD_SEL << SS_ADD_SEL_OFFSET) & SS_ADD_SEL_MASK) | ((SS_UP_SEL << SS_UP_SEL_OFFSET) & SS_UP_SEL_MASK) | ((SS_DUTYCHGLIMIT << SS_DUTYCHGLIMIT_OFFSET) & SS_DUTYCHGLIMIT_MASK) | ((DUTY_UP_TIME << DUTY_UP_TIME_OFFSET) & DUTY_UP_TIME_MASK))));
 }
-int TC78B011FTG::getSoftStartStepSize(){
+int TC78B011FTG::getSoftStartStepSize(bool fromChip){
+    if (!fromChip){
+        return SS_UP_SEL;
+    }
     int regVal = i2cRead(SS_UP_SEL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -797,7 +893,10 @@ int TC78B011FTG::setSoftStartDutyChangeLimit(int dutyChange)
     SS_DUTYCHGLIMIT = dutyChange;
     return i2cWrite(SS_DUTYCHGLIMIT_REGISTER, (uint8_t)(0xFF & (((SS_ADD_SEL << SS_ADD_SEL_OFFSET) & SS_ADD_SEL_MASK) | ((SS_UP_SEL << SS_UP_SEL_OFFSET) & SS_UP_SEL_MASK) | ((SS_DUTYCHGLIMIT << SS_DUTYCHGLIMIT_OFFSET) & SS_DUTYCHGLIMIT_MASK) | ((DUTY_UP_TIME << DUTY_UP_TIME_OFFSET) & DUTY_UP_TIME_MASK))));
 }
-int TC78B011FTG::getSoftStartDutyChangeLimit(){
+int TC78B011FTG::getSoftStartDutyChangeLimit(bool fromChip){
+    if (!fromChip){
+        return SS_DUTYCHGLIMIT;
+    }
     int regVal = i2cRead(SS_DUTYCHGLIMIT_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -810,7 +909,10 @@ int TC78B011FTG::setDutyUpTime(bool dutyTimeMode)
     DUTY_UP_TIME = (int)dutyTimeMode;
     return i2cWrite(DUTY_UP_TIME_REGISTER, (uint8_t)(0xFF & (((SS_ADD_SEL << SS_ADD_SEL_OFFSET) & SS_ADD_SEL_MASK) | ((SS_UP_SEL << SS_UP_SEL_OFFSET) & SS_UP_SEL_MASK) | ((SS_DUTYCHGLIMIT << SS_DUTYCHGLIMIT_OFFSET) & SS_DUTYCHGLIMIT_MASK) | ((DUTY_UP_TIME << DUTY_UP_TIME_OFFSET) & DUTY_UP_TIME_MASK))));
 }
-int TC78B011FTG::getDutyUpTime(){
+int TC78B011FTG::getDutyUpTime(bool fromChip){
+    if (!fromChip){
+        return DUTY_UP_TIME;
+    }
     int regVal = i2cRead(DUTY_UP_TIME_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -826,7 +928,10 @@ int TC78B011FTG::setRPMChangeLimit(int RPMLimit)
     RPMLIMIT = RPMLimit;
     return i2cWrite(RPMLIMIT_REGISTER, (uint8_t)(0xFF & (((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
 }
-int TC78B011FTG::getRPMChangeLimit(){
+int TC78B011FTG::getRPMChangeLimit(bool fromChip){
+    if (!fromChip){
+        return RPMLIMIT;
+    }
     int regVal = i2cRead(RPMLIMIT_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -839,7 +944,10 @@ int TC78B011FTG::setBrakeInverted(bool brakeInverted)
     BRK_INV = (int)brakeInverted;
     return i2cWrite(BRK_INV_REGISTER, (uint8_t)(0xFF & (((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
 }
-int TC78B011FTG::getBrakeInverted(){
+int TC78B011FTG::getBrakeInverted(bool fromChip){
+    if (!fromChip){
+        return BRK_INV;
+    }
     int regVal = i2cRead(BRK_INV_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -852,7 +960,10 @@ int TC78B011FTG::setOvercurrentDetectionDisabled(bool OCPDisabled)
     ISD_MASK = (int)OCPDisabled;
     return i2cWrite(ISD_MASK_REGISTER, (uint8_t)(0xFF & (((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
 }
-int TC78B011FTG::getOvercurrentDetectionDisabled(){
+int TC78B011FTG::getOvercurrentDetectionDisabled(bool fromChip){
+    if (!fromChip){
+        return ISD_MASK;
+    }
     int regVal = i2cRead(ISD_MASK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -868,7 +979,10 @@ int TC78B011FTG::setRSAPinFiltering(int filterMode)
     RS_SEL = filterMode;
     return i2cWrite(RS_SEL_REGISTER, (uint8_t)(0xFF & (((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
 }
-int TC78B011FTG::getRSAPinFiltering(){
+int TC78B011FTG::getRSAPinFiltering(bool fromChip){
+    if (!fromChip){
+        return RS_SEL;
+    }
     int regVal = i2cRead(RS_SEL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -881,7 +995,10 @@ int TC78B011FTG::setAutoDeadTimeControlDisabled(bool autoDeadTimeDisabled)
     ANTITHROUGH = (int)autoDeadTimeDisabled;
     return i2cWrite(ANTITHROUGH_REGISTER, (uint8_t)(0xFF & (((RPMLIMIT << RPMLIMIT_OFFSET) & RPMLIMIT_MASK) | ((BRK_INV << BRK_INV_OFFSET) & BRK_INV_MASK) | ((ISD_MASK << ISD_MASK_OFFSET) & ISD_MASK_MASK) | ((RS_SEL << RS_SEL_OFFSET) & RS_SEL_MASK) | ((ANTITHROUGH << ANTITHROUGH_OFFSET) & ANTITHROUGH_MASK))));
 }
-int TC78B011FTG::getAutoDeadTimeControlDisabled(){
+int TC78B011FTG::getAutoDeadTimeControlDisabled(bool fromChip){
+    if (!fromChip){
+        return ANTITHROUGH;
+    }
     int regVal = i2cRead(ANTITHROUGH_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -897,7 +1014,10 @@ int TC78B011FTG::setBrakeTime(int time)
     WAIT_TIME = time;
     return i2cWrite(WAIT_TIME_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getBrakeTime(){
+int TC78B011FTG::getBrakeTime(bool fromChip){
+    if (!fromChip){
+        return WAIT_TIME;
+    }
     int regVal = i2cRead(WAIT_TIME_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -910,7 +1030,10 @@ int TC78B011FTG::setBrakeMode(bool mode)
     WAIT_MODE = (int)mode;
     return i2cWrite(WAIT_MODE_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getBrakeMode(){
+int TC78B011FTG::getBrakeMode(bool fromChip){
+    if (!fromChip){
+        return WAIT_MODE;
+    }
     int regVal = i2cRead(WAIT_MODE_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -923,7 +1046,10 @@ int TC78B011FTG::setBrakeReleaseMode(bool mode)
     WAIT_CON = (int)mode;
     return i2cWrite(WAIT_CON_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getBrakeReleaseMode(){
+int TC78B011FTG::getBrakeReleaseMode(bool fromChip){
+    if (!fromChip){
+        return WAIT_CON;
+    }
     int regVal = i2cRead(WAIT_CON_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -936,7 +1062,10 @@ int TC78B011FTG::setErrorBrakingMode(bool mode)
     LOCK_BRK = (int)mode;
     return i2cWrite(LOCK_BRK_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getErrorBrakingMode(){
+int TC78B011FTG::getErrorBrakingMode(bool fromChip){
+    if (!fromChip){
+        return LOCK_BRK;
+    }
     int regVal = i2cRead(LOCK_BRK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -949,7 +1078,10 @@ int TC78B011FTG::setAlertInverted(bool inverted)
     ALERT_INV = (int)inverted;
     return i2cWrite(ALERT_INV_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getAlertInverted(){
+int TC78B011FTG::getAlertInverted(bool fromChip){
+    if (!fromChip){
+        return ALERT_INV;
+    }
     int regVal = i2cRead(ALERT_INV_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -962,7 +1094,10 @@ int TC78B011FTG::setThermalShutdownDisable(bool disabled)
     TSD_MASK = (int)disabled;
     return i2cWrite(TSD_MASK_REGISTER, (uint8_t)(0xFF & (((WAIT_TIME << WAIT_TIME_OFFSET) & WAIT_TIME_MASK) | ((WAIT_MODE << WAIT_MODE_OFFSET) & WAIT_MODE_MASK) | ((WAIT_CON << WAIT_CON_OFFSET) * WAIT_CON_MASK) | ((LOCK_BRK << LOCK_BRK_OFFSET) & LOCK_BRK_MASK) | ((ALERT_INV << ALERT_INV_OFFSET) & ALERT_INV_MASK) | ((TSD_MASK < TSD_MASK_OFFSET) & TSD_MASK_MASK))));
 }
-int TC78B011FTG::getThermalShutdownDisable(){
+int TC78B011FTG::getThermalShutdownDisable(bool fromChip){
+    if (!fromChip){
+        return TSD_MASK;
+    }
     int regVal = i2cRead(TSD_MASK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -978,7 +1113,10 @@ int TC78B011FTG::setAutoRestartWaitTime(int time)
     TRE = time;
     return i2cWrite(TRE_REGISTER, (uint8_t)(0xFF & (((TRE <<TRE_OFFSET) & TRE_MASK) | ((PRE_TIP << PRE_TIP_OFFSET) & PRE_TIP_MASK) | ((TIP << TIP_OFFSET) & TIP_MASK))));
 }
-int TC78B011FTG::getAutoRestartWaitTime(){
+int TC78B011FTG::getAutoRestartWaitTime(bool fromChip){
+    if (!fromChip){
+        return TRE;
+    }
     int regVal = i2cRead(TRE_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -994,7 +1132,10 @@ int TC78B011FTG::setFirstDCExcitationTime(int time)
     PRE_TIP = time;
     return i2cWrite(PRE_TIP_REGISTER, (uint8_t)(0xFF & (((TRE <<TRE_OFFSET) & TRE_MASK) | ((PRE_TIP << PRE_TIP_OFFSET) & PRE_TIP_MASK) | ((TIP << TIP_OFFSET) & TIP_MASK))));
 }
-int TC78B011FTG::getFirstDCExcitationTime(){
+int TC78B011FTG::getFirstDCExcitationTime(bool fromChip){
+    if (!fromChip){
+        return PRE_TIP;
+    }
     int regVal = i2cRead(PRE_TIP_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1010,7 +1151,10 @@ int TC78B011FTG::setSecondDCExcitationTime(int time)
     TIP = time;
     return i2cWrite(TIP_REGISTER, (uint8_t)(0xFF & (((TRE <<TRE_OFFSET) & TRE_MASK) | ((PRE_TIP << PRE_TIP_OFFSET) & PRE_TIP_MASK) | ((TIP << TIP_OFFSET) & TIP_MASK))));
 }
-int TC78B011FTG::getSecondDCExcitationTime(){
+int TC78B011FTG::getSecondDCExcitationTime(bool fromChip){
+    if (!fromChip){
+        return TIP;
+    }
     int regVal = i2cRead(TIP_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1026,7 +1170,10 @@ int TC78B011FTG::setLeadAngle(int angleSetting)
     LA = angleSetting;
     return i2cWrite(LA_REGISTER, (uint8_t)(0xFF & (((LA << LA_OFFSET) & LA_MASK) | ((FMAX << FMAX_OFFSET) & FMAX_MASK) | ((FST << FST_OFFSET) & FST_MASK))));
 }
-int TC78B011FTG::getLeadAngle(){
+int TC78B011FTG::getLeadAngle(bool fromChip){
+    if (!fromChip){
+        return LA;
+    }
     int regVal = i2cRead(LA_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1042,7 +1189,10 @@ int TC78B011FTG::setMaxRPM(int maxRPMMode)
     FMAX = maxRPMMode;
     return i2cWrite(FMAX_REGISTER, (uint8_t)(0xFF & (((LA << LA_OFFSET) & LA_MASK) | ((FMAX << FMAX_OFFSET) & FMAX_MASK) | ((FST << FST_OFFSET) & FST_MASK))));
 }
-int TC78B011FTG::getMaxRPM(){
+int TC78B011FTG::getMaxRPM(bool fromChip){
+    if (!fromChip){
+        return FMAX;
+    }
     int regVal = i2cRead(FMAX_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1058,7 +1208,10 @@ int TC78B011FTG::setForcedComutationFrequency(int comutationMode)
     FST = comutationMode;
     return i2cWrite(FST_REGISTER, (uint8_t)(0xFF & (((LA << LA_OFFSET) & LA_MASK) | ((FMAX << FMAX_OFFSET) & FMAX_MASK) | ((FST << FST_OFFSET) & FST_MASK))));
 }
-int TC78B011FTG::getForcedComutationFrequency(){
+int TC78B011FTG::getForcedComutationFrequency(bool fromChip){
+    if (!fromChip){
+        return FST;
+    }
     int regVal = i2cRead(FST_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1074,7 +1227,10 @@ int TC78B011FTG::setOutputPWMFrequencyMode(int frequencyMode)
     FPWM = frequencyMode;
     return i2cWrite(FPWM_REGISTER, (uint8_t)(0xFF & (((FPWM << FPWM_OFFSET) & FPWM_MASK) | ((DEADTIME << DEADTIME_OFFSET) & DEADTIME_MASK))));
 }
-int TC78B011FTG::getOutputPWMFrequencyMode(){
+int TC78B011FTG::getOutputPWMFrequencyMode(bool fromChip){
+    if (!fromChip){
+        return FPWM;
+    }
     int regVal = i2cRead(FPWM_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1090,7 +1246,10 @@ int TC78B011FTG::setDeadtime(int deadtimeMode)
     DEADTIME = deadtimeMode;
     return i2cWrite(DEADTIME_REGISTER, (uint8_t)(0xFF & (((FPWM << FPWM_OFFSET) & FPWM_MASK) | ((DEADTIME << DEADTIME_OFFSET) & DEADTIME_MASK))));
 }
-int TC78B011FTG::getDeadtime(){
+int TC78B011FTG::getDeadtime(bool fromChip){
+    if (!fromChip){
+        return DEADTIME;
+    }
     int regVal = i2cRead(DEADTIME_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1103,7 +1262,10 @@ int TC78B011FTG::setOvercurrentDetectionThreshold(bool thresholdMode)
     ISD_LVL = (int)thresholdMode;
     return i2cWrite(ISD_LVL_REGISTER, (uint8_t)(0xFF & (((ISD_LVL << ISD_LVL_OFFSET) & DEADTIME_MASK) | ((OCP_LVL << OCP_LVL_OFFSET) & OCP_LVL_MASK) | ((SOURCE << SOURCE_OFFSET) & SOURCE_MASK) | ((SINK << SINK_OFFSET) & SINK_MASK))));
 }
-int TC78B011FTG::getOvercurrentDetectionThreshold(){
+int TC78B011FTG::getOvercurrentDetectionThreshold(bool fromChip){
+    if (!fromChip){
+        return ISD_LVL;
+    }
     int regVal = i2cRead(ISD_LVL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1116,7 +1278,10 @@ int TC78B011FTG::setOvercurrentProtectionGain(bool OCPGain)
     OCP_LVL = OCPGain;
     return i2cWrite(OCP_LVL_REGISTER, (uint8_t)(0xFF & (((ISD_LVL << ISD_LVL_OFFSET) & DEADTIME_MASK) | ((OCP_LVL << OCP_LVL_OFFSET) & OCP_LVL_MASK) | ((SOURCE << SOURCE_OFFSET) & SOURCE_MASK) | ((SINK << SINK_OFFSET) & SINK_MASK))));
 }
-int TC78B011FTG::getOvercurrentProtectionGain(){
+int TC78B011FTG::getOvercurrentProtectionGain(bool fromChip){
+    if (!fromChip){
+        return OCP_LVL;
+    }
     int regVal = i2cRead(OCP_LVL_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1132,7 +1297,10 @@ int TC78B011FTG::setGateSourceCurrent(int currentMode)
     SOURCE = currentMode;
     return i2cWrite(SOURCE_REGISTER, (uint8_t)(0xFF & (((ISD_LVL << ISD_LVL_OFFSET) & DEADTIME_MASK) | ((OCP_LVL << OCP_LVL_OFFSET) & OCP_LVL_MASK) | ((SOURCE << SOURCE_OFFSET) & SOURCE_MASK) | ((SINK << SINK_OFFSET) & SINK_MASK))));
 }
-int TC78B011FTG::getGateSourceCurrent(){
+int TC78B011FTG::getGateSourceCurrent(bool fromChip){
+    if (!fromChip){
+        return SOURCE;
+    }
     int regVal = i2cRead(SOURCE_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1148,7 +1316,10 @@ int TC78B011FTG::setGateSinkCurrent(int currentMode)
     SINK = currentMode;
     return i2cWrite(SINK_REGISTER, (uint8_t)(0xFF & (((ISD_LVL << ISD_LVL_OFFSET) & DEADTIME_MASK) | ((OCP_LVL << OCP_LVL_OFFSET) & OCP_LVL_MASK) | ((SOURCE << SOURCE_OFFSET) & SOURCE_MASK) | ((SINK << SINK_OFFSET) & SINK_MASK))));
 }
-int TC78B011FTG::getGateSinkCurrent(){
+int TC78B011FTG::getGateSinkCurrent(bool fromChip){
+    if (!fromChip){
+        return SINK;
+    }
     int regVal = i2cRead(SINK_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1164,7 +1335,10 @@ int TC78B011FTG::setIdleModeHysteresisVoltage(int hysteresisMode)
     COMP_HYS = hysteresisMode;
     return i2cWrite(COMP_HYS_REGISTER, (uint8_t)(0xFF & (((COMP_HYS << COMP_HYS_OFFSET) & COMP_HYS_MASK))));
 }
-int TC78B011FTG::getIdleModeHysteresisVoltage(){
+int TC78B011FTG::getIdleModeHysteresisVoltage(bool fromChip){
+    if (!fromChip){
+        return COMP_HYS;
+    }
     int regVal = i2cRead(COMP_HYS_REGISTER);
     if (regVal < 0){
         return regVal;
@@ -1184,7 +1358,10 @@ int TC78B011FTG::setSpeed(int speed)
     int status4 = i2cWrite(SPD_REGISTER_L, (uint8_t)(0xFF & ((SPEED << SPD_OFFSET) & SPD_MASK)));
     return status1 < 0 ? status1 : status2 < 0 ? status2 : status3 < 0 ? status3 : status4 < 0 ? status4 : 0;
 }
-int TC78B011FTG::getSpeedSetting(){
+int TC78B011FTG::getSpeedSetting(bool fromChip){
+    if (!fromChip){
+        return SPEED;
+    }
     int regValH = i2cRead(SPD_REGISTER_H);
     if (regValH < 0){
         return regValH;
@@ -1197,7 +1374,7 @@ int TC78B011FTG::getSpeedSetting(){
     return (regVal & SPD_MASK) >> SPD_OFFSET;
 }
 
-int TC78B011FTG::getRPM()
+int TC78B011FTG::getRPM(bool fromChip)
 {
     return 250000 / (((uint16_t)(i2cRead(HZ_CNT_REGISTER_H)) << 8) | (uint16_t)i2cRead(HZ_CNT_REGISTER_L)) * 60;
 }
@@ -1234,7 +1411,7 @@ int TC78B011FTG::writeNVM()
     return 0;
 }
 
-int TC78B011FTG::getChargePumpErrorState()
+int TC78B011FTG::getChargePumpErrorState(bool fromChip)
 {
     int regVal = i2cRead(ERR_CP_LOW_REGISTER);
     if (regVal < 0){
@@ -1243,7 +1420,7 @@ int TC78B011FTG::getChargePumpErrorState()
     return (regVal & ERR_CP_LOW_MASK) >> ERR_CP_LOW_OFFSET;
 }
 
-int TC78B011FTG::getTemperatureErrorState()
+int TC78B011FTG::getTemperatureErrorState(bool fromChip)
 {
         int regVal = i2cRead(ERR_TSD_REGISTER);
     if (regVal < 0){
@@ -1252,7 +1429,7 @@ int TC78B011FTG::getTemperatureErrorState()
     return (regVal & ERR_TSD_MASK) >> ERR_TSD_OFFSET;
 }
 
-int TC78B011FTG::getCurrentErrorState()
+int TC78B011FTG::getCurrentErrorState(bool fromChip)
 {
     int regVal = i2cRead(ERR_ISD_REGISTER);
     if (regVal < 0){
@@ -1261,7 +1438,7 @@ int TC78B011FTG::getCurrentErrorState()
     return (regVal & ERR_ISD_STATE_MASK) >> ERR_ISD_STATE_OFFSET;
 }
 
-int TC78B011FTG::getOverspeedErrorState()
+int TC78B011FTG::getOverspeedErrorState(bool fromChip)
 {
     int regVal = i2cRead(ERR_OV_SPD_REGISTER);
     if (regVal < 0){
@@ -1270,7 +1447,7 @@ int TC78B011FTG::getOverspeedErrorState()
     return (regVal & ERR_OV_SPD_MASK) >> ERR_OV_SPD_OFFSET;
 }
 
-int TC78B011FTG::getUnderspeedErrorState()
+int TC78B011FTG::getUnderspeedErrorState(bool fromChip)
 {
     int regVal = i2cRead(ERR_UD_SPD_REGISTER);
     if (regVal < 0){
@@ -1279,7 +1456,7 @@ int TC78B011FTG::getUnderspeedErrorState()
     return (regVal & ERR_UD_SPD_MASK) >> ERR_UD_SPD_OFFSET;
 }
 
-int TC78B011FTG::getStartupErrorState()
+int TC78B011FTG::getStartupErrorState(bool fromChip)
 {
     int regVal = i2cRead(ERR_ST_FAIL_REGISTER);
     if (regVal < 0){
@@ -1296,7 +1473,7 @@ int TC78B011FTG::setUserID(int UID)
     return i2cWrite(USERID_REGISTER, (uint8_t)UID);
 }
 
-int TC78B011FTG::getUserID()
+int TC78B011FTG::getUserID(bool fromChip)
 {
     int regVal = i2cRead(USERID_REGISTER);
     if (regVal < 0){

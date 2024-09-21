@@ -17,205 +17,205 @@ Number motorRegisterGetter(const CallbackInfo &info){
     }
     std::string paramName = info[1].As<String>().Utf8Value();
     if (paramName == "CP_LOW"){
-        return Number::New(info.Env(), motors[motorNumber].getChargePumpErrorState());
+        return Number::New(info.Env(), motors[motorNumber].getChargePumpErrorState(false));
     }
     if (paramName == "TSD"){
-        return Number::New(info.Env(), motors[motorNumber].getTemperatureErrorState());
+        return Number::New(info.Env(), motors[motorNumber].getTemperatureErrorState(false));
     }
     if (paramName == "ISD"){
-        return Number::New(info.Env(), motors[motorNumber].getCurrentErrorState());
+        return Number::New(info.Env(), motors[motorNumber].getCurrentErrorState(false));
     }
     if (paramName == "OV_SPD"){
-        return Number::New(info.Env(), motors[motorNumber].getOverspeedErrorState());   
+        return Number::New(info.Env(), motors[motorNumber].getOverspeedErrorState(false));   
     }
     if (paramName == "OU_SPD"){
-        return Number::New(info.Env(), motors[motorNumber].getUnderspeedErrorState());  
+        return Number::New(info.Env(), motors[motorNumber].getUnderspeedErrorState(false));  
     } 
     if (paramName == "ST_FAIL"){
-        return Number::New(info.Env(), motors[motorNumber].getStartupErrorState());     
+        return Number::New(info.Env(), motors[motorNumber].getStartupErrorState(false));     
     } 
     if (paramName == "USERID"){
-        return Number::New(info.Env(), motors[motorNumber].getUserID());                
+        return Number::New(info.Env(), motors[motorNumber].getUserID(false));                
     } 
     if (paramName == "NOSTOP"){
-        return Number::New(info.Env(), motors[motorNumber].getNoStop());                
+        return Number::New(info.Env(), motors[motorNumber].getNoStop(false));                
     } 
     if (paramName == "STOPDUTY"){
-        return Number::New(info.Env(), motors[motorNumber].getStopDuty());              
+        return Number::New(info.Env(), motors[motorNumber].getStopDuty(false));              
     } 
     if (paramName == "STARTDUTY"){
-        return Number::New(info.Env(), motors[motorNumber].getStartDuty());             
+        return Number::New(info.Env(), motors[motorNumber].getStartDuty(false));             
     } 
     if (paramName == "CHANGEDUTY"){
-        return Number::New(info.Env(), motors[motorNumber].getChangeDuty());            
+        return Number::New(info.Env(), motors[motorNumber].getChangeDuty(false));            
     } 
     if (paramName == "MAXDUTY"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxDuty());               
+        return Number::New(info.Env(), motors[motorNumber].getMaxDuty(false));               
     } 
     if (paramName == "STARTRPM"){
-        return Number::New(info.Env(), motors[motorNumber].getStartRPM());              
+        return Number::New(info.Env(), motors[motorNumber].getStartRPM(false));              
     } 
     if (paramName == "MAXDUTYHYS"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxDutyHysteresis());     
+        return Number::New(info.Env(), motors[motorNumber].getMaxDutyHysteresis(false));     
     } 
     if (paramName == "SPEEDSLOP"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedSlope());            
+        return Number::New(info.Env(), motors[motorNumber].getSpeedSlope(false));            
     } 
     if (paramName == "MAXOPEN"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxOpen());               
+        return Number::New(info.Env(), motors[motorNumber].getMaxOpen(false));               
     } 
     if (paramName == "MAXOFF"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxOff());                
+        return Number::New(info.Env(), motors[motorNumber].getMaxOff(false));                
     }
     if (paramName == "SPEEDSLOP2"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedSlope2());           
+        return Number::New(info.Env(), motors[motorNumber].getSpeedSlope2(false));           
     } 
     if (paramName == "VCP_MASK"){
-        return Number::New(info.Env(), motors[motorNumber].getChargePumpVCP());         
+        return Number::New(info.Env(), motors[motorNumber].getChargePumpVCP(false));         
     } 
     if (paramName == "OPENLOOP"){
-        return Number::New(info.Env(), motors[motorNumber].getOpenLoop());              
+        return Number::New(info.Env(), motors[motorNumber].getOpenLoop(false));              
     } 
     if (paramName == "KIX"){
-        return Number::New(info.Env(), motors[motorNumber].getKIX());                   
+        return Number::New(info.Env(), motors[motorNumber].getKIX(false));                   
     } 
     if (paramName == "KI"){
-        return Number::New(info.Env(), motors[motorNumber].getKI());                    
+        return Number::New(info.Env(), motors[motorNumber].getKI(false));                    
     } 
     if (paramName == "KPX"){
-        return Number::New(info.Env(), motors[motorNumber].getKPX());                   
+        return Number::New(info.Env(), motors[motorNumber].getKPX(false));                   
     }
     if (paramName == "KP"){
-        return Number::New(info.Env(), motors[motorNumber].getKP());                    
+        return Number::New(info.Env(), motors[motorNumber].getKP(false));                    
     }
     if (paramName == "STBY_MODE"){
-        return Number::New(info.Env(), motors[motorNumber].getStandbyMode());
+        return Number::New(info.Env(), motors[motorNumber].getStandbyMode(false));
     }
     if (paramName == "DIR"){
-        return Number::New(info.Env(), motors[motorNumber].getDIRMode());
+        return Number::New(info.Env(), motors[motorNumber].getDIRMode(false));
     }
     if (paramName == "POLEPAIR"){
-        return Number::New(info.Env(), motors[motorNumber].getPoles());
+        return Number::New(info.Env(), motors[motorNumber].getPoles(false));
     }
     if (paramName == "MAXPSEED"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxSpeed());
+        return Number::New(info.Env(), motors[motorNumber].getMaxSpeed(false));
     }
     if (paramName == "FG_ON"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedOutputMode());
+        return Number::New(info.Env(), motors[motorNumber].getSpeedOutputMode(false));
     }
     if (paramName == "TSPSEL"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedControlMode());
+        return Number::New(info.Env(), motors[motorNumber].getSpeedControlMode(false));
     }
     if (paramName == "SPDINV"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedInversion());
+        return Number::New(info.Env(), motors[motorNumber].getSpeedInversion(false));
     }
     if (paramName == "LATCH"){
-        return Number::New(info.Env(), motors[motorNumber].getAutoRecoveryMode());
+        return Number::New(info.Env(), motors[motorNumber].getAutoRecoveryMode(false));
     }
     if (paramName == "OCPMASK"){
-        return Number::New(info.Env(), motors[motorNumber].getDigitalFiltering());
+        return Number::New(info.Env(), motors[motorNumber].getDigitalFiltering(false));
     }
     if (paramName == "LOCKDIS"){
-        return Number::New(info.Env(), motors[motorNumber].getForcedComutationProtection());
+        return Number::New(info.Env(), motors[motorNumber].getForcedComutationProtection(false));
     }
     if (paramName == "DUTYCHGLIMIT"){
-        return Number::New(info.Env(), motors[motorNumber].getDutyChangeLimit());
+        return Number::New(info.Env(), motors[motorNumber].getDutyChangeLimit(false));
     }
     if (paramName == "STARTCURRENT"){
-        return Number::New(info.Env(), motors[motorNumber].getStartCurrentLimit());
+        return Number::New(info.Env(), motors[motorNumber].getStartCurrentLimit(false));
     }
     if (paramName == "OCPDIS"){
-        return Number::New(info.Env(), motors[motorNumber].getOCPDisable());
+        return Number::New(info.Env(), motors[motorNumber].getOCPDisable(false));
     }
     if (paramName == "SS_ADD_SEL"){
-        return Number::New(info.Env(), motors[motorNumber].getSoftStartRange());
+        return Number::New(info.Env(), motors[motorNumber].getSoftStartRange(false));
     }
     if (paramName == "SS_UP_SEL"){
-        return Number::New(info.Env(), motors[motorNumber].getSoftStartStepSize());
+        return Number::New(info.Env(), motors[motorNumber].getSoftStartStepSize(false));
     }
     if (paramName == "SS_DUTYCHGLIMIT"){
-        return Number::New(info.Env(), motors[motorNumber].getSoftStartDutyChangeLimit());
+        return Number::New(info.Env(), motors[motorNumber].getSoftStartDutyChangeLimit(false));
     }
     if (paramName == "DUTY_UP_TIME"){
-        return Number::New(info.Env(), motors[motorNumber].getDutyUpTime());
+        return Number::New(info.Env(), motors[motorNumber].getDutyUpTime(false));
     }
     if (paramName == "RPMLIMIT"){
-        return Number::New(info.Env(), motors[motorNumber].getRPMChangeLimit());
+        return Number::New(info.Env(), motors[motorNumber].getRPMChangeLimit(false));
     }
     if (paramName == "BRK_INV"){
-        return Number::New(info.Env(), motors[motorNumber].getBrakeInverted());
+        return Number::New(info.Env(), motors[motorNumber].getBrakeInverted(false));
     }
     if (paramName == "ISD_MASK"){
-        return Number::New(info.Env(), motors[motorNumber].getOvercurrentDetectionDisabled());
+        return Number::New(info.Env(), motors[motorNumber].getOvercurrentDetectionDisabled(false));
     }
     if (paramName == "RS_SEL"){
-        return Number::New(info.Env(), motors[motorNumber].getRSAPinFiltering());
+        return Number::New(info.Env(), motors[motorNumber].getRSAPinFiltering(false));
     }
     if (paramName == "ANTITHROUGH"){
-        return Number::New(info.Env(), motors[motorNumber].getAutoDeadTimeControlDisabled());
+        return Number::New(info.Env(), motors[motorNumber].getAutoDeadTimeControlDisabled(false));
     }
     if (paramName == "WAIT_TIME"){
-        return Number::New(info.Env(), motors[motorNumber].getBrakeTime());
+        return Number::New(info.Env(), motors[motorNumber].getBrakeTime(false));
     }
     if (paramName == "WAIT_MODE"){
-        return Number::New(info.Env(), motors[motorNumber].getBrakeMode());
+        return Number::New(info.Env(), motors[motorNumber].getBrakeMode(false));
     }
     if (paramName == "WAIT_CON"){
-        return Number::New(info.Env(), motors[motorNumber].getBrakeReleaseMode());
+        return Number::New(info.Env(), motors[motorNumber].getBrakeReleaseMode(false));
     }
     if (paramName == "LOCK_BRK"){
-        return Number::New(info.Env(), motors[motorNumber].getErrorBrakingMode());
+        return Number::New(info.Env(), motors[motorNumber].getErrorBrakingMode(false));
     }
     if (paramName == "ALERTINV"){
-        return Number::New(info.Env(), motors[motorNumber].getAlertInverted());
+        return Number::New(info.Env(), motors[motorNumber].getAlertInverted(false));
     }
     if (paramName == "TSD_MASK"){
-        return Number::New(info.Env(), motors[motorNumber].getThermalShutdownDisable());
+        return Number::New(info.Env(), motors[motorNumber].getThermalShutdownDisable(false));
     }
     if (paramName == "TRE"){
-        return Number::New(info.Env(), motors[motorNumber].getAutoRestartWaitTime());
+        return Number::New(info.Env(), motors[motorNumber].getAutoRestartWaitTime(false));
     }
     if (paramName == "PRE_TIP"){
-        return Number::New(info.Env(), motors[motorNumber].getFirstDCExcitationTime());
+        return Number::New(info.Env(), motors[motorNumber].getFirstDCExcitationTime(false));
     }
     if (paramName == "TIP"){
-        return Number::New(info.Env(), motors[motorNumber].getSecondDCExcitationTime());
+        return Number::New(info.Env(), motors[motorNumber].getSecondDCExcitationTime(false));
     }
     if (paramName == "LA"){
-        return Number::New(info.Env(), motors[motorNumber].getLeadAngle());
+        return Number::New(info.Env(), motors[motorNumber].getLeadAngle(false));
     }
     if (paramName == "FMAX"){
-        return Number::New(info.Env(), motors[motorNumber].getMaxRPM());
+        return Number::New(info.Env(), motors[motorNumber].getMaxRPM(false));
     }
     if (paramName == "FST"){
-        return Number::New(info.Env(), motors[motorNumber].getForcedComutationFrequency());
+        return Number::New(info.Env(), motors[motorNumber].getForcedComutationFrequency(false));
     }
     if (paramName == "FPWM"){
-        return Number::New(info.Env(), motors[motorNumber].getOutputPWMFrequencyMode());
+        return Number::New(info.Env(), motors[motorNumber].getOutputPWMFrequencyMode(false));
     }
     if (paramName == "DEADTIME"){
-        return Number::New(info.Env(), motors[motorNumber].getDeadtime());
+        return Number::New(info.Env(), motors[motorNumber].getDeadtime(false));
     }
     if (paramName == "ISD_LVL"){
-        return Number::New(info.Env(), motors[motorNumber].getOvercurrentDetectionThreshold());
+        return Number::New(info.Env(), motors[motorNumber].getOvercurrentDetectionThreshold(false));
     }
     if (paramName == "OCP_LVL"){
-        return Number::New(info.Env(), motors[motorNumber].getOvercurrentProtectionGain());
+        return Number::New(info.Env(), motors[motorNumber].getOvercurrentProtectionGain(false));
     }
     if (paramName == "SOURCE"){
-        return Number::New(info.Env(), motors[motorNumber].getGateSourceCurrent());
+        return Number::New(info.Env(), motors[motorNumber].getGateSourceCurrent(false));
     }
     if (paramName == "SINK"){
-        return Number::New(info.Env(), motors[motorNumber].getGateSinkCurrent());
+        return Number::New(info.Env(), motors[motorNumber].getGateSinkCurrent(false));
     }
     if (paramName == "COMP_HYS"){
-        return Number::New(info.Env(), motors[motorNumber].getIdleModeHysteresisVoltage());
+        return Number::New(info.Env(), motors[motorNumber].getIdleModeHysteresisVoltage(false));
     }
     if (paramName == "SPD"){
-        return Number::New(info.Env(), motors[motorNumber].getSpeedSetting());
+        return Number::New(info.Env(), motors[motorNumber].getSpeedSetting(false));
     }
     if (paramName == "HZ_CNT"){
-        return Number::New(info.Env(), motors[motorNumber].getRPM());
+        return Number::New(info.Env(), motors[motorNumber].getRPM(false));
     }
 // "HZ_CNT",           // 67
 // "NVM_WR",           // 68

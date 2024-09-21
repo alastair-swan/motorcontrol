@@ -364,22 +364,22 @@ class TC78B011FTG{
 
         /// @brief Gets the charge pump error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the CP_LOW register. returns a negative number on error.
-        int getChargePumpErrorState();
+        int getChargePumpErrorState(bool fromChip);
         /// @brief Gets the temperature error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the TSD register. returns a negative number on error.
-        int getTemperatureErrorState();
+        int getTemperatureErrorState(bool fromChip);
         /// @brief Gets the current error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ISD register. returns a negative number on error.
-        int getCurrentErrorState();
+        int getCurrentErrorState(bool fromChip);
         /// @brief Gets the overspeed error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the OV_SPD register. returns a negative number on error.
-        int getOverspeedErrorState();
+        int getOverspeedErrorState(bool fromChip);
         /// @brief Gets the underspeed error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the UD_SPD register. returns a negative number on error.
-        int getUnderspeedErrorState();
+        int getUnderspeedErrorState(bool fromChip);
         /// @brief Gets the startup error state, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ST_FAIL register. returns a negative number on error.
-        int getStartupErrorState();
+        int getStartupErrorState(bool fromChip);
 
         /// @brief Sets the data stored in the USERID register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param UID 8 bit value to be stored. The chip does not use this register for anything
@@ -387,7 +387,7 @@ class TC78B011FTG{
         int setUserID(int UID);
         /// @brief Gets the UserID, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the USERID register. returns a negative number on error.
-        int getUserID();
+        int getUserID(bool fromChip);
 
 
         /// @brief Sets the NOSTOP behavior, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
@@ -396,7 +396,7 @@ class TC78B011FTG{
         int setNoStop(bool nostop);
         /// @brief Gets the NOSTOP behavior, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return returns the value stored in the NOSTOP register. returns a negative number on error
-        int getNoStop();
+        int getNoStop(bool fromChip);
 
         /// @brief Sets the STOPDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param stopduty only values in the range 0-127 are valid. this value sets the PWM duty cycle at which the motor stops when using PWM control, it is calculated as STOPDUTY × 2 / 512 to produce a value in the range of 0 to 49.6%
@@ -404,7 +404,7 @@ class TC78B011FTG{
         int setStopDuty(int stopduty);
         /// @brief Gets the STOPDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return returns the value stored in the STOPDUTY register. returns a negative number on error
-        int getStopDuty();
+        int getStopDuty(bool fromChip);
 
         /// @brief Sets the STARTDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param startduty only values in the range 0-255 are valid. this value sets the PWM duty cycle at which the motor starts when using PWM control, it is calculated as STOPDUTY / 512 to produce a value in the range of 0 to 49.8%
@@ -412,7 +412,7 @@ class TC78B011FTG{
         int setStartDuty(int startduty);
         /// @brief Gets the STARTDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return returns the value stored in the STARTDUTY register. returns a negative number on error
-        int getStartDuty();
+        int getStartDuty(bool fromChip);
 
         /// @brief Sets the CHANGEDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param changeduty only values in the range 0-255 are valid. this value sets the PWM duty cycle at which the motor transitions from the slope defined in SPEEDSLOP to the slope defined in SPEEDSLOPE2 when using PWM control, it is calculated as CHANGEDUTY × 2 / 512 to produce a value in the range of 0.4 to 99.6%. This value should be between STARTDUTY and MAXDUTY when used and should be 0 when not used.
@@ -420,7 +420,7 @@ class TC78B011FTG{
         int setChangeDuty(int changeduty);
         /// @brief Gets the CHANGEDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the CHANGEDUTY reglister. returns a negative number on error
-        int getChangeDuty();
+        int getChangeDuty(bool fromChip);
 
         /// @brief Sets the MAXDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param maxduty only values in the range 0-255 are valid. this value sets the PWM duty cycle at which the motor runs at full speed when using PWM control, it is calculated as (MAXDUTY + 257) / 512 to produce a value in the range of 50.2 to 100%
@@ -428,7 +428,7 @@ class TC78B011FTG{
         int setMaxDuty(int maxduty);
         /// @brief Gets the MAXDUTY register, see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the MAXDUTY register. returns a negative number on error
-        int getMaxDuty();
+        int getMaxDuty(bool fromChip);
 
         /// @brief Sets the STARTRPM register (6[7:0]7[7:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param startRPM only values in the range 0-4095 are valid. This is the speed at which the motor will spin when the Speed input duty cycle is lowered below STARTDUTY but above STOPDUTY
@@ -436,7 +436,7 @@ class TC78B011FTG{
         int setStartRPM(int startRPM);
         /// @brief Gets the STARTRPM register (6[7:0]7[7:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the STARTRPM register. returns a negative number on error
-        int getStartRPM();
+        int getStartRPM(bool fromChip);
 
         /// @brief Sets the MAXDUTYHYS register (7[3:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param hysteresis only values in the range 0-15 are valid. This value controls how the motor switches between open and closed loop control.
@@ -444,7 +444,7 @@ class TC78B011FTG{
         int setMaxDutyHysteresis(int hysteresis);
         /// @brief Gets the MAXDUTYHYS register (7[3:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the MAXDUTYHYS register. returns a negative number on error
-        int getMaxDutyHysteresis();
+        int getMaxDutyHysteresis(bool fromChip);
 
         /// @brief Sets the SPEEDSLOP register (8[7:0]9[7:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param speedslope only values in the range 0-16383 are valid. When changduty is not used: 64 * (Max RPM - Start RPM) / (MAXDUTY – STARTDUTY + 257). When changeduty is used: 64 * (ChangeDutyRPM – StartRPM) / (CHANGEDUTY * 2 – STARTDUTY)
@@ -452,7 +452,7 @@ class TC78B011FTG{
         int setSpeedSlope(int speedslope);
         /// @brief Gets the SPEEDSLOP register (8[7:0]9[7:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SPEEDSLOP register. returns a negative number on error
-        int getSpeedSlope();
+        int getSpeedSlope(bool fromChip);
         
         /// @brief Sets the MAXOPEN register (9[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param maxopen Works in conjunction with NOSTOP and MAXOFF to control how target speed is affected by SPD Duty.
@@ -460,7 +460,7 @@ class TC78B011FTG{
         int setMaxOpen(bool maxopen);
         /// @brief Gets the MAXOPEN register (9[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the MAXOPEN register. returns a negative number on error
-        int getMaxOpen();
+        int getMaxOpen(bool fromChip);
         
         /// @brief Sets the MAXOFF register (9[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param maxoff Works in conjunction with NOSTOP and MAXOPEN to control how target speed is affected by SDP Duty
@@ -468,7 +468,7 @@ class TC78B011FTG{
         int setMaxOff(bool maxoff);
         /// @brief Gets the MAXOFF register (9[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the MAXOFF register. returns a negative number on error
-        int getMaxOff();
+        int getMaxOff(bool fromChip);
         
         /// @brief Sets the SPEEDSLOP2 register (10[7:0]11[7:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param speedslope2 only values in the range 0-16383 are valid. Only used in conjunction with changeduty: 1024 * (Max output Duty * 512 - Output duty at Change Duty) / (MAXDUTY - CHANGEDUTY * 2 + 257) 
@@ -476,7 +476,7 @@ class TC78B011FTG{
         int setSpeedSlope2(int speedslope2);
         /// @brief Gets the SPEEDSLOP2 register (10[7:0]11[7:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SPEEDSLOP2 register. returns a negative number on error
-        int getSpeedSlope2();
+        int getSpeedSlope2(bool fromChip);
         
         /// @brief Sets the VCP_MASK register (11[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param VCP enables or disables charge pump low voltage detection
@@ -484,7 +484,7 @@ class TC78B011FTG{
         int setChargePumpVCP(bool VCP);
         /// @brief Gets the VCP_MASK register (11[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the VCP_MASK register. returns a negative number on error
-        int getChargePumpVCP();
+        int getChargePumpVCP(bool fromChip);
         
         /// @brief Sets the OPENLOOP register (11[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param openloop true: openloop control, false: closedloop control.
@@ -492,7 +492,7 @@ class TC78B011FTG{
         int setOpenLoop(bool openLoop);
         /// @brief Gets the OPENLOOP register (11[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the OPENLOOP register. returns a negative number on error
-        int getOpenLoop();
+        int getOpenLoop(bool fromChip);
         
         /// @brief Sets the KIX, KI, KPX and KP registers (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param KIX false: KI * 1, true: KI * 8
@@ -503,16 +503,16 @@ class TC78B011FTG{
         int setPID(bool KIX, int KI, bool KPX, int KP);
         /// @brief Gets the KIX register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the KIX register. returns a negative number on error
-        int getKIX();
+        int getKIX(bool fromChip);
         /// @brief Gets the KI register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the KI register. returns a negative number on error
-        int getKI();
+        int getKI(bool fromChip);
         /// @brief Gets the KPX register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the KPX register. returns a negative number on error
-        int getKPX();
+        int getKPX(bool fromChip);
         /// @brief Gets the KP register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the KP register. returns a negative number on error
-        int getKP();
+        int getKP(bool fromChip);
         /// @brief Sets the KIX register (12[7], 12[6:0], 13[7], 13[6:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param KIX false: KI * 1, true: KI * 8
         /// @return Returns the value stored in the KIX register. returns a negative number on error
@@ -536,7 +536,7 @@ class TC78B011FTG{
         int setStandbyMode(bool standbymode);
         /// @brief Gets the STBY_MODE register (14[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the STBY_MODE register. returns a negative number on error
-        int getStandbyMode();
+        int getStandbyMode(bool fromChip);
 
         /// @brief Sets the DIR register (14[6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param dirMode controls the polarity of the CWCCW pin.
@@ -544,7 +544,7 @@ class TC78B011FTG{
         int setDIRMode(bool dirMode);
         /// @brief Gets the DIR register (14[6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the DIR register. returns a negative number on error
-        int getDIRMode();
+        int getDIRMode(bool fromChip);
 
         /// @brief Sets the POLEPAIR register (14[5:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param polesMode sets the number of pole pairs used for calculating motor RPM. Valid only in the range 0-7. 
@@ -552,7 +552,7 @@ class TC78B011FTG{
         int setPoles(int polesMode);
         /// @brief Gets the POLEPAIR register (14[5:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the POLEPAIR register. returns a negative number on error
-        int getPoles();
+        int getPoles(bool fromChip);
 
         /// @brief Sets the MAXSPEED register (14[2:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param polesMode sets the max speed of the motor. 0: 4096RPM, 1: 8192RPM, 2: 16384RPM, 3: 32768RPM. Other values are invalid 
@@ -560,7 +560,7 @@ class TC78B011FTG{
         int setMaxSpeed(int maxSpeedMode);
         /// @brief Gets the MAXSPEED register (14[2:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the MAXSPEED register. returns a negative number on error
-        int getMaxSpeed();
+        int getMaxSpeed(bool fromChip);
 
         /// @brief Sets the FG_ON register (14[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param outputMode controls if the FG pin continues to output when the motor is stopped. 
@@ -568,7 +568,7 @@ class TC78B011FTG{
         int setSpeedOutputMode(bool outputMode);
         /// @brief Gets the FG_ON register (14[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the FG_ON register. returns a negative number on error
-        int getSpeedOutputMode();
+        int getSpeedOutputMode(bool fromChip);
 
         /// @brief Sets the TSPSEL register (15[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param mode sets the control mode when the SEL pin is low. true: PWM control, false: Analog Voltage Control
@@ -576,7 +576,7 @@ class TC78B011FTG{
         int setSpeedControlMode(bool mode);
         /// @brief Gets the TSPSEL register (15[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the TSPSEL register. returns a negative number on error
-        int getSpeedControlMode();
+        int getSpeedControlMode(bool fromChip);
 
         /// @brief Sets the SPDINV register (15[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param inverted controls the polarity of the speed input when SEL is low. true: SPD is inverted, false: SPD is normal
@@ -584,7 +584,7 @@ class TC78B011FTG{
         int setSpeedInversion(bool inverted);
         /// @brief Gets the SPDINV register (15[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SPDINV register. returns a negative number on error
-        int getSpeedInversion();
+        int getSpeedInversion(bool fromChip);
 
         /// @brief Sets the LATCH register (15[2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param autorecovery controls how the chip recovers after an error. false: autorecover from errors, true: latch is fault state
@@ -592,7 +592,7 @@ class TC78B011FTG{
         int setAutoRecoveryMode(bool autorecovery);
         /// @brief Gets the LATCH register (15[2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the LATCH register. returns a negative number on error
-        int getAutoRecoveryMode();
+        int getAutoRecoveryMode(bool fromChip);
 
         /// @brief Sets the OCPMASK register (15[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param filter sets the digital filtering for Output Current Protection (OCP) and Overcurrent Detection (ISD). 0: no OCP filtering, 83ns ISD filtering, 1: 500ns OCP filtering, 583ns ISD filtering, 2: 666ns OCP filtering, 750ns ISD filtering, 3: 750ns OCP filtering, 833ns ISD filtering
@@ -600,7 +600,7 @@ class TC78B011FTG{
         int setDigitalFiltering(int filter);
         /// @brief Gets the OCPMASK register (15[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the OCPMASK register. returns a negative number on error
-        int getDigitalFiltering();
+        int getDigitalFiltering(bool fromChip);
 
         /// @brief Sets the LOCKDIS register (16[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param protectionDisable controls if the motor will go into an error state if it fails to transition out of forced comutations within 4 rotations. true: error mode is inhibited, false: motor is allowed to go into error mode
@@ -608,7 +608,7 @@ class TC78B011FTG{
         int setForcedComutationProtection(bool protectionDisable);
         /// @brief Gets the LOCKDIS register (16[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the LOCKDIS register. returns a negative number on error
-        int getForcedComutationProtection();
+        int getForcedComutationProtection(bool fromChip);
 
         /// @brief Sets the DUTYCHGLIMIT register (16[6:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param dutyChange sets how quickly the motor will adjust actual duty cycle to match desired duty cycle. When in open loop control 0 disables the limits. In closed loop control the 0-100% time in seconds is as follows: 0: 0.17, 1: 5.53, 2: 3.69, 3: 2.76, 4: 1.84, 5: 1.11, 6: 0.55, 7: 0.20
@@ -616,7 +616,7 @@ class TC78B011FTG{
         int setDutyChangeLimit(int dutyChange);
         /// @brief Gets the DUTYCHGLIMIT register (16[6:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the DUTYCHGLIMIT register. returns a negative number on error
-        int getDutyChangeLimit();
+        int getDutyChangeLimit(bool fromChip);
         
         /// @brief Sets the STARTCURRENT register (16[3:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param currentlimit sets the current limit that is applied during startup. Limit is 100% - (12.5% * currentlimit). Valid in the range of 0-7.
@@ -624,7 +624,7 @@ class TC78B011FTG{
         int setStartCurrentLimit(int currentlimit);   // register 16[3:1]
         /// @brief Gets the STARTCURRENT register (16[3:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the STARTCURRENT register. returns a negative number on error
-        int getStartCurrentLimit();   // register 16[3:1]
+        int getStartCurrentLimit(bool fromChip);   // register 16[3:1]
 
         /// @brief Sets the OCPDIS register (16[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param OCPDisable true disables OCP protection
@@ -632,7 +632,7 @@ class TC78B011FTG{
         int setOCPDisable(bool OCPDisable);
         /// @brief Gets the OCPDIS register (16[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the OCPDIS register. returns a negative number on error
-        int getOCPDisable();
+        int getOCPDisable(bool fromChip);
 
         /// @brief Sets the SS_ADD_SEL register (17[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param ssRange Valid in the range 0-3. 
@@ -640,7 +640,7 @@ class TC78B011FTG{
         int setSoftStartRange(int ssRange);
         /// @brief Gets the SS_ADD_SEL register (17[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SS_ADD_SEL register. returns a negative number on error
-        int getSoftStartRange();
+        int getSoftStartRange(bool fromChip);
 
         /// @brief Sets the SS_UP_SEL register (17[5:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param ssStepSize Valid in the range 0-3. 0: 1% steps, 1: 2% steps, 2: 5% steps, 3: 10% steps
@@ -648,7 +648,7 @@ class TC78B011FTG{
         int setSoftStartStepSize(int ssStepSize);
         /// @brief Gets the SS_ADD_SEL register (17[5:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SS_UP_SEL register. returns a negative number on error
-        int getSoftStartStepSize();
+        int getSoftStartStepSize(bool fromChip);
 
         /// @brief Sets the SS_DUTYCHGLIMIT register (17[3:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param dutyChange sets how quickly the motor will adjust actual duty cycle to match desired duty cycle during SoftStart. The 0-100% time in seconds is as follows: 0: 0.17, 1: 5.53, 2: 3.69, 3: 2.76, 4: 1.84, 5: 1.11, 6: 0.55, 7: 0.20
@@ -656,7 +656,7 @@ class TC78B011FTG{
         int setSoftStartDutyChangeLimit(int dutyChange);
         /// @brief Gets the SS_DUTYCHGLIMIT register (17[3:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SS_DUTYCHGLIMIT register. returns a negative number on error
-        int getSoftStartDutyChangeLimit();
+        int getSoftStartDutyChangeLimit(bool fromChip);
 
         /// @brief Sets the DUTY_UP_TIME register (17[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param dutyTimeMode true: 10.8ms, false: 2.7ms
@@ -664,7 +664,7 @@ class TC78B011FTG{
         int setDutyUpTime(bool dutyTimeMode);
         /// @brief Gets the DUTY_UP_TIME register (17[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the DUTY_UP_TIME register. returns a negative number on error
-        int getDutyUpTime();
+        int getDutyUpTime(bool fromChip);
         
         /// @brief Sets the RPMLIMIT register (18[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param RPMLimit sets the limit for RPM change. 0: no limit, 1: 512RPM, 2: 2200RPM, 3: 3800RPM, 4: 5400RPM, 5: 7000RPM, 6: 8600RPM, 7: 10240RPM.
@@ -672,7 +672,7 @@ class TC78B011FTG{
         int setRPMChangeLimit(int RPMLimit);
         /// @brief Gets the RPMLIMIT register (18[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the RPMLIMIT register. returns a negative number on error
-        int getRPMChangeLimit();
+        int getRPMChangeLimit(bool fromChip);
         
         /// @brief Sets the BRK_INV register (18[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param brakeInverted true: brake pin is inverted, false: brake pin opperates normally.
@@ -680,7 +680,7 @@ class TC78B011FTG{
         int setBrakeInverted(bool brakeInverted);
         /// @brief Gets the BRK_INV register (18[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the BRK_INV register. returns a negative number on error
-        int getBrakeInverted();
+        int getBrakeInverted(bool fromChip);
 
         /// @brief Sets the ISD_MASK register (18[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param OCPDisabled true: inhibit detection of overcurrent detection, false: overcurrent detection opperates normally.
@@ -688,7 +688,7 @@ class TC78B011FTG{
         int setOvercurrentDetectionDisabled(bool OCPDisabled);
         /// @brief Gets the ISD_MASK register (18[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ISD_MASK register. returns a negative number on error
-        int getOvercurrentDetectionDisabled();
+        int getOvercurrentDetectionDisabled(bool fromChip);
 
         /// @brief Sets the RS_SEL register (18[2:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param filterMode sets the analog filtering for the RSA pin. 0: no filtering, 1: 200KHz, 2: 100KHz, 3: 50KHz
@@ -696,7 +696,7 @@ class TC78B011FTG{
         int setRSAPinFiltering(int filterMode);
         /// @brief Gets the RS_SEL register (18[2:1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the RS_SEL register. returns a negative number on error
-        int getRSAPinFiltering();
+        int getRSAPinFiltering(bool fromChip);
 
         /// @brief Sets the ANTITHROUGH register (18[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param autoDeadTimeDisabled true: disables auto dead time control. false, auto dead time control enabled.
@@ -704,7 +704,7 @@ class TC78B011FTG{
         int setAutoDeadTimeControlDisabled(bool autoDeadTimeDisabled);
         /// @brief Gets the ANTITHROUGH register (18[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ANTITHROUGH register. returns a negative number on error
-        int getAutoDeadTimeControlDisabled();
+        int getAutoDeadTimeControlDisabled(bool fromChip);
 
         /// @brief Sets the WAIT_TIME register (19[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param time time in seconds that braking should be applied during the brake sequence.
@@ -712,7 +712,7 @@ class TC78B011FTG{
         int setBrakeTime(int time);
         /// @brief Gets the WAIT_TIME register (19[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the WAIT_TIME register. returns a negative number on error
-        int getBrakeTime();
+        int getBrakeTime(bool fromChip);
 
         /// @brief Sets the WAIT_MODE register (19[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param mode true: short phases for braking, false: all phases Hi-Z for braking.
@@ -720,7 +720,7 @@ class TC78B011FTG{
         int setBrakeMode(bool mode);
         /// @brief Gets the WAIT_MODE register (19[4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the WAIT_MODE register. returns a negative number on error
-        int getBrakeMode();
+        int getBrakeMode(bool fromChip);
 
         /// @brief Sets the WAIT_CON register (19[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param mode false: go into idle mode after braking, true: continue braking until speed command is set.
@@ -728,7 +728,7 @@ class TC78B011FTG{
         int setBrakeReleaseMode(bool mode);
         /// @brief Gets the WAIT_CON register (19[3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the WAIT_CON register. returns a negative number on error
-        int getBrakeReleaseMode();
+        int getBrakeReleaseMode(bool fromChip);
 
         /// @brief Sets the LOCK_BRK register (19[2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param mode false: Hi-Z braking, true: Short Braking.
@@ -736,7 +736,7 @@ class TC78B011FTG{
         int setErrorBrakingMode(bool mode);
         /// @brief Gets the LOCK_BRK register (19[2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the LOCK_BRK register. returns a negative number on error
-        int getErrorBrakingMode();
+        int getErrorBrakingMode(bool fromChip);
 
         /// @brief Sets the ALERT_INV register (19[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param inverted false: alert is active high, true: alert is active low
@@ -744,7 +744,7 @@ class TC78B011FTG{
         int setAlertInverted(bool inverted);
         /// @brief Gets the ALERT_INV register (19[1]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ALERT_INV register. returns a negative number on error
-        int getAlertInverted();
+        int getAlertInverted(bool fromChip);
 
         /// @brief Sets the TSD_MASK register (19[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param disabled true: inhibit thermal shutdown, false: thermal shutdown opperates normally.
@@ -752,7 +752,7 @@ class TC78B011FTG{
         int setThermalShutdownDisable(bool disabled);
         /// @brief Gets the TSD_MASK register (19[0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the TSD_MASK register. returns a negative number on error
-        int getThermalShutdownDisable();
+        int getThermalShutdownDisable(bool fromChip);
 
         /// @brief Sets the TRE register (20[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param time time to wait prior to attempting autorecovery from fault. 0: no wait, 1: 0.5 seconds, 2: 1 second, 3: 1.5 seconds, 4: 2 seconds, 5: 4 seconds, 6: 7 seconds, 7: 10 seconds.
@@ -760,7 +760,7 @@ class TC78B011FTG{
         int setAutoRestartWaitTime(int time);
         /// @brief Gets the TRE register (20[7:5]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the TRE register. returns a negative number on error
-        int getAutoRestartWaitTime();
+        int getAutoRestartWaitTime(bool fromChip);
 
         /// @brief Sets the PRE_TIP register (20[4:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param time 1st DC Excitation time. 0: 0 seconds, 1: 0.2 seconds, 2: 0.5 seconds, 3: 1 seconds.
@@ -768,7 +768,7 @@ class TC78B011FTG{
         int setFirstDCExcitationTime(int time);
         /// @brief Gets the PRE_TIP register (20[4:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the PRE_TIP register. returns a negative number on error
-        int getFirstDCExcitationTime();
+        int getFirstDCExcitationTime(bool fromChip);
 
         /// @brief Sets the TIP register (20[2:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param time 2nd DC Excitation time. 0: 0.1 seconds, 1: 0.2 seconds, 2: 0.4 seconds, 3: 0.6 seconds, 4: 0.8 seconds, 5: 1 second, 6: 1.5 seconds, 7: 2 seconds
@@ -776,7 +776,7 @@ class TC78B011FTG{
         int setSecondDCExcitationTime(int time);
         /// @brief Gets the TIP register (20[2:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the TIP register. returns a negative number on error
-        int getSecondDCExcitationTime();
+        int getSecondDCExcitationTime(bool fromChip);
 
         /// @brief Sets the LA register (21[7:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param angleSetting Valid in range 0-15. Sets the lead angle based on Table 8.22 in the datasheet.
@@ -784,7 +784,7 @@ class TC78B011FTG{
         int setLeadAngle(int angleSetting);
         /// @brief Gets the LA register (21[7:4]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the LA register. returns a negative number on error
-        int getLeadAngle();
+        int getLeadAngle(bool fromChip);
 
         /// @brief Sets the FMAX register (21[3:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param maxRPMMode sets the speed at which the motor goes into an error state. 0: 0.75kHz, 1: 1.5kHz, 2: 3.0kHz, 3: no limit.
@@ -792,7 +792,7 @@ class TC78B011FTG{
         int setMaxRPM(int maxRPMMode);
         /// @brief Gets the FMAX register (21[3:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the FMAX register. returns a negative number on error
-        int getMaxRPM();
+        int getMaxRPM(bool fromChip);
 
         /// @brief Sets the FST register (21[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param comutationMode sets the electrical angle frequency during forced comutation. 0: 1.6Hz, 1: 3.2Hz, 2: 6.4Hz, 3: 12.8Hz
@@ -800,7 +800,7 @@ class TC78B011FTG{
         int setForcedComutationFrequency(int comutationMode);
         /// @brief Gets the FST register (21[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the FST register. returns a negative number on error
-        int getForcedComutationFrequency();
+        int getForcedComutationFrequency(bool fromChip);
 
         /// @brief Sets the FPWM register (22[4:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param frequencyMode Valid in the range 0-7. Sets the output PWM frequency based on table 8.26 from the datasheet.
@@ -808,7 +808,7 @@ class TC78B011FTG{
         int setOutputPWMFrequencyMode(int frequencyMode);   
         /// @brief Gets the FPWM register (22[4:2]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the FPWM register. returns a negative number on error
-        int getOutputPWMFrequencyMode();   
+        int getOutputPWMFrequencyMode(bool fromChip);   
 
         /// @brief Sets the DEADTIME register (22[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param frequencyMode Valid in the range 0-3. Sets the phase deadtime when autodeadtime is disabled. 0: 250ns, 1: 500ns, 2: 1000ns, 3: 1500ns.
@@ -816,7 +816,7 @@ class TC78B011FTG{
         int setDeadtime(int deadtimeMode);
         /// @brief Gets the DEADTIME register (22[1:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the DEADTIME register. returns a negative number on error
-        int getDeadtime();
+        int getDeadtime(bool fromChip);
 
         /// @brief Sets the ISD_LVL register (23[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param thresholdMode true: 0.5V, false: 1.0V.
@@ -824,7 +824,7 @@ class TC78B011FTG{
         int setOvercurrentDetectionThreshold(bool thresholdMode);
         /// @brief Gets the ISD_LVL register (23[7]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the ISD_LVL register. returns a negative number on error
-        int getOvercurrentDetectionThreshold();
+        int getOvercurrentDetectionThreshold(bool fromChip);
 
         /// @brief Sets the OCP_LVL register (23[6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param OCPGain true: 20x, false: 10x.
@@ -832,7 +832,7 @@ class TC78B011FTG{
         int setOvercurrentProtectionGain(bool OCPGain);
         /// @brief Gets the OCP_LVL register (23[6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the OCP_LVL register. returns a negative number on error
-        int getOvercurrentProtectionGain();
+        int getOvercurrentProtectionGain(bool fromChip);
 
         /// @brief Sets the SOURCE register (23[5:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param currentMode Valid in the range 0-7. 0: 10mA, 1: 13.9mA, 2: 19.3mA, 3: 26.8mA, 4: 37.3mA, 5: 51.8mA, 6: 72mA, 7: 100mA.
@@ -840,7 +840,7 @@ class TC78B011FTG{
         int setGateSourceCurrent(int currentMode);
         /// @brief Gets the SOURCE register (23[5:3]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SOURCE register. returns a negative number on error
-        int getGateSourceCurrent();
+        int getGateSourceCurrent(bool fromChip);
 
         /// @brief Sets the SINK register (23[2:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param currentMode Valid in the range 0-7. 0: 20mA, 1: 27.8mA, 2: 38.6mA, 3: 53.7mA, 4: 74.6mA, 5: 103.6mA, 6: 143.9mA, 7: 200mA.
@@ -848,7 +848,7 @@ class TC78B011FTG{
         int setGateSinkCurrent(int currentMode);        
         /// @brief Gets the SINK register (23[2:0]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SINK register. returns a negative number on error
-        int getGateSinkCurrent();        
+        int getGateSinkCurrent(bool fromChip);        
 
         /// @brief Sets the SINK register (24[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param currentMode Valid in the range 0-3. 0: no hysteresis, 1: ±100mV, 2: ±200mV, 3: ±300mV
@@ -856,7 +856,7 @@ class TC78B011FTG{
         int setIdleModeHysteresisVoltage(int hysteresisMode);
         /// @brief Gets the SINK register (24[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SINK register. returns a negative number on error
-        int getIdleModeHysteresisVoltage();
+        int getIdleModeHysteresisVoltage(bool fromChip);
 
         /// @brief Sets the SPD registers (27[7:0]28[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @param speed Valid in the range 0-1023. Values from 512-1023 are full speed.
@@ -864,11 +864,11 @@ class TC78B011FTG{
         int setSpeed(int speed);
         /// @brief Gets the SPD registers (27[7:0]28[7:6]), see https://toshiba.semicon-storage.com/info/TC78B011FTG_datasheet_en_20220810.pdf?did=140801&prodName=TC78B011FTG
         /// @return Returns the value stored in the SPD registers. returns a negative number on error
-        int getSpeedSetting();
+        int getSpeedSetting(bool fromChip);
 
         /// @brief Gets the rotation frequency
         /// @return Returns the value stored in the HZ_CNT register. returns a negative number on error.
-        int getRPM();
+        int getRPM(bool fromChip);
 
         /// @brief Writes the contents of the registers to the NVM. Note that the NVM is only rated for 10 write/erase cycles.
         /// @return returns a negative number on error
