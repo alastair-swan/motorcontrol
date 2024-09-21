@@ -179,6 +179,14 @@ async function MotorControlSettings(props: any){
                                         </Box>
                                     </Box>
                                 </Grid2>
+                                <Grid2 sx={{ width: '100%' }}>
+                                    <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                                        Motor Speed Change Limit
+                                        <Box sx={{ paddingLeft: 1, paddingRight: 1, paddingTop: 1, paddingBottom: 0}}>
+                                            <Client.ClientSpeedChangeLimitSlider motorNumber = {props.motorNumber} initialState = {await GetParam(props.motorNumber, 'DUTYCHGLIMIT')}/>
+                                        </Box>
+                                    </Box>
+                                </Grid2>
                             </Grid2>
                         </Box>
                     </Grid2>

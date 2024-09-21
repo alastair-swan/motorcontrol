@@ -462,7 +462,7 @@ export function ClientDigitalFilteringSlider (props: any){
             min={0} 
             max={3}
             step={1}
-            scale={(value: number) => { return value * 0.08 }}
+            scale={(value: number) => { return value }}
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
@@ -490,6 +490,30 @@ export function ClientForceForcedComutationSwitch (props: any){
     )
 }
 
+// DUTYCHGLIMIT
+export function ClientSpeedChangeLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            scale={(value: number) => { return (value + 1) % 8 }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'DUTYCHGLIMIT', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const speedList = ['0.17', '0.20', '0.55', '1.11', '1.84', '2.76', '3.69', '5.53']
+                return speedList[value]
+            }}
+        /> 
+    )
+}
 
 // SPD
 export function ClientMotorSpeedSlider (props: any){ 
