@@ -814,6 +814,19 @@ export function ClientAlertPinPolaritySwitch (props: any){
     )
 }
 
+// TSD_MASK
+export function ClientThermalShutdownInhibitSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'TSD_MASK', checked)
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
