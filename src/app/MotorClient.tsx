@@ -851,6 +851,54 @@ export function RestartTimeSlider (props: any){
     )
 }
 
+// PreTIP
+export function FirstDCExcitationTimeSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'PRE_TIP', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const time = [0, 0.2, 0.5, 1]
+                return time[value] + " seconds"
+            }}
+        /> 
+    )
+}
+
+// TIP
+export function SecondDCExcitationTimeSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'TIP', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const time = [0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.5, 2]
+                return time[value] + " seconds"
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
