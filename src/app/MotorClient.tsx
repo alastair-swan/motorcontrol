@@ -639,7 +639,18 @@ export function ClientSoftStartSpeedChangeLimitSlider (props: any){
     )
 }
 
-
+// DUTY_UP_TIME
+export function ClientDutyUpTimeSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'DUTY_UP_TIME', checked)
+            }}
+        /> 
+    )
+}
 
 // OCP_LVL
 let VOC = 0.125
