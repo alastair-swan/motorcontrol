@@ -10,6 +10,6 @@ export async function UpdateParam(motorNumber: number, paramName: string, paramV
 
 export async function GetParam(motorNumber: number, paramName: string): Promise<number> {
     const result = native.getParam(motorNumber, paramName)
-    console.log('update: ' + paramName + ' with result: ' + result)
+    console.log('readback: ' + paramName + ' with result: ' + result)
     return result
 }
