@@ -526,7 +526,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
             return Number::New(info.Env(), -11); 
         }      
     }
-    if (paramName == "MAXPSEED"){
+    if (paramName == "MAXSPEED"){
         if (info[2].IsNumber()){
             return Number::New(info.Env(), motors[motorNumber].setMaxSpeed((uint8_t)(info[2].As<Number>().Int32Value())));
         }
