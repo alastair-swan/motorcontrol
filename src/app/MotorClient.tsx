@@ -920,7 +920,7 @@ export function LeadAngleSlider (props: any){
 }
 
 // FMAX
-export function MagneticRotationSpeedLimitSlider (props: any){
+export function ElectricalAngleMaxFrequencySlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -936,8 +936,89 @@ export function MagneticRotationSpeedLimitSlider (props: any){
                 }
             }}
             valueLabelFormat={(value: number) => {
-                const time = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
+                const frequency = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
+                return frequency[value]
+            }}
+        /> 
+    )
+}
+
+// FST
+export function ForcedComutationFrequencySlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'FST', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const frequency = ['1.6Hz', '3.2Hz', '6.4Hz', '12.8Hz']
+                return frequency[value]
+            }}
+        /> 
+    )
+}
+
+// FPWM
+export function OutputPWMSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={15}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'FPWM', newValue)
+                }
+            }}
+        /> 
+    )
+}
+
+// DEADTIME
+export function DeadtimeSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'DEADTIME', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const time = ['250ns', '500ns', '1000ns', '1500ns']
                 return time[value]
+            }}
+        /> 
+    )
+}
+
+// ISD_LVL
+export function OvercurrentDetectionThresholdSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'ISD_LVL', checked)
             }}
         /> 
     )
@@ -955,6 +1036,78 @@ export function CurrentSenseGainSwitch (props: any){
                 VOC = value ? 0.25 : 0.125
                 setValue(value)
                 UpdateParam(props.motorNumber, 'OCP_LVL', checked)
+            }}
+        /> 
+    )
+}
+
+// SOURCE
+export function GateSourceCurrentSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'SOURCE', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const frequency = [10, 13.9, 19.3, 26.8, 37.3, 51.8, 72, 100]
+                return frequency[value] + 'mA'
+            }}
+        /> 
+    )
+}
+
+// SINK
+export function GateSinkCurrentSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'SINK', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const current = [20, 27.8, 38.6, 53.7, 74.6, 103.6, 143.9, 200]
+                return current[value] + 'mA'
+            }}
+        /> 
+    )
+}
+
+// COMP_HYS
+export function PositionDetectionHysteresisSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'COMP_HYS', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const voltage = ['none', '100mV', '200mV', '300mV']
+                return voltage[value]
             }}
         /> 
     )
