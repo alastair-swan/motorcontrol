@@ -899,6 +899,50 @@ export function SecondDCExcitationTimeSlider (props: any){
     )
 }
 
+// LA
+export function LeadAngleSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={15}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'LA', newValue)
+                }
+            }}
+        /> 
+    )
+}
+
+// FMAX
+export function MagneticRotationSpeedLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'FMAX', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const time = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
+                return time[value]
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
