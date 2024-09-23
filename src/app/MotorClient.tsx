@@ -614,6 +614,30 @@ export function ClientSoftStartCurrentStepSizeSlider (props: any){
     )
 }
 
+// SS_DUTYCHGLIMIT
+export function ClientSoftStartSpeedChangeLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            scale={(value: number) => { return (value + 1) % 8 }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'SS_DUTYCHGLIMIT', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const speedList = ['0.17', '0.20', '0.55', '1.11', '1.84', '2.76', '3.69', '5.53']
+                return speedList[value]
+            }}
+        /> 
+    )
+}
 
 
 
