@@ -677,6 +677,19 @@ export function ClientRPMLimitSlider (props: any){
     )
 }
 
+// BRK_INV
+export function ClientBrakePolaritySwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'BRK_INV', checked)
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
