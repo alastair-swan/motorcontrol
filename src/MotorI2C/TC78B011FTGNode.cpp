@@ -97,7 +97,7 @@ Number motorRegisterGetter(const CallbackInfo &info){
     if (paramName == "POLEPAIR"){
         return Number::New(info.Env(), motors[motorNumber].getPoles(false));
     }
-    if (paramName == "MAXPSEED"){
+    if (paramName == "MAXSPEED"){
         return Number::New(info.Env(), motors[motorNumber].getMaxSpeed(false));
     }
     if (paramName == "FG_ON"){
