@@ -677,7 +677,7 @@ int TC78B011FTG::getPoles(bool fromChip){
 
 int TC78B011FTG::setMaxSpeed(int maxSpeedMode)
 {
-    if ((maxSpeedMode & (MAXSPEED_MASK >> MAXSPEED_MASK)) != maxSpeedMode){
+    if ((maxSpeedMode & (MAXSPEED_MASK >> MAXSPEED_OFFSET)) != maxSpeedMode){
         return -10;
     }
     MAXSPEED = maxSpeedMode;

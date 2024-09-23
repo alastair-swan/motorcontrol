@@ -53,9 +53,9 @@ export function NoStopSwitch ({ motorNumber, initialState, itembgColor, itembgHo
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)        
+                        setValue(checked)        
                         UpdateParam(motorNumber, 'NOSTOP', checked)
                     }}
                 /> 
@@ -298,11 +298,11 @@ export function MaxOpenSwitch ({ motorNumber, initialState, itembgColor, itembgH
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)        
+                        setValue(checked)        
                         UpdateParam(motorNumber, 'MAXOPEN', checked)
                     }}
                 /> 
@@ -323,11 +323,11 @@ export function MaxOffSwitch ({ motorNumber, initialState, itembgColor, itembgHo
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'MAXOFF', checked)
                     }}
                 />
@@ -386,9 +386,9 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, initialState, it
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'VCP_MASK', checked)
                     }}
                 /> 
@@ -411,9 +411,9 @@ export function OpenLoopSwitch ({ motorNumber, initialState, itembgColor, itembg
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'OPENLOOP', checked)
                     }}
                 /> 
@@ -436,9 +436,9 @@ export function KIXSwitch ({ motorNumber, initialState, itembgColor, itembgHover
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
                 <Switch 
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'KIX', checked)
                     }}
                 />
@@ -495,9 +495,9 @@ export function KPXSwitch ({ motorNumber, initialState, itembgColor, itembgHover
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'KPX', checked)
                     }}
                 />
@@ -543,7 +543,7 @@ export function KPSlider ({ motorNumber, initialState, itembgColor, itembgHoverC
 
 // STBY_MODE
 export function StandbyModeSwitch ({ motorNumber, initialState, itembgColor, itembgHoverColor }: { motorNumber: number, initialState: boolean, itembgColor: string, itembgHoverColor: string }){
-    const [value, setValue] = React.useState<boolean>(initialState)
+    const [value, setValue] = React.useState<boolean>(!initialState)
     const switchText = () => {
         if (!value){
             return "Only Pin Controls Standby"
@@ -554,9 +554,9 @@ export function StandbyModeSwitch ({ motorNumber, initialState, itembgColor, ite
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'STBY_MODE', checked)
                     }}
                 /> 
@@ -573,9 +573,9 @@ export function DirectionSwitch ({ motorNumber, initialState, itembgColor, itemb
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'DIR', checked)
                     }}
                 />
@@ -663,9 +663,9 @@ export function SpeedOutputModeSwitch ({ motorNumber, initialState, itembgColor,
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'FG_ON', checked)
                     }}
                 />
@@ -682,9 +682,9 @@ export function SpeedInputModeSwitch ({ motorNumber, initialState, itembgColor, 
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'TSPSEL', checked)
                     }}
                 />
@@ -701,9 +701,9 @@ export function SpeedInputInversionSwitch ({ motorNumber, initialState, itembgCo
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'SPDINV', checked)
                     }}
                 />
@@ -720,9 +720,9 @@ export function ErrorLatchSwitch ({ motorNumber, initialState, itembgColor, item
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'LATCH', checked)
                     }}
                 />
@@ -772,9 +772,9 @@ export function ForceForcedComutationSwitch ({ motorNumber, initialState, itembg
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'LOCKDIS', checked)
                     }}
                 /> 
@@ -858,9 +858,9 @@ export function OutputCurrentMonitoringSwitch ({ motorNumber, initialState, item
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'OCPDIS', checked)
                     }}
                 />
@@ -986,9 +986,9 @@ export function DutyUpTimeSwitch ({ motorNumber, initialState, itembgColor, item
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'DUTY_UP_TIME', checked)
                     }}
                 />
@@ -1037,10 +1037,9 @@ export function BrakePolaritySwitch ({ motorNumber, initialState, itembgColor, i
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    disabled
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'BRK_INV', checked)
                     }}
                 />
@@ -1057,9 +1056,9 @@ export function OverCurrentDetectionSwitch ({ motorNumber, initialState, itembgC
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'ISD_MASK', checked)
                     }}
                 />
@@ -1108,9 +1107,9 @@ export function AutodeadtimeSwitch ({ motorNumber, initialState, itembgColor, it
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'ANTITHROUGH', checked)
                     }}
                 /> 
@@ -1158,9 +1157,9 @@ export function BrakingModeSwitch ({ motorNumber, initialState, itembgColor, ite
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'WAIT_MODE', checked)
                     }}
                 />
@@ -1177,9 +1176,9 @@ export function PostBrakingActionSwitch ({ motorNumber, initialState, itembgColo
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'WAIT_CON', checked)
                     }}
                 /> 
@@ -1196,9 +1195,9 @@ export function ErrorBrakingModeSwitch ({ motorNumber, initialState, itembgColor
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'LOCK_BRK', checked)
                     }}
                 /> 
@@ -1215,9 +1214,9 @@ export function AlertPinPolaritySwitch ({ motorNumber, initialState, itembgColor
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'ALERTINV', checked)
                     }}
                 /> 
@@ -1234,9 +1233,9 @@ export function ThermalShutdownInhibitSwitch ({ motorNumber, initialState, itemb
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'TSD_MASK', checked)
                     }}
                 />
@@ -1501,9 +1500,9 @@ export function OvercurrentDetectionThresholdSwitch ({ motorNumber, initialState
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(!checked)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'ISD_LVL', checked)
                     }}
                 />
@@ -1523,10 +1522,10 @@ export function CurrentSenseGainSwitch ({ motorNumber, initialState, itembgColor
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={!value}
+                    checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                         VOC = value ? 0.25 : 0.125
-                        setValue(value)
+                        setValue(checked)
                         UpdateParam(motorNumber, 'OCP_LVL', checked)
                     }}
                 />
