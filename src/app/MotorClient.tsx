@@ -10,7 +10,7 @@ function asPercentage(value: number):string{
 }
 
 // NOSTOP
-export function ClientNoStopSwitch (props: any){
+export function NoStopSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -23,7 +23,7 @@ export function ClientNoStopSwitch (props: any){
 }
 
 // STOPDUTY
-export function ClientMotorOffSpeedSlider (props: any){
+export function MotorOffSpeedSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -45,7 +45,7 @@ export function ClientMotorOffSpeedSlider (props: any){
 }
 
 //STARTDUTY
-export function ClientMotorStartDutySlider (props: any){
+export function MotorStartDutySlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -67,7 +67,7 @@ export function ClientMotorStartDutySlider (props: any){
 }
 
 // CHANGEDUTY
-export function ClientMotorChangeDutySlider (props: any){
+export function MotorChangeDutySlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -96,7 +96,7 @@ export function ClientMotorChangeDutySlider (props: any){
 }
 
 // MAXDUTY
-export function ClientMotorMaxDutySlider (props: any){
+export function MotorMaxDutySlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -118,7 +118,7 @@ export function ClientMotorMaxDutySlider (props: any){
 }
 
 // STARTRPM
-export function ClientMotorStartRPMSlider (props: any){
+export function MotorStartRPMSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -137,7 +137,7 @@ export function ClientMotorStartRPMSlider (props: any){
     )
 }
 
-export function ClientMaxDutyHysteresisSlider (props: any){
+export function MaxDutyHysteresisSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -157,7 +157,7 @@ export function ClientMaxDutyHysteresisSlider (props: any){
 }
 
 // SPEEDSLOP
-export function ClientMotorSpeedSlopeSlider (props: any){
+export function MotorSpeedSlopeSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -181,7 +181,7 @@ export function ClientMotorSpeedSlopeSlider (props: any){
 }
 
 // MAXOPEN
-export function ClientMaxOpenSwitch (props: any){
+export function MaxOpenSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -194,7 +194,7 @@ export function ClientMaxOpenSwitch (props: any){
 }
 
 // MAXOFF
-export function ClientMaxOffSwitch (props: any){
+export function MaxOffSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -207,7 +207,7 @@ export function ClientMaxOffSwitch (props: any){
 }
 
 // SPEEDSLOP2
-export function ClientMotorSpeedSlope2Slider (props: any){
+export function MotorSpeedSlope2Slider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -231,7 +231,7 @@ export function ClientMotorSpeedSlope2Slider (props: any){
 }
 
 // VCP_MASK
-export function ClientChargePumpStateMonitoringSwitch (props: any){
+export function ChargePumpStateMonitoringSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -244,7 +244,7 @@ export function ClientChargePumpStateMonitoringSwitch (props: any){
 }
 
 // VCP_MASK
-export function ClientOpenLoopSwitch (props: any){
+export function OpenLoopSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -257,7 +257,7 @@ export function ClientOpenLoopSwitch (props: any){
 }
 
 // KIX
-export function ClientKIXSwitch (props: any){
+export function KIXSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -270,7 +270,7 @@ export function ClientKIXSwitch (props: any){
 }
 
 // KI
-export function ClientKISlider (props: any){
+export function KISlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
 
     return (
@@ -292,7 +292,7 @@ export function ClientKISlider (props: any){
 }
 
 // KPX
-export function ClientKPXSwitch (props: any){
+export function KPXSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -305,7 +305,7 @@ export function ClientKPXSwitch (props: any){
 }
 
 // KP
-export function ClientKPSlider (props: any){
+export function KPSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -326,7 +326,7 @@ export function ClientKPSlider (props: any){
 }
 
 // STBY_MODE
-export function ClientStandbyModeSwitch (props: any){
+export function StandbyModeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -339,7 +339,7 @@ export function ClientStandbyModeSwitch (props: any){
 }
 
 // DIR
-export function ClientDirectionSwitch (props: any){
+export function DirectionSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -352,7 +352,7 @@ export function ClientDirectionSwitch (props: any){
 }
 
 // POLEPAIR
-export function ClientPolesSlider (props: any){
+export function PolesSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -376,7 +376,7 @@ export function ClientPolesSlider (props: any){
 }
 
 // MAXSPEED
-export function ClientMaxSpeedSlider (props: any){
+export function MaxSpeedSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -401,7 +401,7 @@ export function ClientMaxSpeedSlider (props: any){
 }
 
 // FG_ON
-export function ClientSpeedOutputModeSwitch (props: any){
+export function SpeedOutputModeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -414,7 +414,7 @@ export function ClientSpeedOutputModeSwitch (props: any){
 }
 
 // TSPSEL
-export function ClientSpeedInputModeSwitch (props: any){
+export function SpeedInputModeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -427,7 +427,7 @@ export function ClientSpeedInputModeSwitch (props: any){
 }
 
 // SPDINV
-export function ClientSpeedInputInversionSwitch (props: any){
+export function SpeedInputInversionSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -440,7 +440,7 @@ export function ClientSpeedInputInversionSwitch (props: any){
 }
 
 // LATCH
-export function ClientErrorLatchSwitch (props: any){
+export function ErrorLatchSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Switch 
@@ -453,7 +453,7 @@ export function ClientErrorLatchSwitch (props: any){
 }
 
 // OCPMASK
-export function ClientDigitalFilteringSlider (props: any){
+export function DigitalFilteringSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -478,7 +478,7 @@ export function ClientDigitalFilteringSlider (props: any){
 }
 
 // LOCKDIS
-export function ClientForceForcedComutationSwitch (props: any){
+export function ForceForcedComutationSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -491,7 +491,7 @@ export function ClientForceForcedComutationSwitch (props: any){
 }
 
 // DUTYCHGLIMIT
-export function ClientSpeedChangeLimitSlider (props: any){
+export function SpeedChangeLimitSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -516,7 +516,7 @@ export function ClientSpeedChangeLimitSlider (props: any){
 }
 
 // STARTCURRENT
-export function ClientStartupCurrentLimitSlider (props: any){
+export function StartupCurrentLimitSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -542,7 +542,7 @@ export function ClientStartupCurrentLimitSlider (props: any){
 }
 
 // OCPDIS
-export function ClientOutputCurrentMonitoringSwitch (props: any){
+export function OutputCurrentMonitoringSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -555,7 +555,7 @@ export function ClientOutputCurrentMonitoringSwitch (props: any){
 }
 
 // SS_ADD_SEL
-export function ClientSoftStartCurrentLimitSlider (props: any){
+export function SoftStartCurrentLimitSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -585,7 +585,7 @@ export function ClientSoftStartCurrentLimitSlider (props: any){
 }
 
 // SS_UP_SEL
-export function ClientSoftStartCurrentStepSizeSlider (props: any){
+export function SoftStartCurrentStepSizeSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -615,7 +615,7 @@ export function ClientSoftStartCurrentStepSizeSlider (props: any){
 }
 
 // SS_DUTYCHGLIMIT
-export function ClientSoftStartSpeedChangeLimitSlider (props: any){
+export function SoftStartSpeedChangeLimitSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -640,7 +640,7 @@ export function ClientSoftStartSpeedChangeLimitSlider (props: any){
 }
 
 // DUTY_UP_TIME
-export function ClientDutyUpTimeSwitch (props: any){
+export function DutyUpTimeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -653,7 +653,7 @@ export function ClientDutyUpTimeSwitch (props: any){
 }
 
 // RPMLIMIT
-export function ClientRPMLimitSlider (props: any){
+export function RPMLimitSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -677,7 +677,7 @@ export function ClientRPMLimitSlider (props: any){
 }
 
 // BRK_INV
-export function ClientBrakePolaritySwitch (props: any){
+export function BrakePolaritySwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -690,7 +690,7 @@ export function ClientBrakePolaritySwitch (props: any){
 }
 
 // ISD_MASK
-export function ClientOverCurrentDetectionSwitch (props: any){
+export function OverCurrentDetectionSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -703,7 +703,7 @@ export function ClientOverCurrentDetectionSwitch (props: any){
 }
 
 // RS_SEL
-export function ClientCurrentSenseFilteringSlider (props: any){
+export function CurrentSenseFilteringSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -727,7 +727,7 @@ export function ClientCurrentSenseFilteringSlider (props: any){
 }
 
 // ANTITHROUGH
-export function ClientAutodeadtimeSwitch (props: any){
+export function AutodeadtimeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -740,7 +740,7 @@ export function ClientAutodeadtimeSwitch (props: any){
 }
 
 // WAIT_TIME
-export function ClientBrakeTimeSlider (props: any){
+export function BrakeTimeSlider (props: any){
     const [value, setValue] = React.useState<number>(props.initialState);
     return (
         <Slider 
@@ -763,7 +763,7 @@ export function ClientBrakeTimeSlider (props: any){
 }
 
 // WAIT_MODE
-export function ClientBrakingModeSwitch (props: any){
+export function BrakingModeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -776,7 +776,7 @@ export function ClientBrakingModeSwitch (props: any){
 }
 
 // WAIT_CON
-export function ClientPostBrakingActionSwitch (props: any){
+export function PostBrakingActionSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -789,7 +789,7 @@ export function ClientPostBrakingActionSwitch (props: any){
 }
 
 // LOCK_BRK
-export function ClientErrorBrakingModeSwitch (props: any){
+export function ErrorBrakingModeSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -802,7 +802,7 @@ export function ClientErrorBrakingModeSwitch (props: any){
 }
 
 // ALERTINV
-export function ClientAlertPinPolaritySwitch (props: any){
+export function AlertPinPolaritySwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -815,7 +815,7 @@ export function ClientAlertPinPolaritySwitch (props: any){
 }
 
 // TSD_MASK
-export function ClientThermalShutdownInhibitSwitch (props: any){
+export function ThermalShutdownInhibitSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     return (
         <Switch 
@@ -830,7 +830,7 @@ export function ClientThermalShutdownInhibitSwitch (props: any){
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
-export function ClientCurrentSenseGainSwitch (props: any){
+export function CurrentSenseGainSwitch (props: any){
     const [value, setValue] = React.useState<number>(props.initialState)
     VOC = value ? 0.25 : 0.125
     return (
@@ -845,7 +845,7 @@ export function ClientCurrentSenseGainSwitch (props: any){
 }
 
 // SPD
-export function ClientMotorSpeedSlider (props: any){ 
+export function MotorSpeedSlider (props: any){ 
     const [value, setValue] = React.useState<number>(props.initialState);
 
     return (
