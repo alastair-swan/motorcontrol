@@ -662,7 +662,6 @@ export function ClientRPMLimitSlider (props: any){
             min={0} 
             max={7}
             step={1}
-            scale={(value: number) => { return (value + 1) % 8 }}
             onChange={(event: Event, newValue: number | number[]) => {
                 if (typeof newValue === 'number'){
                     setValue(newValue)
@@ -671,7 +670,7 @@ export function ClientRPMLimitSlider (props: any){
             }}
             valueLabelFormat={(value: number) => {
                 const speedList = ['unlimited', '512', '2200', '3800', '5400', '7000', '8600', '10240']
-                return speedList[value]
+                return speedList[value] + ' RPM'
             }}
         /> 
     )
@@ -698,6 +697,30 @@ export function ClientOverCurrentDetectionSwitch (props: any){
             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                 setValue(value)
                 UpdateParam(props.motorNumber, 'ISD_MASK', checked)
+            }}
+        /> 
+    )
+}
+
+// RS_SEL
+export function ClientCurrentSenseFilteringSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'RS_SEL', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const speedList = ['unfiltered', '200kHz', '100kHz', '50kHz']
+                return speedList[value]
             }}
         /> 
     )
