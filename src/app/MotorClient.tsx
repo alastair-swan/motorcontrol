@@ -652,6 +652,31 @@ export function ClientDutyUpTimeSwitch (props: any){
     )
 }
 
+// RPMLIMIT
+export function ClientRPMLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            scale={(value: number) => { return (value + 1) % 8 }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'RPMLIMIT', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                const speedList = ['unlimited', '512', '2200', '3800', '5400', '7000', '8600', '10240']
+                return speedList[value]
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
