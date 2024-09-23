@@ -739,6 +739,68 @@ export function ClientAutodeadtimeSwitch (props: any){
     )
 }
 
+// WAIT_TIME
+export function ClientBrakeTimeSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'WAIT_TIME', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                return value + " seconds"
+            }}
+        /> 
+    )
+}
+
+// WAIT_MODE
+export function ClientBrakingModeSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'WAIT_MODE', checked)
+            }}
+        /> 
+    )
+}
+
+// WAIT_CON
+export function ClientPostBrakingActionSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'WAIT_CON', checked)
+            }}
+        /> 
+    )
+}
+
+// LOCK_BRK
+export function ClientErrorBrakingModeSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'LOCK_BRK', checked)
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
