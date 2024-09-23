@@ -801,6 +801,19 @@ export function ClientErrorBrakingModeSwitch (props: any){
     )
 }
 
+// ALERTINV
+export function ClientAlertPinPolaritySwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'ALERTINV', checked)
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
