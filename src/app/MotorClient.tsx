@@ -726,6 +726,19 @@ export function ClientCurrentSenseFilteringSlider (props: any){
     )
 }
 
+// ANTITHROUGH
+export function ClientAutodeadtimeSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'ANTITHROUGH', checked)
+            }}
+        /> 
+    )
+}
+
 // OCP_LVL
 let VOC = 0.125
 const shuntResistor = 0.025
