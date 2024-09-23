@@ -515,6 +515,125 @@ export function ClientSpeedChangeLimitSlider (props: any){
     )
 }
 
+// STARTCURRENT
+export function ClientStartupCurrentLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={7}
+            step={1}
+            scale={(value: number) => { 
+                return (((8 - value) / 8) * VOC) / shuntResistor; 
+            }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'STARTCURRENT', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                return value + "A"
+            }}
+        /> 
+    )
+}
+
+// OCPDIS
+export function ClientOutputCurrentMonitoringSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setValue(value)
+                UpdateParam(props.motorNumber, 'OCPDIS', checked)
+            }}
+        /> 
+    )
+}
+
+// SS_ADD_SEL
+export function ClientSoftStartCurrentLimitSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            scale={(value: number) => {
+                const steps = (index: number) : number => { 
+                    const stepValues = [0, 0.3, 0.4, 0.5] as number[]
+                    return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
+                }
+                return steps(value) * (VOC / shuntResistor) 
+            }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'SS_ADD_SEL', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                return value + 'A'
+            }}
+        /> 
+    )
+}
+
+// SS_UP_SEL
+export function ClientSoftStartCurrentStepSizeSlider (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState);
+    return (
+        <Slider 
+            valueLabelDisplay='auto' 
+            value={value}
+            min={0} 
+            max={3}
+            step={1}
+            scale={(value: number) => {
+                const steps = (index: number) : number => { 
+                    const stepValues = [0.01, 0.02, 0.05, 0.10] as number[]
+                    return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
+                }
+                return steps(value) * (VOC / shuntResistor) 
+            }}
+            onChange={(event: Event, newValue: number | number[]) => {
+                if (typeof newValue === 'number'){
+                    setValue(newValue)
+                    UpdateParam(props.motorNumber, 'SS_UP_SEL', newValue)
+                }
+            }}
+            valueLabelFormat={(value: number) => {
+                return value + 'A'
+            }}
+        /> 
+    )
+}
+
+
+
+
+// OCP_LVL
+let VOC = 0.125
+const shuntResistor = 0.025
+export function ClientCurrentSenseGainSwitch (props: any){
+    const [value, setValue] = React.useState<number>(props.initialState)
+    VOC = value ? 0.25 : 0.125
+    return (
+        <Switch 
+            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                VOC = value ? 0.25 : 0.125
+                setValue(value)
+                UpdateParam(props.motorNumber, 'OCP_LVL', checked)
+            }}
+        /> 
+    )
+}
+
 // SPD
 export function ClientMotorSpeedSlider (props: any){ 
     const [value, setValue] = React.useState<number>(props.initialState);
