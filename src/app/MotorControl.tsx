@@ -2,7 +2,7 @@
 
 const native = __non_webpack_require__('../../../build/Release/native.node')
 
-export const registerList = {
+export const RegisterList = {
     CP_LOW: { command: 'CP_LOW', readable: true, writable: false, type: 'boolean'},
     TSD: { command: 'TSD', readable: true, writable: false, type: 'boolean'},
     ISD: { command: 'ISD', readable: true, writable: false, type: 'boolean'},
@@ -35,7 +35,7 @@ export const registerList = {
     TSPSEL: { command: 'TSPSEL', readable: true, writable: true, type: 'boolean', default: false},
     SPDINV: { command: 'SPDINV', readable: true, writable: true, type: 'boolean', default: false},
     LATCH: { command: 'LATCH', readable: true, writable: true, type: 'boolean', default: false},
-    OCPMASK: { command: 'OCPMASK', readable: true, writable: true, type: 'boolean', default: false},
+    OCPMASK: { command: 'OCPMASK', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0},
     LOCKDIS: { command: 'LOCKDIS', readable: true, writable: true, type: 'boolean', default: false},
     DUTYCHGLIMIT: { command: 'DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 3},
     STARTCURRENT: { command: 'STARTCURRENT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2},
