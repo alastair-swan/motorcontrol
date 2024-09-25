@@ -1,13 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { switchComponentWithVOCProps } from "."
+import { switchComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // OCP_LVL
-export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverColor, VOC }: switchComponentWithVOCProps){
+export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverColor, setVOC }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.OCP_LVL.default)
     useEffect(
         () => {
@@ -29,7 +28,9 @@ export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverC
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        VOC = value ? 0.25 : 0.125
+                        if (typeof(setVOC) != 'undefined'){
+                            setVOC(value)
+                        }
                         setValue(checked)
                         UpdateParam(motorNumber, RegisterList.OCP_LVL.command, checked)
                     }}

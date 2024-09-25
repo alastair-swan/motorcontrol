@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { sliderComponentWithVOCProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 
 // SS_ADD_SEL
-export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentWithVOCProps){
+export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.SS_ADD_SEL.default);
     useEffect(
         () => {
@@ -42,7 +41,7 @@ export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgH
                             const stepValues = [0, 0.3, 0.4, 0.5] as number[]
                             return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
                         }
-                        return steps(value) * (VOC / shuntResistor) 
+                        return steps(value) * (VOC ? 0.125 : 0.25 / shuntResistor) 
                     }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){

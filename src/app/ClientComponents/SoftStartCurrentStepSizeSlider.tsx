@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { sliderComponentWithVOCProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 
 // SS_UP_SEL
-export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentWithVOCProps){
+export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.SS_UP_SEL.default);
     useEffect(
         () => {
@@ -29,7 +28,7 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, item
             const stepValues = [0.01, 0.02, 0.05, 0.10] as number[]
             return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
         }
-        return steps(value) * (VOC / shuntResistor) 
+        return steps(value) * (VOC ? 0.125 : 0.25 / shuntResistor) 
     }
     const sliderFormat = (value: number) => { return value.toFixed(1) + ' Amps' }
     const switchText = () => {

@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { switchComponentProps } from "."
+import { switchComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 

@@ -1,10 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
-import { sliderComponentProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 
 // OCPMASK
 export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){

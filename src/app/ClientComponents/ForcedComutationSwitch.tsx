@@ -1,13 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { switchComponentProps } from "."
+import { switchComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // LOCKDIS
-export function ForceForcedComutationSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function ForcedComutationSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.LOCKDIS.default)
     useEffect(
         () => {

@@ -2,8 +2,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { sliderComponentProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 

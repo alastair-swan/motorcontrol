@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
 import { asPercentage } from "./helper"
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
-import { sliderComponentProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 
 // CHANGEDUTY
 export function ChangeDutySlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){

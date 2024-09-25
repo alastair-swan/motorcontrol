@@ -1,13 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { sliderComponentProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // SPEEDSLOP
-export function MotorSpeedSlopeSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
+export function SpeedSlopeSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.SPEEDSLOP.default);
     useEffect(
         () => {

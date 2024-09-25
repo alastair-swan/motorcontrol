@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { RegisterList } from "../MotorControl"
-import { sliderComponentWithVOCProps } from "."
+import { sliderComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 
 // STARTCURRENT
-export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentWithVOCProps){
+export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.STARTCURRENT.default);
 
     useEffect(
@@ -39,7 +38,7 @@ export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHov
                     max={7}
                     step={1}
                     scale={(value: number) => { 
-                        return (((8 - value) / 8) * VOC) / shuntResistor; 
+                        return (((8 - value) / 8) * (VOC ? 0.125 : 0.25)) / shuntResistor; 
                     }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
