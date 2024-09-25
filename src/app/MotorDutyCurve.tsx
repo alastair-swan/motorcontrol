@@ -1,46 +1,71 @@
-"use server"
+"use client"
 
 import Box from '@mui/material/Box'
 import * as d3 from "d3"
 import { GetParam } from './MotorControl'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { RegisterList } from './ClientComponents'
+
+type graphPoint = { x: number, y: number }
 
 export default async function DutyCurve({
     motorNumber
 }: {
     motorNumber: number
 }){
-    let localstartduty = await GetParam(motorNumber, 'STARTDUTY') / 5.12
-    let localstopduty = await GetParam(motorNumber, 'STOPDUTY') / 2.56
-    let localstartrpm = await GetParam(motorNumber, 'STARTRPM')
-    let localchangeduty = await GetParam(motorNumber, 'CHANGEDUTY') * 2 / 5.12
-    let localchangerpm = localstartrpm + (await GetParam(motorNumber, 'SPEEDSLOP') * 0.08 * (localchangeduty - localstopduty))
-    let localmaxduty = (await GetParam(motorNumber, 'MAXDUTY') + 257) / 5.12
-    let localmaxrpm = localchangerpm + (await GetParam(motorNumber, 'SPEEDSLOP2') * 0.08 * (localmaxduty - localchangeduty))
-    const graphData = 
-    [
-        {
-            x: localstartduty, 
-            y: 0
-        },
-        {
-            x: localstartduty, 
-            y: localstartrpm
-        },
-        {
-            x: localstopduty, 
-            y: localstartrpm
-        },
-        {
-            x: localchangeduty, 
-            y: localchangerpm
-        },
-        {
-            x: localmaxduty, 
-            y: localmaxrpm
-        }
-    ]
-
+    /*
+    
+    */
+    const [graphData, setGraphData] = useState<{ x: number, y: number }[]>(
+        [
+            { x: 0, y: 0 } as graphPoint
+        ]
+    )
+    useEffect(
+        () => {
+            const fetchData = async () => {
+                try{
+                    const localstartduty = await GetParam(motorNumber, 'STARTDUTY') / 5.12
+                    const localstopduty = await GetParam(motorNumber, 'STOPDUTY') / 2.56
+                    const localstartrpm = await GetParam(motorNumber, 'STARTRPM')
+                    const localchangeduty = await GetParam(motorNumber, 'CHANGEDUTY') * 2 / 5.12
+                    const localchangerpm = localstartrpm + (await GetParam(motorNumber, 'SPEEDSLOP') * 0.08 * (localchangeduty - localstopduty))
+                    const localmaxduty = (await GetParam(motorNumber, 'MAXDUTY') + 257) / 5.12
+                    const localmaxrpm = localchangerpm + (await GetParam(motorNumber, 'SPEEDSLOP2') * 0.08 * (localmaxduty - localchangeduty))
+                    const result = [
+                        {
+                            x: localstartduty, 
+                            y: 0
+                        },
+                        {
+                            x: localstartduty, 
+                            y: localstartrpm
+                        },
+                        {
+                            x: localstopduty, 
+                            y: localstartrpm
+                        },
+                        {
+                            x: localchangeduty, 
+                            y: localchangerpm
+                        },
+                        {
+                            x: localmaxduty, 
+                            y: localmaxrpm
+                        }
+                    ]
+                    setGraphData(result)
+                }
+                catch (error){
+                    console.error('Fetches failed for Graph: ', error)
+                }
+            }
+            fetchData()
+        }, [ motorNumber ]
+    )
+    /*
+    
+    */
     return (
         <Box
             sx={{

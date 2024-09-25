@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import './MotorDutyCurve'
 import * as Client from './ClientComponents'
 import MotorControlSettings from './MotorClient'
+import { Suspense } from "react";
 const sectionbgColor = 'rgba(255,255,255,0.2)'
 const itembgColor = 'rgba(255,255,255,0.2)'
 const itembgHoverColor = 'rgba(255,255,255,0.4)'
@@ -53,7 +54,7 @@ export async function Motor ({ motorNumber }: { motorNumber: number }){
             <Grid2 container spacing={1}>
                 <MotorNumberComponent motorNumber={motorNumber}/>
                 <ErrorState motorNumber={motorNumber}/>
-                <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor}/>
+                    <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor}/>
             </Grid2>
         </Grid2>
     )

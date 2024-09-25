@@ -430,6 +430,7 @@ int TC78B011FTG::getMaxDutyHysteresis(bool fromChip){
 
 int TC78B011FTG::setSpeedSlope(int speedslope)
 {
+    std::cout<<speedslope<<std::endl;
     if ((speedslope & (SPEEDSLOP_MASK >> SPEEDSLOP_OFFSET)) != speedslope){
         return -10;
     }

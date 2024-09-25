@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Grid2 from "@mui/material/Grid2";
 import Box from '@mui/material/Box';
 import './MotorDutyCurve'
@@ -9,7 +9,7 @@ import { RegisterList } from './ClientComponents'
 import { GetParam } from './MotorControl';
 import DutyCurve from './MotorDutyCurve';
 
-export default async function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor }: {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string}){
+export default function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor }: {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string}){
     const [VOC, setVOC] = useState(RegisterList.OCP_LVL.default)
     useEffect(
         () => {
@@ -95,7 +95,9 @@ export default async function MotorControlSettings({ motorNumber, sectionbgColor
                     <Grid2 size={1}>
                         <Box sx={{ flex: 1, height: '100%', bgcolor: sectionbgColor, borderRadius: 2, borderWidth: 0}}>
                             <Box sx={{ flex: 1, height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                                <DutyCurve motorNumber={motorNumber}/>
+                                <Suspense>
+                                    <DutyCurve motorNumber={motorNumber}/>
+                                </Suspense>
                             </Box>
                         </Box>
                     </Grid2>

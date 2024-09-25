@@ -238,7 +238,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
         return Number::New(info.Env(), -3);
     }
     if (paramName == "USERID"){
-        return Number::New(info.Env(), motors[motorNumber].setUserID((uint8_t)(info[2].As<Number>().Int32Value())));                
+        return Number::New(info.Env(), motors[motorNumber].setUserID((uint32_t)(info[2].As<Number>().Int32Value())));                
     } 
     if (paramName == "NOSTOP"){
         bool controlBit = false; 
@@ -264,7 +264,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "STOPDUTY"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setStopDuty((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setStopDuty((uint32_t)(info[2].As<Number>().Int32Value())));
         }    
         else{
             return Number::New(info.Env(), -11); 
@@ -272,7 +272,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "STARTDUTY"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setStartDuty((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setStartDuty((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -280,7 +280,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "CHANGEDUTY"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setChangeDuty((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setChangeDuty((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -288,7 +288,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "MAXDUTY"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setMaxDuty((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setMaxDuty((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -296,7 +296,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "STARTRPM"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setStartRPM((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setStartRPM((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -304,7 +304,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "MAXDUTYHYS"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setMaxDutyHysteresis((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setMaxDutyHysteresis((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -312,7 +312,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "SPEEDSLOP"){
             if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSpeedSlope((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSpeedSlope((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -364,7 +364,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SPEEDSLOP2"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSpeedSlope2((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSpeedSlope2((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -438,7 +438,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     } 
     if (paramName == "KI"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setKI((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setKI((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -468,7 +468,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "KP"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setKP((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setKP((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -520,7 +520,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "POLEPAIR"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setPoles((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setPoles((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -528,7 +528,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "MAXSPEED"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setMaxSpeed((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setMaxSpeed((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -624,7 +624,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "OCPMASK"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setDigitalFiltering((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setDigitalFiltering((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -654,7 +654,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "DUTYCHGLIMIT"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setDutyChangeLimit((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setDutyChangeLimit((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -662,7 +662,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "STARTCURRENT"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setStartCurrentLimit((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setStartCurrentLimit((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -692,7 +692,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SS_ADD_SEL"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSoftStartRange((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSoftStartRange((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -700,7 +700,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SS_UP_SEL"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSoftStartStepSize((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSoftStartStepSize((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -708,7 +708,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SS_DUTYCHGLIMIT"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSoftStartDutyChangeLimit((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSoftStartDutyChangeLimit((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -738,7 +738,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "RPMLIMIT"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setRPMChangeLimit((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setRPMChangeLimit((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -790,7 +790,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "RS_SEL"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setRSAPinFiltering((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setRSAPinFiltering((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -820,7 +820,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "WAIT_TIME"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setBrakeTime((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setBrakeTime((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -938,7 +938,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "TRE"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setAutoRestartWaitTime((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setAutoRestartWaitTime((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -946,7 +946,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "PRE_TIP"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setFirstDCExcitationTime((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setFirstDCExcitationTime((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -954,7 +954,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "TIP"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSecondDCExcitationTime((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSecondDCExcitationTime((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -962,7 +962,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "LA"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setLeadAngle((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setLeadAngle((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -970,7 +970,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "FMAX"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setMaxRPM((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setMaxRPM((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -978,7 +978,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "FST"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setForcedComutationFrequency((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setForcedComutationFrequency((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -986,7 +986,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "FPWM"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setOutputPWMFrequencyMode((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setOutputPWMFrequencyMode((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -994,7 +994,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "DEADTIME"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setDeadtime((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setDeadtime((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -1046,7 +1046,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SOURCE"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setGateSourceCurrent((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setGateSourceCurrent((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -1054,7 +1054,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SINK"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setGateSinkCurrent((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setGateSinkCurrent((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -1062,7 +1062,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "COMP_HYS"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setIdleModeHysteresisVoltage((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setIdleModeHysteresisVoltage((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
@@ -1070,7 +1070,7 @@ Number motorRegisterSetter(const CallbackInfo &info){
     }
     if (paramName == "SPD"){
         if (info[2].IsNumber()){
-            return Number::New(info.Env(), motors[motorNumber].setSpeed((uint8_t)(info[2].As<Number>().Int32Value())));
+            return Number::New(info.Env(), motors[motorNumber].setSpeed((uint32_t)(info[2].As<Number>().Int32Value())));
         }
         else{
             return Number::New(info.Env(), -11); 
