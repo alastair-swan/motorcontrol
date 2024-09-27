@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // KIX
-export function KIXSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function KIXSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.KIX.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.KIX.command) === 1
+                    const updatedState = state
+                    updatedState.KIX = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('KIX failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function KIXSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switc
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (!value){
+        if (!state.KIX){
             return "x8"
         }
         return "x1"
@@ -34,7 +37,10 @@ export function KIXSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switc
                 <Switch 
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.KIX = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.KIX.command, checked)
                     }}
                 />

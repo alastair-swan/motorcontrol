@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // FST
-export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
+export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.FST.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.FST.command)
+                    const updatedState = state
+                    updatedState.FST = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('FST failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, ite
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.FST
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,7 +40,10 @@ export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, ite
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.FST = newValue
                             setValue(newValue)
+                        setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.FST.command, newValue)
                         }
                     }}

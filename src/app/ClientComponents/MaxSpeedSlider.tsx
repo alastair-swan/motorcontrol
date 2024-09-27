@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // MAXSPEED
-export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.MAXSPEED.default);
+export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.MAXSPEED.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.MAXSPEED.command)
+                    const updatedState = state
+                    updatedState.MAXSPEED = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('MAXSPEED failed to fetch: ', error)
@@ -23,11 +26,11 @@ export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }: 
         }, [ motorNumber ]
     )
     const sliderFormat = (value: number) => {
-        const speedList = [4096, 8192, 16384, 32768]
+        const speedList = RegisterList.MAXSPEED.valuemap
         return speedList[value] + " RPM"
     }
     const switchText = () => {
-        return sliderFormat(value)
+        return sliderFormat(state.MAXSPEED)
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -41,7 +44,10 @@ export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }: 
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.MAXSPEED = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.MAXSPEED.command, newValue)
                         }
                     }}

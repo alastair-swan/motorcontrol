@@ -7,14 +7,17 @@ import { Grid2, Box, Slider } from '@mui/material'
 import { asPercentage } from "./helper"
 
 // MAXDUTY
-export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.MAXDUTY.default);
+export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.MAXDUTY.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.MAXDUTY.command)
+                    const updatedState = state
+                    updatedState.MAXDUTY = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('MAXDUTY failed to fetch: ', error)
@@ -24,7 +27,7 @@ export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor }: s
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.MAXDUTY
     }
     const sliderScale = (value: number) => { return ((value + 257)/512) }
     return (
@@ -40,7 +43,10 @@ export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor }: s
                     scale={(value: number) => { return ((value + 257)/512) }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.MAXDUTY = newValue
                             setValue(newValue)
+                        setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.MAXDUTY.command, newValue)
                         }
                     }}

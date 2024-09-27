@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // TSD_MASK
-export function ThermalShutdownInhibitSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function ThermalShutdownInhibitSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.TSD_MASK.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.TSD_MASK.command) === 1
+                    const updatedState = state
+                    updatedState.TSD_MASK = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('TSD_MASK failed to fetch: ', error)
@@ -28,11 +31,14 @@ export function ThermalShutdownInhibitSwitch ({ motorNumber, itembgColor, itembg
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.TSD_MASK = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.TSD_MASK.command, checked)
                     }}
                 />
-                Thermal Shutdown Enabled
+                Thermal Shutdown { state.TSD_MASK ? "Disabled" : "Enabled" }
             </Box>
         </Grid2>
     )

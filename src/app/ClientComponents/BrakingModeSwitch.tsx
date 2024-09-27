@@ -6,14 +6,16 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // WAIT_MODE
-export function BrakingModeSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function BrakingModeSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState}: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.WAIT_MODE.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.WAIT_MODE.command) === 1
-                    setValue(result)
+                    const updatedState = state
+                    updatedState.WAIT_MODE = result
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('WAIT_MODE failed to fetch: ', error)
@@ -28,7 +30,10 @@ export function BrakingModeSwitch ({ motorNumber, itembgColor, itembgHoverColor 
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.WAIT_MODE = checked
                         setValue(checked)
+                        setState(updatedState)
                         UpdateParam(motorNumber, RegisterList.WAIT_MODE.command, checked)
                     }}
                 />

@@ -6,14 +6,16 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // WAIT_TIME
-export function BrakeTimeSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.WAIT_TIME.default);
+export function BrakeTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.WAIT_TIME.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.WAIT_TIME.command)
-                    setValue(result)
+                    const updatedState = state
+                    updatedState.WAIT_TIME = result
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('KI failed to fetch: ', error)
@@ -23,7 +25,7 @@ export function BrakeTimeSlider ({ motorNumber, itembgColor, itembgHoverColor }:
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.WAIT_TIME
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,7 +39,10 @@ export function BrakeTimeSlider ({ motorNumber, itembgColor, itembgHoverColor }:
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.WAIT_TIME = newValue
                             setValue(newValue)
+                            setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.WAIT_TIME.command, newValue)
                         }
                     }}

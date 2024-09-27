@@ -6,14 +6,17 @@ import { Grid2, Box, Slider } from '@mui/material'
 import { sliderComponentProps, RegisterList } from "."
 
 // OCPMASK
-export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.OCPMASK.default);
+export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.OCPMASK.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.OCPMASK.command)
+                    const updatedState = state
+                    updatedState.OCPMASK = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('OCPMASK failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverC
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.OCPMASK
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -38,7 +41,10 @@ export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverC
                     scale={(value: number) => { return value }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.OCPMASK = newValue
                             setValue(newValue)
+                        setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.OCPMASK.command, newValue)
                         }
                     }}

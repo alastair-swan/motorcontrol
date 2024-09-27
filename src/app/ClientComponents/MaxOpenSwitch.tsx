@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // MAXOPEN
-export function MaxOpenSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function MaxOpenSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.MAXOPEN.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.MAXOPEN.command) === 1
+                    const updatedState = state
+                    updatedState.MAXOPEN = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('MAXOPEN failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function MaxOpenSwitch ({ motorNumber, itembgColor, itembgHoverColor }: s
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (!value){
+        if (!state.MAXOPEN){
             return "Speed Capped at Max Duty"
         }
         return "Extrapolate Past Max Duty"
@@ -34,7 +37,10 @@ export function MaxOpenSwitch ({ motorNumber, itembgColor, itembgHoverColor }: s
                 <Switch 
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setValue(checked)        
+                        const updatedState = state
+                        updatedState.MAXOPEN = checked
+                        setValue(checked)
+                        setState(updatedState)          
                         UpdateParam(motorNumber, RegisterList.MAXOPEN.command, checked)
                     }}
                 /> 

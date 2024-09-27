@@ -7,14 +7,17 @@ import { Grid2, Box, Slider } from '@mui/material'
 import { asPercentage } from "./helper"
 
 // SPD
-export function MotorSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){ 
-    const [value, setValue] = useState<number>(RegisterList.SPD.default)
+export function MotorDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.SPD.default) 
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.SPD.command)
+                    const updatedState = state
+                    updatedState.SPD = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('SPD failed to fetch: ', error)
@@ -24,7 +27,7 @@ export function MotorSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.SPD
     }
 
     return (
@@ -33,14 +36,17 @@ export function MotorSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor }
                 Motor Duty Setting {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.SPD}
                     min={0} 
                     max={511}
                     step={1}
                     scale={(value: number) => { return value }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.SPD = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.SPD.command, newValue)
                         }
                     }}

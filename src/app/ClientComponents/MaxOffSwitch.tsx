@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // MAXOFF
-export function MaxOffSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function MaxOffSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.MAXOFF.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.MAXOFF.command) === 1
+                    const updatedState = state                    
+                    updatedState.MAXOFF = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('MAXOFF failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function MaxOffSwitch ({ motorNumber, itembgColor, itembgHoverColor }: sw
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (!value){
+        if (!state.MAXOFF){
             return "Off above Max Duty"
         }
         return "On above Max Duty"
@@ -34,7 +37,10 @@ export function MaxOffSwitch ({ motorNumber, itembgColor, itembgHoverColor }: sw
                 <Switch 
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state                    
+                        updatedState.MAXOFF = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.MAXOFF.command, checked)
                     }}
                 />

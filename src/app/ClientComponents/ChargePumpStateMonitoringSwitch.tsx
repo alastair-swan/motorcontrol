@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // VCP_MASK
-export function ChargePumpStateMonitoringSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function ChargePumpStateMonitoringSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.VCP_MASK.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.VCP_MASK.command) === 1
+                    const updatedState = state
+                    updatedState.VCP_MASK = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('VCP_MASK failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, itembgColor, ite
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (value){
+        if (state.VCP_MASK){
             return "Enabled"
         }
         return "Disabled"
@@ -32,11 +35,14 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, itembgColor, ite
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch 
-                    checked={value}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    checked={ value }
+                    onChange={ (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.VCP_MASK = checked
                         setValue(checked)
+                        setState(updatedState)
                         UpdateParam(motorNumber, RegisterList.VCP_MASK.command, checked)
-                    }}
+                    } }
                 /> 
                 Charge Pump Monitoring: {switchText()}
             </Box>

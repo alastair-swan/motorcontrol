@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // SOURCE
-export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SOURCE.default);
+export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.SOURCE.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.SOURCE.command)
+                    const updatedState = state
+                    updatedState.SOURCE = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('SOURCE failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHover
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.SOURCE
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,7 +40,10 @@ export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHover
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.SOURCE = newValue
                             setValue(newValue)
+                            setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.SOURCE.command, newValue)
                         }
                     }}

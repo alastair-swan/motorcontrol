@@ -1,19 +1,22 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { switchComponentProps, RegisterList } from "."
 import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // ANTITHROUGH
-export function AutodeadtimeSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function AutodeadtimeSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.ANTITHROUGH.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.ANTITHROUGH.command) === 1
+                    const updatedState = state
+                    updatedState.ANTITHROUGH = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('KIX failed to fetch: ', error)
@@ -28,7 +31,10 @@ export function AutodeadtimeSwitch ({ motorNumber, itembgColor, itembgHoverColor
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.ANTITHROUGH = checked
                         setValue(checked)
+                        setState(updatedState)
                         UpdateParam(motorNumber, RegisterList.ANTITHROUGH.command, checked)
                     }}
                 /> 

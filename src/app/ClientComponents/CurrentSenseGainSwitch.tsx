@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // OCP_LVL
-export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverColor, setVOC }: switchComponentProps){
+export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.OCP_LVL.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.OCP_LVL.command) === 1
+                    const updatedState = state
+                    updatedState.OCP_LVL = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('OCP_LVL failed to fetch: ', error)
@@ -28,14 +31,14 @@ export function CurrentSenseGainSwitch ({ motorNumber, itembgColor, itembgHoverC
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        if (typeof(setVOC) != 'undefined'){
-                            setVOC(value)
-                        }
+                        const updatedState = state
+                        updatedState.OCP_LVL = checked
                         setValue(checked)
+                        setState(updatedState)
                         UpdateParam(motorNumber, RegisterList.OCP_LVL.command, checked)
                     }}
                 />
-                Current Sense Gain
+                Current Sense Gain: {state.OCP_LVL? "10" : "20"}
             </Box>
         </Grid2>
     )

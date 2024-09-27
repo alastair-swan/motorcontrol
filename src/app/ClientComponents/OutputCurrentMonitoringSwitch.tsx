@@ -6,17 +6,20 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // OCPDIS
-export function OutputCurrentMonitoringSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function OutputCurrentMonitoringSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.OCPDIS.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.OCPDIS.command) === 1
+                    const updatedState = state
+                    updatedState.OCPDIS = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
-                    console.error('KIX failed to fetch: ', error)
+                    console.error('OCPDIS failed to fetch: ', error)
                 }
             }
             fetchData()
@@ -28,7 +31,10 @@ export function OutputCurrentMonitoringSwitch ({ motorNumber, itembgColor, itemb
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.OCPDIS = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.OCPDIS.command, checked)
                     }}
                 />

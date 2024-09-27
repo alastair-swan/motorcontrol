@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // STBY_MODE
-export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.STBY_MODE.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.STBY_MODE.command) === 1
+                    const updatedState = state
+                    updatedState.STBY_MODE = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('STBY_MODE failed to fetch: ', error)
@@ -23,8 +26,8 @@ export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor 
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (!value){
-            return "Only Pin Controls Standby"
+        if (!state.STBY_MODE){
+            return "Only Stby Pin Controls Standby"
         }
         return "Standby if motor is off"
     }
@@ -34,7 +37,10 @@ export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor 
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.STBY_MODE = checked
                         setValue(checked)
+                        setState(updatedState)
                         UpdateParam(motorNumber, RegisterList.STBY_MODE.command, checked)
                     }}
                 /> 

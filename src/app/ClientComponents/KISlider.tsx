@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // KI
-export function KISlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
+export function KISlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.KI.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.KI.command)
+                    const updatedState = state
+                    updatedState.KI = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('KI failed to fetch: ', error)
@@ -27,7 +30,7 @@ export function KISlider ({ motorNumber, itembgColor, itembgHoverColor }: slider
         return value.toFixed(2)
     }
     const switchText = () => {
-        return sliderFormat(sliderScale(value))
+        return sliderFormat(sliderScale(state.KI))
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -42,7 +45,10 @@ export function KISlider ({ motorNumber, itembgColor, itembgHoverColor }: slider
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.KI = newValue
                             setValue(newValue)
+                            setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.KI.command, newValue)
                         }
                     }}

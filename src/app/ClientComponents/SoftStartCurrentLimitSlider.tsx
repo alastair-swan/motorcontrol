@@ -7,14 +7,17 @@ import { Grid2, Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 
 // SS_ADD_SEL
-export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SS_ADD_SEL.default);
+export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.SS_ADD_SEL.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.SS_ADD_SEL.command)
+                    const updatedState = state
+                    updatedState.SS_ADD_SEL = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('SS_ADD_SEL failed to fetch: ', error)
@@ -23,8 +26,13 @@ export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgH
             fetchData()
         }, [ motorNumber ]
     )
+
+    const sliderFormat = (value: number) => {
+        const steps = (index: number) : number => { return RegisterList.SS_ADD_SEL.valuemap[index] as number }
+        return (steps(value) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor)) + " Amps"
+    }
     const switchText = () => {
-        return value
+        return sliderFormat(state.SS_ADD_SEL)
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -36,22 +44,16 @@ export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgH
                     min={0} 
                     max={3}
                     step={1}
-                    scale={(value: number) => {
-                        const steps = (index: number) : number => { 
-                            const stepValues = [0, 0.3, 0.4, 0.5] as number[]
-                            return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
-                        }
-                        return steps(value) * (VOC ? 0.125 : 0.25 / shuntResistor) 
-                    }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.SS_ADD_SEL = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.SS_ADD_SEL.command, newValue)
                         }
                     }}
-                    valueLabelFormat={(value: number) => {
-                        return value + 'A'
-                    }}
+                    valueLabelFormat={sliderFormat}
                 /> 
             </Box>
         </Grid2>

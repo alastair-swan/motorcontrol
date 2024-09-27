@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // KP
-export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
+export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
     const [value, setValue] = useState<number>(RegisterList.KP.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.KP.command)
+                    const updatedState = state
+                    updatedState.KP = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('KP failed to fetch: ', error)
@@ -27,7 +30,7 @@ export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor }: slider
         return value.toFixed(2)
     }
     const switchText = () => {
-        return sliderFormat(sliderScale(value))
+        return sliderFormat(sliderScale(state.KP))
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -42,7 +45,10 @@ export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor }: slider
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.KP = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.KP.command, newValue)
                         }
                     }}

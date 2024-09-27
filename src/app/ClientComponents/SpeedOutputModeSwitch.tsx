@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // FG_ON
-export function SpeedOutputModeSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function SpeedOutputModeSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.FG_ON.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.FG_ON.command) === 1
+                    const updatedState = state
+                    updatedState.FG_ON = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('FG_ON failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function SpeedOutputModeSwitch ({ motorNumber, itembgColor, itembgHoverCo
         }, [ motorNumber ]
     )
     const switchText = () => {
-        if (!value){
+        if (!state.FG_ON){
             return "FG stops without speed control command"
         }
         return "FG stops without speed control command"
@@ -34,11 +37,14 @@ export function SpeedOutputModeSwitch ({ motorNumber, itembgColor, itembgHoverCo
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.FG_ON = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.FG_ON.command, checked)
                     }}
                 />
-                Continue Output when stopped
+                { switchText () }
             </Box>
         </Grid2>
     )

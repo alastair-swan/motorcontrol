@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // RS_SEL
-export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.RS_SEL.default);
+export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.RS_SEL.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.RS_SEL.command)
+                    const updatedState = state
+                    updatedState.RS_SEL = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('RS_SEL failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgH
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.RS_SEL
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,7 +40,10 @@ export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgH
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.RS_SEL = newValue
                             setValue(newValue)
+                            setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.RS_SEL.command, newValue)
                         }
                     }}

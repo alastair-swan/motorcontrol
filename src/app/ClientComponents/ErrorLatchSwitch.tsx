@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Switch } from '@mui/material'
 
 // LATCH
-export function ErrorLatchSwitch ({ motorNumber, itembgColor, itembgHoverColor }: switchComponentProps){
+export function ErrorLatchSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     const [value, setValue] = useState<boolean>(RegisterList.LATCH.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.LATCH.command) === 1
+                    const updatedState = state
+                    updatedState.LATCH = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('LATCH failed to fetch: ', error)
@@ -28,7 +31,10 @@ export function ErrorLatchSwitch ({ motorNumber, itembgColor, itembgHoverColor }
                 <Switch  
                     checked={value}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                        const updatedState = state
+                        updatedState.LATCH = checked
                         setValue(checked)
+                        setState(updatedState)  
                         UpdateParam(motorNumber, RegisterList.LATCH.command, checked)
                     }}
                 />

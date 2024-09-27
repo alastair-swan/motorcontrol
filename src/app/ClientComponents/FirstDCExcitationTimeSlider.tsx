@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // PreTIP
-export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.PRE_TIP.default);
+export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.PRE_TIP.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.PRE_TIP.command)
+                    const updatedState = state
+                    updatedState.PRE_TIP = result
                     setValue(result)
+                    setState(updatedState)
                 }
                 catch (error){
                     console.error('PRE_TIP failed to fetch: ', error)
@@ -23,7 +26,7 @@ export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgH
         }, [ motorNumber ]
     )
     const switchText = () => {
-        return value
+        return state.PRE_TIP
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,7 +40,10 @@ export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgH
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.PRE_TIP = newValue
                             setValue(newValue)
+                        setState(updatedState)
                             UpdateParam(motorNumber, RegisterList.PRE_TIP.command, newValue)
                         }
                     }}

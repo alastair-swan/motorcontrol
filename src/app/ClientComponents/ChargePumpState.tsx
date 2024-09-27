@@ -1,7 +1,13 @@
 "use client"
 
-export function ChargePumpState({motorNumber}: {motorNumber: number}){
+import { Dispatch, SetStateAction } from "react"
+import { MotorParams } from "../MotorControlClient"
+import { Box } from "@mui/material"
+
+export function ChargePumpState({ state }: { state: MotorParams }){
     return (
-        "Good"
+        <Box>
+            Charge Pump: { state.CP_LOW ? '<span style="color: red">Low</span>' : "Normal" }
+        </Box>
     )
 }

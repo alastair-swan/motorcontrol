@@ -1,7 +1,11 @@
 "use client"
 
-export type switchComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, VOC?: boolean, setVOC?: (VOC: boolean) => {}}
-export type sliderComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, VOC?: boolean, setVOC?: (VOC: boolean) => {} }
+import { Dispatch, SetStateAction } from 'react'
+import { MotorParams } from '../MotorControlClient'
+import { number } from 'zod'
+
+export type switchComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}
+export type sliderComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}
 
 export const RegisterList = {
     CP_LOW: { command: 'CP_LOW', readable: true, writable: false, type: 'boolean'},
@@ -31,21 +35,21 @@ export const RegisterList = {
     STBY_MODE: { command: 'STBY_MODE', readable: true, writable: true, type: 'boolean', default: false},
     DIR: { command: 'DIR', readable: true, writable: true, type: 'boolean', default: true},
     POLEPAIR: { command: 'POLEPAIR', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 6},
-    MAXSPEED: { command: 'MAXSPEED', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0},
+    MAXSPEED: { command: 'MAXSPEED', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: [4096, 8192, 16384, 32768]},
     FG_ON: { command: 'FG_ON', readable: true, writable: true, type: 'boolean', default: false},
     TSPSEL: { command: 'TSPSEL', readable: true, writable: true, type: 'boolean', default: false},
     SPDINV: { command: 'SPDINV', readable: true, writable: true, type: 'boolean', default: false},
     LATCH: { command: 'LATCH', readable: true, writable: true, type: 'boolean', default: false},
     OCPMASK: { command: 'OCPMASK', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0},
     LOCKDIS: { command: 'LOCKDIS', readable: true, writable: true, type: 'boolean', default: false},
-    DUTYCHGLIMIT: { command: 'DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 3},
+    DUTYCHGLIMIT: { command: 'DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 3, valuemap: [0.17, 0.20, 0.55, 1.11, 1.84, 2.76, 3.69, 5.53]},
     STARTCURRENT: { command: 'STARTCURRENT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2},
     OCPDIS: { command: 'OCPDIS', readable: true, writable: true, type: 'boolean', default: false},
-    SS_ADD_SEL: { command: 'SS_ADD_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1},
-    SS_UP_SEL: { command: 'SS_UP_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1},
-    SS_DUTYCHGLIMIT: { command: 'SS_DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2},
+    SS_ADD_SEL: { command: 'SS_ADD_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1, valuemap: [0, 0.3, 0.4, 0.5]},
+    SS_UP_SEL: { command: 'SS_UP_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1, valuemap: [0.01, 0.02, 0.05, 0.10]},
+    SS_DUTYCHGLIMIT: { command: 'SS_DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, valuemap: [0.17, 0.20, 0.55, 1.11, 1.84, 2.76, 3.69, 5.53]},
     DUTY_UP_TIME: { command: 'DUTY_UP_TIME', readable: true, writable: true, type: 'boolean', default: false},
-    RPMLIMIT: { command: 'RPMLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2},
+    RPMLIMIT: { command: 'RPMLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, valuemap: ["Unlimited", 512, 2200, 3800, 5400, 7000, 8600, 10240]},
     BRK_INV: { command: 'BRK_INV', readable: true, writable: true, type: 'boolean', default: false},
     ISD_MASK: { command: 'ISD_MASK', readable: true, writable: true, type: 'boolean', default: false},
     RS_SEL: { command: 'RS_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0},
@@ -58,7 +62,7 @@ export const RegisterList = {
     TSD_MASK: { command: 'TSD_MASK', readable: true, writable: true, type: 'boolean', default: false},
     TRE: { command: 'TRE', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 1},
     PRE_TIP: { command: 'PRE_TIP', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2},
-    TIP: { command: 'TIP', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 3},
+    TIP: { command: 'TIP', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 3, valuemap: [0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.5, 2]},
     LA: { command: 'LA', readable: true, writable: true, type: 'number', min: 0, max: 15, default: 12},
     FMAX: { command: 'FMAX', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2},
     FST: { command: 'FST', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0},
@@ -69,6 +73,7 @@ export const RegisterList = {
     SOURCE: { command: 'SOURCE', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 0},
     SINK: { command: 'SINK', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 0},
     COMP_HYS: { command: 'COMP_HYS', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1},
+    SLAVE_ADRS: {readable: true, writable: true, type: 'number', default: [41, 45, 50]},
     SPD: { command: 'SPD', readable: true, writable: true, type: 'number', min: 0, max: 512, default: 0},
     HZ_CNT: { command: 'HZ_CNT', readable: true, writable: false, type: 'number'}
 }
@@ -106,7 +111,7 @@ export { MaxDutySlider } from './MaxDutySlider'
 export { MaxOffSwitch } from './MaxOffSwitch'
 export { MaxOpenSwitch } from './MaxOpenSwitch'
 export { MaxSpeedSlider } from './MaxSpeedSlider'
-export { MotorSpeedSlider } from './MotorSpeedSlider'
+export { MotorDutySlider } from './MotorDutySlider'
 export { NoStopSwitch } from './NoStopSwitch'
 export { OffDutySlider } from './OffDutySlider'
 export { OpenLoopSwitch } from './OpenLoopSwitch'
@@ -137,3 +142,5 @@ export { StartupCurrentLimitSlider } from './StartupCurrentLimitSlider'
 export { StartupState } from './StartupState'
 export { TemperatureState } from './TemperatureState'
 export { ThermalShutdownInhibitSwitch } from './ThermalShutdownInhibitSwitch'
+export { DutyCurve } from './MotorDutyCurve'
+export { RPMErrorState } from './RPMErrorState'

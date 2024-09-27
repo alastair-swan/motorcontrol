@@ -6,14 +6,17 @@ import { GetParam, UpdateParam } from "../MotorControl"
 import { Grid2, Box, Slider } from '@mui/material'
 
 // TIP
-export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.TIP.default);
+export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.TIP.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.TIP.command)
+                    const updatedState = state
+                    updatedState.TIP = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('TIP failed to fetch: ', error)
@@ -22,8 +25,11 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembg
             fetchData()
         }, [ motorNumber ]
     )
+    const sliderFormat = (value: number) => {
+        return RegisterList.TIP.valuemap[value] + " seconds"
+    }
     const switchText = () => {
-        return value
+        return sliderFormat(state.TIP)
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -37,14 +43,14 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembg
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.TIP = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.TIP.command, newValue)
                         }
                     }}
-                    valueLabelFormat={(value: number) => {
-                        const time = [0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.5, 2]
-                        return time[value] + " seconds"
-                    }}
+                    valueLabelFormat={sliderFormat}
                 />
             </Box>
         </Grid2>

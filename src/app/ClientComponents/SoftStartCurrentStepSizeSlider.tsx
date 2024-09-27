@@ -7,14 +7,17 @@ import { Grid2, Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 
 // SS_UP_SEL
-export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, VOC }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SS_UP_SEL.default);
+export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+    const [value, setValue] = useState<number>(RegisterList.SS_UP_SEL.default)
     useEffect(
         () => {
             const fetchData = async () => {
                 try{
                     const result = await GetParam(motorNumber, RegisterList.SS_UP_SEL.command)
+                    const updatedState = state
+                    updatedState.SS_UP_SEL = result
                     setValue(result)
+                    setState(updatedState)  
                 }
                 catch (error){
                     console.error('SS_UP_SEL failed to fetch: ', error)
@@ -25,14 +28,13 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, item
     )
     const sliderScale = (value: number) => {
         const steps = (index: number) : number => { 
-            const stepValues = [0.01, 0.02, 0.05, 0.10] as number[]
-            return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
+            return RegisterList.SS_UP_SEL.valuemap[index] as number
         }
-        return steps(value) * (VOC ? 0.125 : 0.25 / shuntResistor) 
+        return steps(value) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor) 
     }
     const sliderFormat = (value: number) => { return value.toFixed(1) + ' Amps' }
     const switchText = () => {
-        return sliderFormat(sliderScale(value))
+        return sliderFormat(sliderScale(state.SS_UP_SEL))
     }
     return (
         <Grid2 sx={{ width: '100%' }}>
@@ -47,7 +49,10 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, item
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
+                            const updatedState = state
+                            updatedState.SS_UP_SEL = newValue
                             setValue(newValue)
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.SS_UP_SEL.command, newValue)
                         }
                     }}
