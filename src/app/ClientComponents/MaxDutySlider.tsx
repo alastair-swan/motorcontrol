@@ -46,7 +46,7 @@ export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
                             const updatedState = state
                             updatedState.MAXDUTY = newValue
                             setValue(newValue)
-                        setState(updatedState)  
+                            setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.MAXDUTY.command, newValue)
                         }
                     }}

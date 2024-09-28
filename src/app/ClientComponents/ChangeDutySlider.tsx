@@ -45,7 +45,7 @@ export function ChangeDutySlider ({ motorNumber, itembgColor, itembgHoverColor, 
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
                             const updatedState = state
-                            updatedState.TIP = newValue
+                            updatedState.CHANGEDUTY = newValue
                             setValue(newValue)
                             setState(updatedState)  
                             UpdateParam(motorNumber, RegisterList.CHANGEDUTY.command, newValue)
