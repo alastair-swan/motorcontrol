@@ -6,7 +6,7 @@ import { MotorParams } from "../MotorControlClient"
 export function TemperatureState({state}: {state: MotorParams}){
     return (
         <Box>
-            Temperature: { state.ST_FAIL ? '<span style="color: red">Out of Limits</span>' : "In Limits"}
+            Temperature: { state.TSD_MASK ? (state.TSD ? <span style={{color: 'red'}}>Overtemperature</span> : "Normal" ) : <span style={{color: 'yellow'}}>Not Monitored</span> }
         </Box>
     )
 }

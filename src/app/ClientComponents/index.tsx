@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction } from 'react'
 import { MotorParams } from '../MotorControlClient'
 import { number } from 'zod'
 
-export type switchComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}
-export type sliderComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}
+export type switchComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: (motorState: MotorParams) => void}
+export type sliderComponentProps = { motorNumber: number, itembgColor?: string, itembgHoverColor?: string, state: MotorParams, setState: (motorState: MotorParams) => void}
 
 export const RegisterList = {
     CP_LOW: { command: 'CP_LOW', readable: true, writable: false, type: 'boolean'},

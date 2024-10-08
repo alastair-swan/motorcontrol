@@ -13,7 +13,7 @@ const itembgColor = 'rgba(255,255,255,0.2)'
 const itembgHoverColor = 'rgba(255,255,255,0.4)'
 
 
-async function MotorNumberComponent({ motorNumber }: { motorNumber: number }){
+function MotorNumberComponent({ motorNumber }: { motorNumber: number }){
     return (
         <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0, width: '100%'}}>
             <Box sx={{ borderWidth: 0, padding: 1, width: '100%', justifyContent: 'center'}}>
@@ -23,7 +23,9 @@ async function MotorNumberComponent({ motorNumber }: { motorNumber: number }){
     )
 }
 
-async function ErrorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>> }){
+
+
+function ErrorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     return (
         <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Box sx={{ borderWidth: 0, padding: 1 }}>
@@ -37,12 +39,12 @@ async function ErrorState({ motorNumber, state, setState }: { motorNumber: numbe
                     </Grid2>
                     <Grid2 size={1}>
                         <Box sx={{height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                            Charge Pump: <Client.ChargePumpState state={state}/><br/>
-                            Temperature: <Client.TemperatureState state={state}/><br/>
-                            Current: <Client.CurrentState state={state}/><br/>
-                            RPM State: <Client.RPMErrorState state={state}/><br/>
-                            Startup: <Client.StartupState state={state}/><br/>
-                            Current Speed: <Client.RotationState state={state}/>
+                            <Client.ChargePumpState state={state}/><br/>
+                            <Client.TemperatureState state={state}/><br/>
+                            <Client.CurrentState state={state}/><br/>
+                            <Client.RPMErrorState state={state}/><br/>
+                            <Client.StartupState state={state}/><br/>
+                            <Client.RotationState state={state}/>
                         </Box>
                     </Grid2>
                 </Grid2>
@@ -124,33 +126,24 @@ export function Motor ({ motorNumber }: { motorNumber: number }){
         SPD: RegisterList.SPD.default,
         hz_cnt: 0
     })
+
+    const updateMotor = (motorState: MotorParams) => {
+        setMotorState({...motorState})
+    }
+
     return (
         <Grid2 size={1}>
             <Grid2 container spacing={1}>
                 <MotorNumberComponent motorNumber={motorNumber}/>
-                <ErrorState motorNumber={motorNumber} state={motorState} setState={setMotorState}/>
-                <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={motorState} setState={setMotorState}/>
+                <ErrorState motorNumber={motorNumber} state={motorState} setState={updateMotor}/>
+                <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={motorState} setState={updateMotor}/>
             </Grid2>
         </Grid2>
     )
 }
 
-export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState }: {motorNumber: number, sectionbgColor?: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>> } ) {
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = state
-                    state.OCP_LVL = await GetParam(motorNumber, RegisterList.OCP_LVL.command) === 1
-                    setState(result)
-                }
-                catch (error){
-                    console.error('OCP_LVL failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
+export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState }: 
+    {motorNumber: number, sectionbgColor?: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void } ) {
     return (
         <Grid2 container spacing={1}>
             <Client.NoStopSwitch motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
@@ -215,7 +208,7 @@ export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverCo
     )
 }
 
-export default function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState}: {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}){
+export default function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState}: {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void }){
     return (
         <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Box sx={{ borderWidth: 0, padding: 1 }}>
@@ -226,7 +219,7 @@ export default function MotorControlSettings({ motorNumber, sectionbgColor, item
                     <Grid2 size={1}>
                         <Box sx={{ flex: 1, height: '100%', bgcolor: sectionbgColor, borderRadius: 2, borderWidth: 0}}>
                             <Box sx={{ flex: 1, height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                                <Client.DutyCurve motorNumber={motorNumber} state={state} setState={setState}/>
+                                { /* <Client.DutyCurve motorNumber={motorNumber} state={state} setState={setState}/> */ }
                             </Box>
                         </Box>
                     </Grid2>

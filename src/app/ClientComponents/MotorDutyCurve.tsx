@@ -8,7 +8,7 @@ import { RegisterList } from '.'
 
 type graphPoint = { x: number, y: number }
 
-export function DutyCurve({ motorNumber, state, setState}: { motorNumber: number, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>}){
+export function DutyCurve({ motorNumber, state, setState}: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void}){
     const getGraphData = ():graphPoint[] => {
         const startDuty = state.STARTDUTY / 5.12
         const stopDuty = state.STOPDUTY / 2.56

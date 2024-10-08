@@ -1,3 +1,5 @@
+"use client"
+
 export type MotorParams = {
     CP_LOW: boolean,
     TSD: boolean,

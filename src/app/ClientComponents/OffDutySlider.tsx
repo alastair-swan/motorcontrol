@@ -8,25 +8,6 @@ import { asPercentage } from "./helper"
 
 // STOPDUTY
 export function OffDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.STOPDUTY.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.STOPDUTY.command)
-                    const updatedState = state
-                    updatedState.STOPDUTY = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('STOPDUTY failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
-
     const switchText = () => {
         return asPercentage(sliderScale(state.STOPDUTY))
     }
@@ -37,17 +18,17 @@ export function OffDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
                 Motor Off Input Value: { switchText() }
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.STOPDUTY}
                     min={0} 
                     max={127}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.STOPDUTY = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                STOPDUTY: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.STOPDUTY.command, newValue)
                         }
                     }}
