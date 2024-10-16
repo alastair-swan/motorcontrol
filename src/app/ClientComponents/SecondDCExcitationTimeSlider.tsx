@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // TIP
 export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.TIP.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.TIP.command)
-                    const updatedState = state
-                    updatedState.TIP = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('TIP failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         return RegisterList.TIP.valuemap[value] + " seconds"
     }
@@ -37,16 +19,16 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembg
                 Second DC Excitation Time {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.TIP }
                     min={0} 
                     max={7}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.TIP = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                TIP: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.TIP.command, newValue)
                         }
                     }}

@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // RPMLIMIT
 export function RPMLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.RPMLIMIT.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.RPMLIMIT.command)
-                    const updatedState = state
-                    updatedState.RPMLIMIT = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('RPMLIMIT failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         return RegisterList.RPMLIMIT.valuemap[value] + ' RPM'
     }
@@ -37,16 +19,16 @@ export function RPMLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, st
                 Motor RPM Limit {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.RPMLIMIT }
                     min={0} 
                     max={7}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.RPMLIMIT = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                RPMLIMIT: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.RPMLIMIT.command, newValue)
                         }
                     }}

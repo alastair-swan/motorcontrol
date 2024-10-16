@@ -7,25 +7,7 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // KP
 export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.KP.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.KP.command)
-                    const updatedState = state
-                    updatedState.KP = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('KP failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
-    const sliderScale = (value: number) => { return (value * 0.08) }
+    const sliderScale = (value: number) => { return (state.KPX ? value * 0.08 * 8 : value * 0.08) }
     const sliderFormat = (value: number) => {
         return value.toFixed(2)
     }
@@ -38,17 +20,17 @@ export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor, state, s
                 I coefficient: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.KP }
                     min={0} 
                     max={127}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.KP = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                KP: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.KP.command, newValue)
                         }
                     }}

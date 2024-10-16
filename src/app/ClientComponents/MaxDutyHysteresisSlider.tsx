@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // MAXDUTYHYS
 export function MaxDutyHysteresisSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.MAXDUTYHYS.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.MAXDUTYHYS.command)
-                    const updatedState = state
-                    updatedState.MAXDUTYHYS = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('MAXDUTYHYS failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.MAXDUTYHYS
     }
@@ -34,16 +16,16 @@ export function MaxDutyHysteresisSlider ({ motorNumber, itembgColor, itembgHover
                 Hysteresis at Max Duty: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.MAXDUTYHYS }
                     min={0}
                     max={15}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.MAXDUTYHYS = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                MAXDUTYHYS: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.MAXDUTYHYS.command, newValue)
                         }
                     }}

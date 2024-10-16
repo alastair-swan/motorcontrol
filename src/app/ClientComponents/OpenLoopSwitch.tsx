@@ -7,23 +7,6 @@ import { Grid2, Box, Switch } from '@mui/material'
 
 // OPENLOOP
 export function OpenLoopSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
-    const [value, setValue] = useState<boolean>(RegisterList.OPENLOOP.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.OPENLOOP.command) === 1
-                    const updatedState = state
-                    updatedState.OPENLOOP = result
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('OPENLOOP failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         if (state.OPENLOOP){
             return "Open"
@@ -36,10 +19,10 @@ export function OpenLoopSwitch ({ motorNumber, itembgColor, itembgHoverColor, st
                 <Switch 
                     checked={state.OPENLOOP}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        const updatedState = state
-                        updatedState.OPENLOOP = checked
-                        setValue(checked)
-                        setState(updatedState)  
+                        setState({
+                            ...state,
+                            OPENLOOP: checked
+                        })  
                         UpdateParam(motorNumber, RegisterList.OPENLOOP.command, checked)
                     }}
                 /> 

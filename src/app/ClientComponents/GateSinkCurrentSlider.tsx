@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // SINK
 export function GateSinkCurrentSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SINK.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SINK.command)
-                    const updatedState = state
-                    updatedState.SINK = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('SINK failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.SINK
     }
@@ -34,16 +16,16 @@ export function GateSinkCurrentSlider ({ motorNumber, itembgColor, itembgHoverCo
                 Transistor Gate Sink Current {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SINK }
                     min={0} 
                     max={7}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SINK = newValue
-                            setValue(newValue)
-                            setState(updatedState)
+                            setState({
+                                ...state,
+                                SINK: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.SINK.command, newValue)
                         }
                     }}

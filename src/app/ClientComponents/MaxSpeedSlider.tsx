@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // MAXSPEED
 export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.MAXSPEED.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.MAXSPEED.command)
-                    const updatedState = state
-                    updatedState.MAXSPEED = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('MAXSPEED failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         const speedList = RegisterList.MAXSPEED.valuemap
         return speedList[value] + " RPM"
@@ -38,16 +20,16 @@ export function MaxSpeedSlider ({ motorNumber, itembgColor, itembgHoverColor, st
                 Max RPM: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.MAXSPEED }
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.MAXSPEED = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                MAXSPEED: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.MAXSPEED.command, newValue)
                         }
                     }}

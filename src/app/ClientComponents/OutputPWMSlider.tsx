@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // FPWM
 export function OutputPWMSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.FPWM.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.FPWM.command)
-                    const updatedState = state
-                    updatedState.FPWM = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('FPWM failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.FPWM
     }
@@ -34,16 +16,16 @@ export function OutputPWMSlider ({ motorNumber, itembgColor, itembgHoverColor, s
                 Output PWM Frequency Mode {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.FPWM }
                     min={0} 
                     max={15}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.FPWM = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                FPWM: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.FPWM.command, newValue)
                         }
                     }}

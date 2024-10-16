@@ -7,24 +7,6 @@ import { Grid2, Box, Switch } from '@mui/material'
 
 // STBY_MODE
 export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
-    const [value, setValue] = useState<boolean>(RegisterList.STBY_MODE.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.STBY_MODE.command) === 1
-                    const updatedState = state
-                    updatedState.STBY_MODE = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('STBY_MODE failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         if (!state.STBY_MODE){
             return "Only Stby Pin Controls Standby"
@@ -35,12 +17,12 @@ export function StandbyModeSwitch ({ motorNumber, itembgColor, itembgHoverColor,
         <Grid2 sx={{ width: '100%' }}>
             <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
                 <Switch  
-                    checked={value}
+                    checked={ state.STBY_MODE }
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        const updatedState = state
-                        updatedState.STBY_MODE = checked
-                        setValue(checked)
-                        setState(updatedState)
+                        setState({
+                            ...state,
+                            STBY_MODE: checked
+                        })
                         UpdateParam(motorNumber, RegisterList.STBY_MODE.command, checked)
                     }}
                 /> 

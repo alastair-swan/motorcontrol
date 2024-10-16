@@ -8,24 +8,6 @@ import { shuntResistor } from "./helper"
 
 // SS_UP_SEL
 export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SS_UP_SEL.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SS_UP_SEL.command)
-                    const updatedState = state
-                    updatedState.SS_UP_SEL = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('SS_UP_SEL failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderScale = (value: number) => {
         const steps = (index: number) : number => { 
             return RegisterList.SS_UP_SEL.valuemap[index] as number
@@ -42,17 +24,17 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, item
                 Soft Start Current Step Size: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SS_UP_SEL }
                     min={0} 
                     max={3}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SS_UP_SEL = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                SS_UP_SEL: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.SS_UP_SEL.command, newValue)
                         }
                     }}

@@ -7,23 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // FMAX
 export function ElectricalAngleMaxFrequencySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.WAIT_TIME.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.FMAX.command)
-                    const updatedState = state
-                    updatedState.FMAX = result
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('FMAX failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.FMAX
     }
@@ -33,16 +16,16 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, itembgColor, i
                 Electrical Angle Frequency Mode {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.FMAX}
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.FMAX = newValue
-                            setValue(newValue)
-                        setState(updatedState)
+                            setState({
+                                ...state,
+                                FMAX: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.FMAX.command, newValue)
                         }
                     }}

@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // POLEPAIR
 export function PolesSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.POLEPAIR.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.POLEPAIR.command)
-                    const updatedState = state
-                    updatedState.POLEPAIR = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('POLEPAIR failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         return (value + 1) * 2 + " Pole Motor"
     }
@@ -37,16 +19,16 @@ export function PolesSlider ({ motorNumber, itembgColor, itembgHoverColor, state
                 {sliderText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.POLEPAIR }
                     min={0} 
                     max={7}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.POLEPAIR = newValue
-                            setValue(newValue)
-                        setState(updatedState)  
+                            setState({
+                                ...state,
+                                POLEPAIR: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.POLEPAIR.command, newValue)
                         }
                     }}

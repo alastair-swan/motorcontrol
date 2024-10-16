@@ -8,24 +8,6 @@ import { asPercentage } from "./helper"
 
 // SPD
 export function MotorDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SPD.default) 
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SPD.command)
-                    const updatedState = state
-                    updatedState.SPD = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('SPD failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.SPD
     }
@@ -43,10 +25,10 @@ export function MotorDutySlider ({ motorNumber, itembgColor, itembgHoverColor, s
                     scale={(value: number) => { return value }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SPD = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state, 
+                                SPD: newValue}
+                            )  
                             UpdateParam(motorNumber, RegisterList.SPD.command, newValue)
                         }
                     }}

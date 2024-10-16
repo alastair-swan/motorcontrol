@@ -18,11 +18,11 @@ export function StartDutySlider ({ motorNumber, itembgColor, itembgHoverColor, s
                 Motor Start Input Value: { switchText() }
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={state.STARTDUTY}
+                    value={ state.STARTDUTY }
                     min={0} 
                     max={255}
                     step={1}
-                    scale={sliderScale}
+                    scale={ sliderScale }
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
                             setState({

@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // FST
 export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.FST.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.FST.command)
-                    const updatedState = state
-                    updatedState.FST = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('FST failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.FST
     }
@@ -34,16 +16,16 @@ export function ForcedComutationFrequencySlider ({ motorNumber, itembgColor, ite
                 Forced Comutation Frequency {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.FST }
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.FST = newValue
-                            setValue(newValue)
-                        setState(updatedState)
+                            setState({
+                                ...state,
+                                FST: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.FST.command, newValue)
                         }
                     }}

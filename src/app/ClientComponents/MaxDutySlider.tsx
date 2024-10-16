@@ -8,24 +8,6 @@ import { asPercentage } from "./helper"
 
 // MAXDUTY
 export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.MAXDUTY.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.MAXDUTY.command)
-                    const updatedState = state
-                    updatedState.MAXDUTY = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('MAXDUTY failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.MAXDUTY
     }
@@ -36,7 +18,7 @@ export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
                 Motor Max Input Value: {asPercentage(sliderScale(switchText()))}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.MAXDUTY}
                     min={0} 
                     max={255}
                     step={1}
@@ -45,8 +27,10 @@ export function MaxDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
                         if (typeof newValue === 'number'){
                             const updatedState = state
                             updatedState.MAXDUTY = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                MAXDUTY: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.MAXDUTY.command, newValue)
                         }
                     }}

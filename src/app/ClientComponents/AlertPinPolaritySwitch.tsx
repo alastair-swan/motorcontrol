@@ -13,10 +13,6 @@ export function AlertPinPolaritySwitch ({ motorNumber, itembgColor, itembgHoverC
                 <Switch  
                     checked={state.ALERTINV}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        console.log("ALERTINV" + checked)
-                        const updatedState = state
-                        updatedState.ALERTINV = checked
-                        //setValue(checked)
                         setState({
                             ...state,
                             ALERTINV: checked

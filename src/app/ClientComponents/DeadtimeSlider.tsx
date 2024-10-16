@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // DEADTIME
 export function DeadtimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.DEADTIME.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.DEADTIME.command)
-                    const updatedState = state
-                    updatedState.DEADTIME = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('DEADTIME failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.DEADTIME
     }
@@ -34,16 +16,16 @@ export function DeadtimeSlider ({ motorNumber, itembgColor, itembgHoverColor, st
                 Dead Time Setting {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.DEADTIME}
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.DEADTIME = newValue
-                            setValue(newValue)
-                            setState(updatedState)
+                            setState({
+                                ...state,
+                                DEADTIME: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.DEADTIME.command, newValue)
                         }
                     }}

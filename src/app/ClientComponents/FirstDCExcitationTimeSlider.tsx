@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // PreTIP
 export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.PRE_TIP.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.PRE_TIP.command)
-                    const updatedState = state
-                    updatedState.PRE_TIP = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('PRE_TIP failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.PRE_TIP
     }
@@ -34,16 +16,16 @@ export function FirstDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgH
                 First DC Excitation Time {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.PRE_TIP }
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.PRE_TIP = newValue
-                            setValue(newValue)
-                        setState(updatedState)
+                            setState({
+                                ...state,
+                                PRE_TIP: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.PRE_TIP.command, newValue)
                         }
                     }}

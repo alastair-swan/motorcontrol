@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // DUTYCHGLIMIT
 export function SpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.DUTYCHGLIMIT.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.DUTYCHGLIMIT.command)
-                    const updatedState = state
-                    updatedState.STOPDUTY = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('DUTYCHGLIMIT failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         return (100 / (RegisterList.DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
     }
@@ -37,17 +19,17 @@ export function SpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverC
                 Motor Speed Change Rate: { switchText() }
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.DUTYCHGLIMIT }
                     min={0} 
                     max={7}
                     step={1}
                     scale={(value: number) => { return (value + 1) % 8 }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.DUTYCHGLIMIT = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                DUTYCHGLIMIT: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.DUTYCHGLIMIT.command, newValue)
                         }
                     }}

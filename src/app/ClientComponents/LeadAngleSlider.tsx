@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // LA
 export function LeadAngleSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.LA.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.LA.command)
-                    const updatedState = state
-                    updatedState.LA = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('LA failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.LA
     }
@@ -34,16 +16,16 @@ export function LeadAngleSlider ({ motorNumber, itembgColor, itembgHoverColor, s
                 Lead Angle Mode {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.LA }
                     min={0} 
                     max={15}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.LA = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                LA: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.LA.command, newValue)
                         }
                     }}

@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 //STARTRPM
 export function StartRPMSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.STARTRPM.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.STARTRPM.command)
-                    const updatedState = state
-                    updatedState.STARTRPM = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('STARTRPM failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.STARTRPM
     }
@@ -34,16 +16,16 @@ export function StartRPMSlider ({ motorNumber, itembgColor, itembgHoverColor, st
                 RPM At Start Duty: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.STARTRPM }
                     min={0} 
                     max={4095}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.STARTRPM = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                STARTRPM: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.STARTRPM.command, newValue)
                         }
                     }}

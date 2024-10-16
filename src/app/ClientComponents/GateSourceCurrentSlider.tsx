@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // SOURCE
 export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SOURCE.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SOURCE.command)
-                    const updatedState = state
-                    updatedState.SOURCE = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('SOURCE failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.SOURCE
     }
@@ -34,16 +16,16 @@ export function GateSourceCurrentSlider ({ motorNumber, itembgColor, itembgHover
                 Transistor Gate Source Current {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SOURCE }
                     min={0} 
                     max={7}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SOURCE = newValue
-                            setValue(newValue)
-                            setState(updatedState)
+                            setState({
+                                ...state,
+                                SOURCE: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.SOURCE.command, newValue)
                         }
                     }}

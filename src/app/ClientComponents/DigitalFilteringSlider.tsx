@@ -7,24 +7,6 @@ import { sliderComponentProps, RegisterList } from "."
 
 // OCPMASK
 export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.OCPMASK.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.OCPMASK.command)
-                    const updatedState = state
-                    updatedState.OCPMASK = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('OCPMASK failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.OCPMASK
     }
@@ -34,17 +16,17 @@ export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverC
                 Current Sense Digital Filtering: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.OCPMASK}
                     min={0} 
                     max={3}
                     step={1}
                     scale={(value: number) => { return value }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.OCPMASK = newValue
-                            setValue(newValue)
-                        setState(updatedState)
+                            setState({
+                                ...state,
+                                OCPMASK: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.OCPMASK.command, newValue)
                         }
                     }}

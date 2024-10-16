@@ -8,25 +8,6 @@ import { shuntResistor } from "./helper"
 
 // SS_ADD_SEL
 export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SS_ADD_SEL.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SS_ADD_SEL.command)
-                    const updatedState = state
-                    updatedState.SS_ADD_SEL = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('SS_ADD_SEL failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
-
     const sliderFormat = (value: number) => {
         const steps = (index: number) : number => { return RegisterList.SS_ADD_SEL.valuemap[index] as number }
         return (steps(value) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor)) + " Amps"
@@ -40,16 +21,16 @@ export function SoftStartCurrentLimitSlider ({ motorNumber, itembgColor, itembgH
                 Current Limit During Soft Start: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SS_ADD_SEL }
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SS_ADD_SEL = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                SS_ADD_SEL: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.SS_ADD_SEL.command, newValue)
                         }
                     }}

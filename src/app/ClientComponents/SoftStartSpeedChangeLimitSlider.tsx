@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // SS_DUTYCHGLIMIT
 export function SoftStartSpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SS_DUTYCHGLIMIT.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SS_DUTYCHGLIMIT.command)
-                    const updatedState = state
-                    updatedState.SS_DUTYCHGLIMIT = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('SS_DUTYCHGLIMIT failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         return (100 / (RegisterList.SS_DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
     }
@@ -37,17 +19,17 @@ export function SoftStartSpeedChangeLimitSlider ({ motorNumber, itembgColor, ite
                 Speed Change Rate during soft start: { sliderText() }
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SS_DUTYCHGLIMIT }
                     min={0} 
                     max={7}
                     step={1}
                     scale={(value: number) => { return (value + 1) % 8 }}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SS_DUTYCHGLIMIT = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                SS_DUTYCHGLIMIT: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.SS_DUTYCHGLIMIT.command, newValue)
                         }
                     }}

@@ -7,25 +7,7 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // KI
 export function KISlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.KI.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.KI.command)
-                    const updatedState = state
-                    updatedState.KI = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('KI failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
-    const sliderScale = (value: number) => { return (value * 0.08) }
+    const sliderScale = (value: number) => { return (state.KIX ? value * 0.08 * 8: value * 0.08) }
     const sliderFormat = (value: number) => {
         return value.toFixed(2)
     }
@@ -38,17 +20,17 @@ export function KISlider ({ motorNumber, itembgColor, itembgHoverColor, state, s
                 I coefficient: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.KI }
                     min={0} 
                     max={127}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.KI = newValue
-                            setValue(newValue)
-                            setState(updatedState)
+                            setState({
+                                ...state,
+                                KI: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.KI.command, newValue)
                         }
                     }}

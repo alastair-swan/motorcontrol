@@ -8,24 +8,6 @@ import { shuntResistor } from "./helper"
 
 // STARTCURRENT
 export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.STARTCURRENT.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.STARTCURRENT.command)
-                    const updatedState = state
-                    updatedState.STARTCURRENT = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('STARTCURRENT failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const sliderFormat = (value: number) => {
         const steps = (index: number) : number => { 
             const stepValues = [0, 0.3, 0.4, 0.5] as number[]
@@ -45,17 +27,17 @@ export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHov
                 Startup Current Limit: {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.STARTCURRENT }
                     min={0} 
                     max={7}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.TIP = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                STARTCURRENT: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.STARTCURRENT.command, newValue)
                         }
                     }}

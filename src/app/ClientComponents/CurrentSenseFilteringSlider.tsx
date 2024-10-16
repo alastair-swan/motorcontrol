@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // RS_SEL
 export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.RS_SEL.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.RS_SEL.command)
-                    const updatedState = state
-                    updatedState.RS_SEL = result
-                    setValue(result)
-                    setState(updatedState)
-                }
-                catch (error){
-                    console.error('RS_SEL failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return state.RS_SEL
     }
@@ -34,16 +16,16 @@ export function CurrentSenseFilteringSlider ({ motorNumber, itembgColor, itembgH
                 Current Sense analog filtering {switchText()}
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={state.RS_SEL}
                     min={0} 
                     max={3}
                     step={1}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.RS_SEL = newValue
-                            setValue(newValue)
-                            setState(updatedState)
+                            setState({
+                                ...state,
+                                RS_SEL: newValue
+                            })
                             UpdateParam(motorNumber, RegisterList.RS_SEL.command, newValue)
                         }
                     }}

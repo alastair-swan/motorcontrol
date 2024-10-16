@@ -7,24 +7,6 @@ import { Grid2, Box, Slider } from '@mui/material'
 
 // SPEEDSLOP
 export function SpeedSlopeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
-    const [value, setValue] = useState<number>(RegisterList.SPEEDSLOP.default)
-    useEffect(
-        () => {
-            const fetchData = async () => {
-                try{
-                    const result = await GetParam(motorNumber, RegisterList.SPEEDSLOP.command)
-                    const updatedState = state
-                    updatedState.SPEEDSLOP = result
-                    setValue(result)
-                    setState(updatedState)  
-                }
-                catch (error){
-                    console.error('SPEEDSLOP failed to fetch: ', error)
-                }
-            }
-            fetchData()
-        }, [ motorNumber ]
-    )
     const switchText = () => {
         return sliderFormat(sliderScale(state.SPEEDSLOP))
     }
@@ -38,17 +20,17 @@ export function SpeedSlopeSlider ({ motorNumber, itembgColor, itembgHoverColor, 
                 Speed Slope Below Inflection Point: { switchText() }
                 <Slider 
                     valueLabelDisplay='auto' 
-                    value={value}
+                    value={ state.SPEEDSLOP }
                     min={0} 
                     max={16383}
                     step={1}
                     scale={sliderScale}
                     onChange={(event: Event, newValue: number | number[]) => {
                         if (typeof newValue === 'number'){
-                            const updatedState = state
-                            updatedState.SPEEDSLOP = newValue
-                            setValue(newValue)
-                            setState(updatedState)  
+                            setState({
+                                ...state,
+                                SPEEDSLOP: newValue
+                            })  
                             UpdateParam(motorNumber, RegisterList.SPEEDSLOP.command, newValue)
                         }
                     }}
