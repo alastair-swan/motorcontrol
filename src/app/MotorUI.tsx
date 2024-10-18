@@ -213,7 +213,7 @@ export default function MotorControlSettings({ motorNumber, sectionbgColor, item
         <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Box sx={{ borderWidth: 0, padding: 1 }}>
                 <Grid2 container spacing={1} columns={2}>
-                    <Grid2 size={1} spacing={1}>
+                    <Grid2 minWidth={'inherit'} size={1} spacing={1}>
                         <MotorControlSliders motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState}/>
                     </Grid2>
                     <Grid2 size={1}>

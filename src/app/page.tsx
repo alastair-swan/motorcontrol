@@ -6,9 +6,8 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-top bg-gradient-to-b from-[#5c67ad] to-[#a7a7cc] text-white">
       <Box padding={2}>
-        <Grid2 container spacing={2} columns={2}>
+        <Grid2 container spacing={2} columns={1}>
           <Motor motorNumber={0}/>
-          <Motor motorNumber={1}/>
         </Grid2>
       </Box>
     </main>
