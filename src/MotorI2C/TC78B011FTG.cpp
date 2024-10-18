@@ -1,3 +1,15 @@
+#include <thread>
+#include <chrono>
+#include <linux/i2c-dev.h>
+#include <cstdlib>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <ostream>
+#include <iostream>
+#include <cmath>
+#include <cstring>
 #include "TC78B011FTG.h"
 
 char* numToBin(uint8_t num){
@@ -1382,12 +1394,13 @@ int TC78B011FTG::getRPM(bool fromChip)
 
 int TC78B011FTG::readNVM()
 {
+    using namespace std::chrono_literals;
     i2cWrite(NVM_RW_REGISTER, 0);
     i2cWrite(NVM_ST_REGISTER, 1);
     int waitTime = 0;
-    // wait 100ms
+    std::this_thread::sleep_for(100ms);
     while (i2cRead(NVM_ST_REGISTER) != 0){
-        // wait 100ms
+        std::this_thread::sleep_for(100ms);
         waitTime++;
         if (waitTime > 10){
             return -1;
@@ -1398,12 +1411,13 @@ int TC78B011FTG::readNVM()
 
 int TC78B011FTG::writeNVM()
 {
+    using namespace std::chrono_literals;
     i2cWrite(NVM_RW_REGISTER, 1);
     i2cWrite(NVM_ST_REGISTER, 1);
     int waitTime = 0;
-    // wait 100ms
+    std::this_thread::sleep_for(100ms);
     while (i2cRead(NVM_ST_REGISTER) != 0){
-        // wait 100ms
+        std::this_thread::sleep_for(100ms);
         waitTime++;
         if (waitTime > 10){
             return -1;

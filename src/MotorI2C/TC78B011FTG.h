@@ -1,14 +1,4 @@
-#include <linux/i2c-dev.h>
-#include <cstdlib>
-#include <fcntl.h>
-#include <unistd.h>
 #include <stdint.h>
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <ostream>
-#include <iostream>
-#include <cmath>
-#include <cstring>
 
 #define ERR_CP_LOW_MASK 0x20
 #define ERR_CP_LOW_OFFSET 5

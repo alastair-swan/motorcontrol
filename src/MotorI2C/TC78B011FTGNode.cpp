@@ -1,5 +1,6 @@
 #include "TC78B011FTG.h"
 #include <napi.h>
+#include <iostream>
 
 using namespace Napi;
 
