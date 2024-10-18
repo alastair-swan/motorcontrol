@@ -1,12 +1,10 @@
 "use client"
 
-import Grid2 from "@mui/material/Grid2";
-import Box from '@mui/material/Box';
+import { Grid2, Box, Tabs, Tab } from "@mui/material";
 import './ClientComponents/MotorDutyCurve'
 import * as Client from './ClientComponents'
-import { GetParam } from "./MotorControl";
 import { RegisterList } from "./ClientComponents";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { MotorParams } from "./MotorControlClient";
 const sectionbgColor = 'rgba(255,255,255,0.2)'
 const itembgColor = 'rgba(255,255,255,0.2)'
@@ -15,47 +13,37 @@ const itembgHoverColor = 'rgba(255,255,255,0.4)'
 
 function MotorNumberComponent({ motorNumber }: { motorNumber: number }){
     return (
-        <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0, width: '100%'}}>
-            <Box sx={{ borderWidth: 0, padding: 1, width: '100%', justifyContent: 'center'}}>
-                Motor { motorNumber }
-            </Box>
-        </Grid2>
+        <Box sx={{ width: '100%', borderRadius: 4, borderWidth: 0, padding: 1, justifyContent: 'center', bgcolor: itembgColor}}>
+            Motor { motorNumber }
+        </Box>
     )
 }
 
 
 
-function ErrorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
+function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     return (
-        <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
-            <Box sx={{ borderWidth: 0, padding: 1 }}>
-                <Grid2 container spacing={1} columns={2}>
-                    <Grid2 size={1}>
-                        <Grid2 container spacing={1}>
-                            <Client.ChargePumpStateMonitoringSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
-                            <Client.ThermalShutdownInhibitSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
-                            <Client.OverCurrentDetectionSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 size={1}>
-                        <Box sx={{height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                            <Client.ChargePumpState state={state}/><br/>
-                            <Client.TemperatureState state={state}/><br/>
-                            <Client.CurrentState state={state}/><br/>
-                            <Client.RPMErrorState state={state}/><br/>
-                            <Client.StartupState state={state}/><br/>
-                            <Client.RotationState state={state}/>
-                        </Box>
-                    </Grid2>
+        <Box sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
+            <Grid2 container columns={2} sx={{ borderWidth: 0, padding: 1 }}>
+                <Grid2 gridColumn={0} sx={{height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                    <Client.ChargePumpState state={state}/>
+                    <Client.TemperatureState state={state}/>
+                    <Client.CurrentState state={state}/>
+                    <Client.RPMErrorState state={state}/>
+                    <Client.StartupState state={state}/>
+                    <Client.RotationState state={state}/>
                 </Grid2>
-            </Box>
-        </Grid2>
+                <Grid2 gridColumn={1}>
+                    <Client.DutyCurve motorNumber={motorNumber} state={state} setState={setState}/>
+                </Grid2>
+            </Grid2>
+        </Box>
     )
 }
 
 
 
-export function Motor ({ motorNumber }: { motorNumber: number }){
+export default function Motor ({ motorNumber }: { motorNumber: number }){
     const [motorState, setMotorState] = useState<MotorParams>({
         CP_LOW: false,
         TSD: false,
@@ -132,20 +120,21 @@ export function Motor ({ motorNumber }: { motorNumber: number }){
     }
 
     return (
-        <Grid2 size={1}>
-            <Grid2 container spacing={1}>
-                <MotorNumberComponent motorNumber={motorNumber}/>
-                <ErrorState motorNumber={motorNumber} state={motorState} setState={updateMotor}/>
-                <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={motorState} setState={updateMotor}/>
-            </Grid2>
-        </Grid2>
+        <Box>
+            <MotorNumberComponent motorNumber={motorNumber}/>
+            <MotorState motorNumber={motorNumber} state={motorState} setState={updateMotor}/>
+            <MotorControlSettings motorNumber={motorNumber} sectionbgColor={sectionbgColor} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={motorState} setState={updateMotor}/>
+        </Box>
     )
 }
 
-export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState }: 
-    {motorNumber: number, sectionbgColor?: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void } ) {
+export function MotorTuningSliders({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState }: 
+    {motorNumber: number, sectionbgColor?: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void }) {
     return (
         <Grid2 container spacing={1}>
+            <Client.ChargePumpStateMonitoringSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
+            <Client.ThermalShutdownInhibitSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
+            <Client.OverCurrentDetectionSwitch motorNumber={motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
             <Client.NoStopSwitch motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
             <Client.OffDutySlider motorNumber = {motorNumber } itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
             <Client.StartDutySlider motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
@@ -203,29 +192,69 @@ export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverCo
             <Client.GateSourceCurrentSlider motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
             <Client.GateSinkCurrentSlider motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
             <Client.PositionDetectionHysteresisSlider motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />                            
+        </Grid2>
+    )
+}
+
+export function MotorControlSliders({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState }: 
+    {motorNumber: number, sectionbgColor?: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void }) {
+    return (
+        <Grid2 container spacing={1}>
             <Client.MotorDutySlider motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState} />
         </Grid2>
     )
 }
 
-export default function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState}: {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void }){
+export function MotorControlSettings({ motorNumber, sectionbgColor, itembgHoverColor, itembgColor, state, setState}: 
+    {motorNumber: number, sectionbgColor: string, itembgHoverColor: string, itembgColor: string, state: MotorParams, setState: (motorState: MotorParams) => void }) {
+        const [value, setValue] = useState(0);
+
+        interface TabPanelProps {
+            children?: React.ReactNode;
+            index: number;
+            value: number;
+        }
+          
+        function TabPanel(props: TabPanelProps) {
+            const { children, value, index, ...other } = props;
+            
+            return (
+                <div
+                    role="controltabpanel"
+                    hidden={value !== index}
+                    id={`control-tabpanel-${index}`}
+                    aria-labelledby={`control-tab-${index}`}
+                    {...other}
+                >
+                {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+                </div>
+            );
+        }
+          
+    function a11yProps(index: number) {
+        return {
+            id: `control-tab-${index}`,
+            'aria-controls': `control-tabpanel-${index}`,
+        };
+    }
+    
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
     return (
-        <Grid2 sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
-            <Box sx={{ borderWidth: 0, padding: 1 }}>
-                <Grid2 container spacing={1} columns={2}>
-                    <Grid2 minWidth={'inherit'} size={1} spacing={1}>
-                        <MotorControlSliders motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState}/>
-                    </Grid2>
-                    <Grid2 size={1}>
-                        <Box sx={{ flex: 1, height: '100%', bgcolor: sectionbgColor, borderRadius: 2, borderWidth: 0}}>
-                            <Box sx={{ flex: 1, height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                                { /* <Client.DutyCurve motorNumber={motorNumber} state={state} setState={setState}/> */ }
-                            </Box>
-                        </Box>
-                    </Grid2>
-                </Grid2>
-            </Box>
-        </Grid2>
+        <Box sx={{ width: '100%', borderWidth: 0, padding: 1, bgcolor: sectionbgColor, borderRadius: 4}}>
+            <Tabs value={value} onChange={handleChange}>
+                <Tab label="Control" {...a11yProps(0)} />
+                <Tab label="Tuning" {...a11yProps(1)} />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+                <MotorControlSliders motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState}/>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                <MotorTuningSliders motorNumber = {motorNumber} itembgHoverColor={itembgHoverColor} itembgColor={itembgColor} state={state} setState={setState}/>
+            </TabPanel>
+        </Box>
     )
 }
 
