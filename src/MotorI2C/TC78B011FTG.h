@@ -131,7 +131,7 @@
 #define POLEPAIR_OFFSET 3
 #define POLEPAIR_REGISTER 14
 
-#define DEFAULT_MAXSPEED 0       // register 14[2:1]
+#define DEFAULT_MAXSPEED 2       // register 14[2:1]
 #define MAXSPEED_MASK 0x06
 #define MAXSPEED_OFFSET 1
 #define MAXSPEED_REGISTER 14

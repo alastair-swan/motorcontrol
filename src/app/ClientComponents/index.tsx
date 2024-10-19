@@ -35,7 +35,7 @@ export const RegisterList = {
     STBY_MODE: { command: 'STBY_MODE', readable: true, writable: true, type: 'boolean', default: false},
     DIR: { command: 'DIR', readable: true, writable: true, type: 'boolean', default: true},
     POLEPAIR: { command: 'POLEPAIR', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 6},
-    MAXSPEED: { command: 'MAXSPEED', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: [4096, 8192, 16384, 32768]},
+    MAXSPEED: { command: 'MAXSPEED', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2, valuemap: [4096, 8192, 16384, 32768]},
     FG_ON: { command: 'FG_ON', readable: true, writable: true, type: 'boolean', default: false},
     TSPSEL: { command: 'TSPSEL', readable: true, writable: true, type: 'boolean', default: false},
     SPDINV: { command: 'SPDINV', readable: true, writable: true, type: 'boolean', default: false},
