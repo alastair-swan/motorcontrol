@@ -14,20 +14,18 @@ export function KIXSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, 
         return "x1"
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                <Switch 
-                    checked={state.KIX}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setState({
-                            ...state,
-                            KIX: checked
-                        })  
-                        UpdateParam(motorNumber, RegisterList.KIX.command, checked)
-                    }}
-                />
-                I coefficient {switchText()} 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            <Switch 
+                checked={state.KIX}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    setState({
+                        ...state,
+                        KIX: checked
+                    })  
+                    UpdateParam(motorNumber, RegisterList.KIX.command, checked)
+                }}
+            />
+            I coefficient {switchText()} 
+        </Box>
     )
 }

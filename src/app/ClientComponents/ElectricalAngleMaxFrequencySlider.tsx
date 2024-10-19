@@ -11,30 +11,28 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, itembgColor, i
         return state.FMAX
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Electrical Angle Frequency Mode {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={state.FMAX}
-                    min={0} 
-                    max={3}
-                    step={1}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                FMAX: newValue
-                            })
-                            UpdateParam(motorNumber, RegisterList.FMAX.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={(value: number) => {
-                        const frequency = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
-                        return frequency[value]
-                    }}
-                /> 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Electrical Angle Frequency Mode {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={state.FMAX}
+                min={0} 
+                max={3}
+                step={1}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            FMAX: newValue
+                        })
+                        UpdateParam(motorNumber, RegisterList.FMAX.command, newValue)
+                    }
+                }}
+                valueLabelFormat={(value: number) => {
+                    const frequency = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
+                    return frequency[value]
+                }}
+            /> 
+        </Box>
     )
 }

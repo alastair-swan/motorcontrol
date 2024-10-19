@@ -15,28 +15,26 @@ export function KPSlider ({ motorNumber, itembgColor, itembgHoverColor, state, s
         return sliderFormat(sliderScale(state.KP))
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                I coefficient: {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={ state.KP }
-                    min={0} 
-                    max={127}
-                    step={1}
-                    scale={sliderScale}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                KP: newValue
-                            })  
-                            UpdateParam(motorNumber, RegisterList.KP.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={sliderFormat}
-                />
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            I coefficient: {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={ state.KP }
+                min={0} 
+                max={127}
+                step={1}
+                scale={sliderScale}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            KP: newValue
+                        })  
+                        UpdateParam(motorNumber, RegisterList.KP.command, newValue)
+                    }
+                }}
+                valueLabelFormat={sliderFormat}
+            />
+        </Box>
     )
 }

@@ -8,20 +8,18 @@ import { Grid2, Box, Switch } from '@mui/material'
 // LATCH
 export function ErrorLatchSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
-                <Switch  
-                    checked={state.LATCH}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setState({
-                            ...state,
-                            LATCH: checked
-                        })  
-                        UpdateParam(motorNumber, RegisterList.LATCH.command, checked)
-                    }}
-                />
-                Latch Error State
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
+            <Switch  
+                checked={state.LATCH}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    setState({
+                        ...state,
+                        LATCH: checked
+                    })  
+                    UpdateParam(motorNumber, RegisterList.LATCH.command, checked)
+                }}
+            />
+            Latch Error State
+        </Box>
     )
 }

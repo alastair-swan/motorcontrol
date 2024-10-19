@@ -11,30 +11,28 @@ export function DeadtimeSlider ({ motorNumber, itembgColor, itembgHoverColor, st
         return state.DEADTIME
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Dead Time Setting {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={state.DEADTIME}
-                    min={0} 
-                    max={3}
-                    step={1}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                DEADTIME: newValue
-                            })
-                            UpdateParam(motorNumber, RegisterList.DEADTIME.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={(value: number) => {
-                        const time = ['250ns', '500ns', '1000ns', '1500ns']
-                        return time[value]
-                    }}
-                /> 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Dead Time Setting {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={state.DEADTIME}
+                min={0} 
+                max={3}
+                step={1}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            DEADTIME: newValue
+                        })
+                        UpdateParam(motorNumber, RegisterList.DEADTIME.command, newValue)
+                    }
+                }}
+                valueLabelFormat={(value: number) => {
+                    const time = ['250ns', '500ns', '1000ns', '1500ns']
+                    return time[value]
+                }}
+            /> 
+        </Box>
     )
 }

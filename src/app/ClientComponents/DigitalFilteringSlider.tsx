@@ -11,31 +11,29 @@ export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverC
         return state.OCPMASK
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Current Sense Digital Filtering: {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={state.OCPMASK}
-                    min={0} 
-                    max={3}
-                    step={1}
-                    scale={(value: number) => { return value }}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                OCPMASK: newValue
-                            })
-                            UpdateParam(motorNumber, RegisterList.OCPMASK.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={(value: number) => {
-                        const speedList = ['OCP: none, ISD: 83ns', 'OCP: 500ns, ISD: 583ns', 'OCP: 666ns, ISD: 750ns', 'OCP: 750ns, ISD: 833ns']
-                        return speedList[value]
-                    }}
-                /> 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Current Sense Digital Filtering: {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={state.OCPMASK}
+                min={0} 
+                max={3}
+                step={1}
+                scale={(value: number) => { return value }}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            OCPMASK: newValue
+                        })
+                        UpdateParam(motorNumber, RegisterList.OCPMASK.command, newValue)
+                    }
+                }}
+                valueLabelFormat={(value: number) => {
+                    const speedList = ['OCP: none, ISD: 83ns', 'OCP: 500ns, ISD: 583ns', 'OCP: 666ns, ISD: 750ns', 'OCP: 750ns, ISD: 833ns']
+                    return speedList[value]
+                }}
+            /> 
+        </Box>
     )
 }

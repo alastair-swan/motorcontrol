@@ -14,27 +14,25 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembg
         return sliderFormat(state.TIP)
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Second DC Excitation Time {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={ state.TIP }
-                    min={0} 
-                    max={7}
-                    step={1}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                TIP: newValue
-                            })  
-                            UpdateParam(motorNumber, RegisterList.TIP.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={sliderFormat}
-                />
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Second DC Excitation Time {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={ state.TIP }
+                min={0} 
+                max={7}
+                step={1}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            TIP: newValue
+                        })  
+                        UpdateParam(motorNumber, RegisterList.TIP.command, newValue)
+                    }
+                }}
+                valueLabelFormat={sliderFormat}
+            />
+        </Box>
     )
 }

@@ -13,22 +13,20 @@ export function NoStopSwitch ({ motorNumber, itembgColor, itembgHoverColor, stat
         return "Off below StopDuty"
     }
     return (                                    
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
-                <Switch 
-                    checked={ state.NOSTOP }
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setState({
-                            ...state,
-                            NOSTOP: checked
-                        })
-                        UpdateParam(motorNumber, RegisterList.NOSTOP.command, checked)
-                    }}
-                /> 
-                {
-                    switchText()    
-                }
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
+            <Switch 
+                checked={ state.NOSTOP }
+                onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    setState({
+                        ...state,
+                        NOSTOP: checked
+                    })
+                    UpdateParam(motorNumber, RegisterList.NOSTOP.command, checked)
+                }}
+            /> 
+            {
+                switchText()    
+            }
+        </Box>
     )
 }

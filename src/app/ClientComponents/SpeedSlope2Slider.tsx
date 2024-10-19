@@ -15,28 +15,26 @@ export function SpeedSlope2Slider ({ motorNumber, itembgColor, itembgHoverColor,
         return Math.round(value * 100) / 100 + " RPM/%"
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Speed Slope Above Inflection Point: {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={ state.SPEEDSLOP2 }
-                    min={0} 
-                    max={16383}
-                    step={1}
-                    scale={(value: number) => { return value * 0.08 }}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                SPEEDSLOP2: newValue
-                            })  
-                            UpdateParam(motorNumber, RegisterList.SPEEDSLOP2.command, newValue)
-                        }
-                    }}
-                    valueLabelFormat={sliderFormat}
-                /> 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Speed Slope Above Inflection Point: {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={ state.SPEEDSLOP2 }
+                min={0} 
+                max={16383}
+                step={1}
+                scale={(value: number) => { return value * 0.08 }}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            SPEEDSLOP2: newValue
+                        })  
+                        UpdateParam(motorNumber, RegisterList.SPEEDSLOP2.command, newValue)
+                    }
+                }}
+                valueLabelFormat={sliderFormat}
+            /> 
+        </Box>
     )
 }

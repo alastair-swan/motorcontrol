@@ -11,26 +11,24 @@ export function LeadAngleSlider ({ motorNumber, itembgColor, itembgHoverColor, s
         return state.LA
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Lead Angle Mode {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={ state.LA }
-                    min={0} 
-                    max={15}
-                    step={1}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                LA: newValue
-                            })  
-                            UpdateParam(motorNumber, RegisterList.LA.command, newValue)
-                        }
-                    }}
-                /> 
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Lead Angle Mode {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={ state.LA }
+                min={0} 
+                max={15}
+                step={1}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            LA: newValue
+                        })  
+                        UpdateParam(motorNumber, RegisterList.LA.command, newValue)
+                    }
+                }}
+            /> 
+        </Box>
     )
 }

@@ -11,26 +11,24 @@ export function MaxDutyHysteresisSlider ({ motorNumber, itembgColor, itembgHover
         return state.MAXDUTYHYS
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
-                Hysteresis at Max Duty: {switchText()}
-                <Slider 
-                    valueLabelDisplay='auto' 
-                    value={ state.MAXDUTYHYS }
-                    min={0}
-                    max={15}
-                    step={1}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                        if (typeof newValue === 'number'){
-                            setState({
-                                ...state,
-                                MAXDUTYHYS: newValue
-                            })  
-                            UpdateParam(motorNumber, RegisterList.MAXDUTYHYS.command, newValue)
-                        }
-                    }}
-                />
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+            Hysteresis at Max Duty: {switchText()}
+            <Slider 
+                valueLabelDisplay='auto' 
+                value={ state.MAXDUTYHYS }
+                min={0}
+                max={15}
+                step={1}
+                onChange={(event: Event, newValue: number | number[]) => {
+                    if (typeof newValue === 'number'){
+                        setState({
+                            ...state,
+                            MAXDUTYHYS: newValue
+                        })  
+                        UpdateParam(motorNumber, RegisterList.MAXDUTYHYS.command, newValue)
+                    }
+                }}
+            />
+        </Box>
     )
 }

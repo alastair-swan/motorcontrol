@@ -14,20 +14,18 @@ export function MaxOffSwitch ({ motorNumber, itembgColor, itembgHoverColor, stat
         return "On above Max Duty"
     }
     return (
-        <Grid2 sx={{ width: '100%' }}>
-            <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
-                <Switch 
-                    checked={ state.MAXOFF }
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                        setState({
-                            ...state,
-                            MAXOFF: checked
-                        })  
-                        UpdateParam(motorNumber, RegisterList.MAXOFF.command, checked)
-                    }}
-                />
-                {switchText()}
-            </Box>
-        </Grid2>
+        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
+            <Switch 
+                checked={ state.MAXOFF }
+                onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    setState({
+                        ...state,
+                        MAXOFF: checked
+                    })  
+                    UpdateParam(motorNumber, RegisterList.MAXOFF.command, checked)
+                }}
+            />
+            {switchText()}
+        </Box>
     )
 }
