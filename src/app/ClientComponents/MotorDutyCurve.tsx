@@ -53,12 +53,12 @@ export function DutyCurve({ motorNumber, state, setState}: { motorNumber: number
     return (
         <Box
             sx={{
-                width: 400,
+                width: 1000,
                 height: 400,
                 backgroundColor: '#FFFFFF'
             }}
         >
-            <Graph data={graphData} maxX={RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number}/>
+            <Graph data={graphData} maxX={RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number} width={1000}/>
         </Box>
     )
 }

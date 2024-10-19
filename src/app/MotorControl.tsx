@@ -1,6 +1,6 @@
 "use server"
 
-const native = __non_webpack_require__('../../../build/Release/native.node')
+const native = require('/build/Release/native.node')
 
 export async function UpdateParam(motorNumber: number, paramName: string, paramValue: number | string | boolean): Promise<string> {
     const result = native.setParam(motorNumber, paramName, paramValue)

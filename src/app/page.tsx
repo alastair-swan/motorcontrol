@@ -1,6 +1,5 @@
-import Motor from "~/app/MotorUI"
+import Motor from "./MotorUI"
 import Box from '@mui/material/Box'
-import Grid2 from '@mui/material/Grid2'
 
 export default function HomePage() {
   return (

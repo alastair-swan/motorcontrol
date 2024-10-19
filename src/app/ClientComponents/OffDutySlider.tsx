@@ -12,8 +12,9 @@ export function OffDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
         return asPercentage(sliderScale(state.STOPDUTY))
     }
     const sliderScale = (value: number) => { return value/256 }
+    //const [value, setValue] = useState(0)
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={{ bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
             Motor Off Input Value: { switchText() }
             <Slider 
                 valueLabelDisplay='auto' 
@@ -27,7 +28,7 @@ export function OffDutySlider ({ motorNumber, itembgColor, itembgHoverColor, sta
                         setState({
                             ...state,
                             STOPDUTY: newValue
-                        })  
+                        })
                         UpdateParam(motorNumber, RegisterList.STOPDUTY.command, newValue)
                     }
                 }}
