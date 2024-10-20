@@ -19,7 +19,7 @@ export function CurrentSenseGainSwitch ({ motorNumber, state, setState, frameSty
                     UpdateParam(motorNumber, RegisterList.OCP_LVL.command, checked)
                 }}
             />
-            Current Sense Gain: {state.OCP_LVL? "10" : "20"}
+            Current Sense Gain: {state.OCP_LVL? "10x" : "20x"}
         </Box>
     )
 }

@@ -19,7 +19,7 @@ export function BrakingModeSwitch ({ motorNumber, state, setState, frameStyle = 
                     UpdateParam(motorNumber, RegisterList.WAIT_MODE.command, checked)
                 }}
             />
-            Brake Mode
+            {state.WAIT_MODE ? "Shorted" : "Hi-Z"}
         </Box>
     )
 }

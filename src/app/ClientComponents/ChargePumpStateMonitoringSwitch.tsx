@@ -3,7 +3,7 @@
 import { switchComponentProps, RegisterList } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
-import { componentStyle } from "../UIStyle"
+import { componentStyle, warningStateColor } from "../UIStyle"
 
 // VCP_MASK
 export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -11,7 +11,7 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState,
         if (state.VCP_MASK){
             return "Enabled"
         }
-        return "Disabled"
+        return <span style={{color: warningStateColor}}>Not Monitored</span>
     }
     return (
         <Box sx={ frameStyle }>

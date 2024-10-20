@@ -19,7 +19,7 @@ export function BrakePolaritySwitch ({ motorNumber, state, setState, frameStyle 
                     UpdateParam(motorNumber, RegisterList.BRK_INV.command, checked)
                 }}
             />
-            Brake Pin Inverted Input
+            Brake Pin: {state.BRK_INV ? "Active Low" : "Active High"}
         </Box>
     )
 }

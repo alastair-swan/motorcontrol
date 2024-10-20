@@ -12,7 +12,7 @@ export function BrakeTimeSlider ({ motorNumber, state, setState, frameStyle = co
     }
     return (
         <Box sx={ frameStyle }>
-            Brake Time {switchText()}
+            Brake Time {switchText()} seconds
             <Slider 
                 valueLabelDisplay='auto' 
                 value={state.WAIT_TIME}

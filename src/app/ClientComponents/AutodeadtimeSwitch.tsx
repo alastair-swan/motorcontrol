@@ -19,7 +19,7 @@ export function AutodeadtimeSwitch ({ motorNumber, state, setState, frameStyle =
                     UpdateParam(motorNumber, RegisterList.ANTITHROUGH.command, checked)
                 }}
             /> 
-            Autodeadtime
+            Auto Dead time control: {state.ANTITHROUGH ? "Disabled" : "Enabled"}
         </Box>
     )
 }
