@@ -16,15 +16,40 @@ export function DutyCurve({ state, width }: { motorNumber: number, state: MotorP
     const maxDuty = (state.MAXDUTY + 257) / 5.12
     const maxDutyRPM = changeRPM + (state.SPEEDSLOP2 * 0.08 * (maxDuty - changeDuty))
     const maxSpeedLimit = RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number
-    const offSpeedSetting = (state.MAXOFF ? maxSpeedLimit : 0)
+    const calc0DutySpeedSetting = () => (
+        state.MAXOPEN ? (
+            state.NOSTOP ? (
+                state.MAXOFF ? 
+                    maxSpeedLimit : 
+                    startRPM
+            ) :
+            (
+                state.MAXOFF ? 
+                    maxSpeedLimit : 
+                    0
+            )
+        ) :
+        (
+            state.NOSTOP ? (
+                state.MAXOFF ? 
+                    maxSpeedLimit : 
+                    startRPM
+            ) :
+            (
+                state.MAXOFF ? 
+                    maxSpeedLimit : 
+                    0
+            )
+        )
+    )
     const graphData = [
         {
             x: 0,
-            y: offSpeedSetting
+            y: calc0DutySpeedSetting()
         },
         {
             x: startDuty, 
-            y: offSpeedSetting
+            y: calc0DutySpeedSetting()
         },
         {
             x: startDuty, 
