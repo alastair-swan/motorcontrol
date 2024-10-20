@@ -1,16 +1,32 @@
 "use server"
 
+import { register } from "./ClientComponents"
+
 //const native = require('/home/alastair/git/motorcontrol/build/Release/native.node')
 const native = __non_webpack_require__('../../../build/Release/native.node')
 
-export async function UpdateParam(motorNumber: number, paramName: string, paramValue: number | string | boolean): Promise<string> {
-    const result = native.setParam(motorNumber, paramName, paramValue)
-    console.log('update: ' + paramName + ' on Motor: ' + motorNumber + ' to ' + paramValue + ' with result: ' + result)
+export async function UpdateParam(motorNumber: number, paramName: string | register, paramValue: number | string | boolean): Promise<string> {
+    var command
+    if (typeof(paramName) === 'string'){
+        command = paramName
+    }
+    else{
+        command = (paramName as register).command
+    }
+    const result = native.setParam(motorNumber, command, paramValue)
+    console.log('update: ' + command + ' on Motor: ' + motorNumber + ' to ' + paramValue + ' with result: ' + result)
     return result
 }
 
-export async function GetParam(motorNumber: number, paramName: string): Promise<number> {
-    const result = native.getParam(motorNumber, paramName)
-    console.log('readback: ' + paramName + ' from Motor: ' + motorNumber + ' with result: ' + result)
+export async function GetParam(motorNumber: number, paramName: string | register): Promise<number> {
+    var command
+    if (typeof(paramName) === 'string'){
+        command = paramName
+    }
+    else{
+        command = (paramName as register).command
+    }
+    const result = native.getParam(motorNumber, command)
+    console.log('readback: ' + command + ' from Motor: ' + motorNumber + ' with result: ' + result)
     return result
 }
