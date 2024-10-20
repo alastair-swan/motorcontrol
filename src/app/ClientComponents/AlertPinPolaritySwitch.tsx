@@ -9,17 +9,17 @@ import { componentStyle } from "../UIStyle"
 export function AlertPinPolaritySwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     return (
         <Box sx={ frameStyle }>
-            <Switch  
+            <Switch
                 checked={state.ALERTINV}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                     setState({
                         ...state,
                         ALERTINV: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.ALERTINV.command, checked)
+                    UpdateParam(motorNumber, RegisterList.ALERTINV, checked)
                 }}
             /> 
-            Alert Pin Polarity Inverted
+            Alert Pin Polarity {state.ALERTINV ? "Inverted" : "Normal"}
         </Box>
     )
 }
