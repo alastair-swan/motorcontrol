@@ -3,11 +3,11 @@
 import { switchComponentProps, RegisterList } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
-import { componentStyle } from "../UIStyle"
+import { componentStyle, warningStateColor } from "../UIStyle"
 
 // ISD_MASK
 export function OverCurrentDetectionSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
-    const switchText = () => { return state.ISD_MASK ? "Disabled" : "Enabled"}
+    const switchText = () => { return state.ISD_MASK ? <span style={{color: warningStateColor}}>Disabled</span> : "Enabled"}
     return (
         <Box sx={ frameStyle }>
             <Switch  
