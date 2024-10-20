@@ -8,8 +8,13 @@ import { componentStyle } from "../UIStyle"
 // MAXSPEED
 export function MaxSpeedSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        const speedList = RegisterList.MAXSPEED.valuemap
-        return speedList[value] + " RPM"
+        if (typeof(RegisterList.MAXSPEED.valuemap) === "undefined"){
+            console.log("expected an array of speeds at RegisterList.MAXSPEED.valuemap")
+            return "Data error"
+        }
+        else{
+            return RegisterList.MAXSPEED.valuemap[value] + " RPM"
+        }
     }
     const switchText = () => {
         return sliderFormat(state.MAXSPEED)

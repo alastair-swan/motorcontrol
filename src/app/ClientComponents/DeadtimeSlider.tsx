@@ -7,8 +7,17 @@ import { componentStyle } from "../UIStyle"
 
 // DEADTIME
 export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        if (typeof(RegisterList.DEADTIME.valuemap) === 'undefined'){
+            console.log("expected an array of speeds at RegisterList.DEADTIME.valuemap")
+            return "Data error"
+        }
+        else {
+            return RegisterList.DEADTIME.valuemap[value]
+        }
+    }
     const switchText = () => {
-        return state.DEADTIME
+        return formatText(state.DEADTIME)
     }
     return (
         <Box sx={ frameStyle }>
@@ -28,10 +37,7 @@ export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = com
                         UpdateParam(motorNumber, RegisterList.DEADTIME.command, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const time = ['250ns', '500ns', '1000ns', '1500ns']
-                    return time[value]
-                }}
+                valueLabelFormat={ formatText }
             /> 
         </Box>
     )

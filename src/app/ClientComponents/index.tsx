@@ -12,7 +12,7 @@ export type register = {
     type: string, 
     min?: number, 
     max?: number, 
-    default?: number | boolean | Array<number>, 
+    default: number | boolean | Array<number>, 
     valuemap?: Array<string | number>,
     scale?: (value: number) => number,
 }

@@ -7,8 +7,18 @@ import { componentStyle } from "../UIStyle"
 
 // RS_SEL
 export function CurrentSenseFilteringSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        if (typeof(RegisterList.RS_SEL.valuemap) === 'undefined'){
+            console.log("expected an array of speeds at RegisterList.RS_SEL.valuemap")
+            return "Data error"
+        }
+        else {
+            return RegisterList.RS_SEL.valuemap[value]
+        }
+    }
+    
     const switchText = () => {
-        return state.RS_SEL
+        return formatText(state.RS_SEL)
     }
     return (
         <Box sx={ frameStyle }>
@@ -28,10 +38,7 @@ export function CurrentSenseFilteringSlider ({ motorNumber, state, setState, fra
                         UpdateParam(motorNumber, RegisterList.RS_SEL.command, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const speedList = ['unfiltered', '200kHz', '100kHz', '50kHz']
-                    return speedList[value]
-                }}
+                valueLabelFormat={ formatText }
             />
         </Box>
     )
