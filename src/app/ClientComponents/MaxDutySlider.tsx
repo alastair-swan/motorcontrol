@@ -8,6 +8,7 @@ import { asPercentage } from "./helper"
 
 // MAXDUTY
 export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const scaleFunction = (value: number) => { return ((value + 257)/512) }
     const switchText = () => {
         return state.MAXDUTY
     }
@@ -21,7 +22,7 @@ export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = comp
                 min={0} 
                 max={255}
                 step={1}
-                scale={(value: number) => { return ((value + 257)/512) }}
+                scale={scaleFunction}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         const updatedState = state
