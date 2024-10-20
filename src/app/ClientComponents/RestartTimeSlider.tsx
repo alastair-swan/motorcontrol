@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // TRE
-export function RestartTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function RestartTimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         const time = [0, 0.5, 1, 1.5, 2, 4, 7, 10]
         return time[value] + " seconds"
@@ -15,7 +15,7 @@ export function RestartTimeSlider ({ motorNumber, itembgColor, itembgHoverColor,
         return sliderFormat(state.TRE)
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Auto Restart Time: {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

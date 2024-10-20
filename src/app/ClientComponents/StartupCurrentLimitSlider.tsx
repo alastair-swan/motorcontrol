@@ -4,9 +4,10 @@ import { sliderComponentProps, RegisterList } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
+import { componentStyle } from "../UIStyle"
 
 // STARTCURRENT
-export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function StartupCurrentLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         const steps = (index: number) : number => { 
             const stepValues = [0, 0.3, 0.4, 0.5] as number[]
@@ -21,7 +22,7 @@ export function StartupCurrentLimitSlider ({ motorNumber, itembgColor, itembgHov
         return sliderFormat(sliderScale(state.STARTCURRENT))
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Startup Current Limit: {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

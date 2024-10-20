@@ -1,20 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
 
 // STOPDUTY
-export function OffDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function OffDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
         return asPercentage(sliderScale(state.STOPDUTY))
     }
     const sliderScale = (value: number) => { return value/256 }
     //const [value, setValue] = useState(0)
     return (
-        <Box sx={{ bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Motor Off Input Value: { switchText() }
             <Slider 
                 valueLabelDisplay='auto' 

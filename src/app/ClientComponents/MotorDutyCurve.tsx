@@ -2,63 +2,59 @@
 
 import Box from '@mui/material/Box'
 import * as d3 from "d3"
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { MotorParams } from '../MotorControlClient'
 import { RegisterList } from '.'
 
 type graphPoint = { x: number, y: number }
 
-export function DutyCurve({ motorNumber, state, setState}: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void}){
-    const getGraphData = ():graphPoint[] => {
-        const startDuty = state.STARTDUTY / 5.12
-        const stopDuty = state.STOPDUTY / 2.56
-        const startRPM = state.STARTRPM
-        const changeDuty = state.CHANGEDUTY * 2 / 5.12
-        const changeRPM = startRPM + (state.SPEEDSLOP * 0.08 * (changeDuty - stopDuty))
-        const maxDuty = (state.MAXDUTY + 257) / 5.12
-        const maxDutyRPM = changeRPM + (state.SPEEDSLOP2 * 0.08 * (maxDuty - changeDuty))
-        const maxSpeedLimit = RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number
-        const offSpeedSetting = (state.MAXOFF ? maxSpeedLimit : 0)
-        const result = [
-            {
-                x: 0,
-                y: offSpeedSetting
-            },
-            {
-                x: startDuty, 
-                y: offSpeedSetting
-            },
-            {
-                x: startDuty, 
-                y: startRPM
-            },
-            {
-                x: stopDuty, 
-                y: startRPM
-            },
-            {
-                x: changeDuty, 
-                y: changeRPM
-            },
-            {
-                x: maxDuty, 
-                y: maxDutyRPM
-            }
-        ]
-        return result
-    }
-    const [graphData, setGraphData] = useState<{ x: number, y: number }[]>(getGraphData())
-    const getGraphDataEffect = (): void => {setGraphData(getGraphData())}
-    useEffect(getGraphDataEffect)
+export function DutyCurve({ state, width }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void, width: number}){
+    const startDuty = state.STARTDUTY / 5.12
+    const stopDuty = state.STOPDUTY / 2.56
+    const startRPM = state.STARTRPM
+    const changeDuty = state.CHANGEDUTY * 2 / 5.12
+    const changeRPM = startRPM + (state.SPEEDSLOP * 0.08 * (changeDuty - stopDuty))
+    const maxDuty = (state.MAXDUTY + 257) / 5.12
+    const maxDutyRPM = changeRPM + (state.SPEEDSLOP2 * 0.08 * (maxDuty - changeDuty))
+    const maxSpeedLimit = RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number
+    const offSpeedSetting = (state.MAXOFF ? maxSpeedLimit : 0)
+    const graphData = [
+        {
+            x: 0,
+            y: offSpeedSetting
+        },
+        {
+            x: startDuty, 
+            y: offSpeedSetting
+        },
+        {
+            x: startDuty, 
+            y: startRPM
+        },
+        {
+            x: stopDuty, 
+            y: startRPM
+        },
+        {
+            x: changeDuty, 
+            y: changeRPM
+        },
+        {
+            x: maxDuty, 
+            y: maxDutyRPM
+        }
+    ] as graphPoint[]
+    //const [graphData, setGraphData] = useState<{ x: number, y: number }[]>(getGraphData())
+    //const getGraphDataEffect = (): void => {setGraphData(getGraphData())}
+    //useEffect(getGraphDataEffect, [])
     return (
         <Box
             sx={{
-                width: 1000,
+                width: {width},
                 height: 400,
                 backgroundColor: '#FFFFFF'
             }}
         >
-            <Graph data={graphData} maxX={RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number} width={1000}/>
+            <Graph data={graphData} maxX={RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number} width={width}/>
         </Box>
     )
 }

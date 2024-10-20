@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // COMP_HYS
-export function PositionDetectionHysteresisSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function PositionDetectionHysteresisSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         const voltage = ['none', '100mV', '200mV', '300mV']
         return voltage[value]
@@ -15,7 +15,7 @@ export function PositionDetectionHysteresisSlider ({ motorNumber, itembgColor, i
         return sliderFormat(state.COMP_HYS)
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Position Detection Hysteresis Voltage { sliderText() }
             <Slider 
                 valueLabelDisplay='auto' 

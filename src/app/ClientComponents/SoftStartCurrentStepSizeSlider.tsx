@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 import { shuntResistor } from "./helper"
 
 // SS_UP_SEL
-export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function SoftStartCurrentStepSizeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderScale = (value: number) => {
         const steps = (index: number) : number => { 
             return RegisterList.SS_UP_SEL.valuemap[index] as number
@@ -19,7 +19,7 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, itembgColor, item
         return sliderFormat(sliderScale(state.SS_UP_SEL))
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Soft Start Current Step Size: {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

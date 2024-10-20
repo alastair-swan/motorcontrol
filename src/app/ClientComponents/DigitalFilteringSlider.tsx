@@ -1,17 +1,17 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
 import { sliderComponentProps, RegisterList } from "."
+import { componentStyle } from "../UIStyle"
 
 // OCPMASK
-export function DigitalFilteringSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function DigitalFilteringSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
         return state.OCPMASK
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Current Sense Digital Filtering: {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

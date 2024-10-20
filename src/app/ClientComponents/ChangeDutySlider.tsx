@@ -1,19 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { asPercentage } from "./helper"
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
 import { sliderComponentProps, RegisterList } from "."
+import { componentStyle } from "../UIStyle"
 
 // CHANGEDUTY
-export function ChangeDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function ChangeDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
         return state.CHANGEDUTY
     }
     const sliderScale = (value: number) => { return ((value * 2)/512) }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Motor Slope Inflection Point: {asPercentage(sliderScale(switchText()))}
             <Slider 
                 valueLabelDisplay='auto' 

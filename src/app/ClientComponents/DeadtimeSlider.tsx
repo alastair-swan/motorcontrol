@@ -1,17 +1,17 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // DEADTIME
-export function DeadtimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
         return state.DEADTIME
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Dead Time Setting {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { switchComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Switch } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Switch } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // ISD_MASK
-export function OverCurrentDetectionSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
+export function OverCurrentDetectionSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     const switchText = () => { return state.ISD_MASK ? "Disabled" : "Enabled"}
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             <Switch  
                 checked={ state.ISD_MASK }
                 onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {

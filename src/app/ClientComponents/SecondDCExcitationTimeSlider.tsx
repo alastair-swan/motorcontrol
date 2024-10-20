@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // TIP
-export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function SecondDCExcitationTimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         return RegisterList.TIP.valuemap[value] + " seconds"
     }
@@ -14,7 +14,7 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, itembgColor, itembg
         return sliderFormat(state.TIP)
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Second DC Excitation Time {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 

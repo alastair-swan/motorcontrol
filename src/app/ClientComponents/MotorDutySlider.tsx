@@ -1,22 +1,26 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
 import { asPercentage } from "./helper"
+import { componentStyle } from "../UIStyle"
 
 // SPD
-export function MotorDutySlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function MotorDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        return asPercentage(value / 511)
+    }
+
     const switchText = () => {
-        return state.SPD
+        return formatText(state.SPD)
     }
 
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Motor Duty Setting {switchText()}
             <Slider 
-                valueLabelDisplay='auto' 
+                valueLabelDisplay='off' 
                 value={state.SPD}
                 min={0} 
                 max={511}
@@ -31,9 +35,7 @@ export function MotorDutySlider ({ motorNumber, itembgColor, itembgHoverColor, s
                         UpdateParam(motorNumber, RegisterList.SPD.command, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    return asPercentage(value / 511)
-                }}
+                valueLabelFormat={ formatText }
             />
         </Box>
     )

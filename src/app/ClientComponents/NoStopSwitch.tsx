@@ -2,10 +2,11 @@
 
 import { switchComponentProps, RegisterList } from "."
 import { UpdateParam } from "../MotorControl"
-import { Grid2, Box, Switch } from '@mui/material'
+import { Box, Switch } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // NOSTOP
-export function NoStopSwitch ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: switchComponentProps){
+export function NoStopSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     const switchText = () => {
         if (!state.NOSTOP){
             return "Full Speed below StopDuty"
@@ -13,7 +14,7 @@ export function NoStopSwitch ({ motorNumber, itembgColor, itembgHoverColor, stat
         return "Off below StopDuty"
     }
     return (                                    
-        <Box sx={{ justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             <Switch 
                 checked={ state.NOSTOP }
                 onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {

@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // DUTYCHGLIMIT
-export function SpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         return (100 / (RegisterList.DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
     }
@@ -14,7 +14,7 @@ export function SpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverC
         return sliderFormat(state.DUTYCHGLIMIT) + " seconds"
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Motor Speed Change Rate: { switchText() }
             <Slider 
                 valueLabelDisplay='auto' 

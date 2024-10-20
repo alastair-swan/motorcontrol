@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { sliderComponentProps, RegisterList } from "."
-import { GetParam, UpdateParam } from "../MotorControl"
-import { Grid2, Box, Slider } from '@mui/material'
+import { UpdateParam } from "../MotorControl"
+import { Box, Slider } from '@mui/material'
+import { componentStyle } from "../UIStyle"
 
 // SS_DUTYCHGLIMIT
-export function SoftStartSpeedChangeLimitSlider ({ motorNumber, itembgColor, itembgHoverColor, state, setState }: sliderComponentProps){
+export function SoftStartSpeedChangeLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
         return (100 / (RegisterList.SS_DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
     }
@@ -14,7 +14,7 @@ export function SoftStartSpeedChangeLimitSlider ({ motorNumber, itembgColor, ite
         return sliderFormat(state.SS_DUTYCHGLIMIT) + " seconds"
     }
     return (
-        <Box sx={{ justifyItems: 'center', justifyContent: 'center', height: '100%', bgcolor: itembgColor, '&:hover': { bgcolor: itembgHoverColor }, borderRadius: 2, borderWidth: 0, paddingTop: 1, paddingLeft: 2, paddingRight: 2}}>
+        <Box sx={ frameStyle }>
             Speed Change Rate during soft start: { sliderText() }
             <Slider 
                 valueLabelDisplay='auto' 
