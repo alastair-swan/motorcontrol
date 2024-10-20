@@ -9,3 +9,8 @@ Built using React and Next.js App Router to allow for control of all motor param
 ## Server
 
 Built using React and Next.js App Router for the backend with c++ libraries handeling the communication to the chip using the i2c interface on a raspberry pi.
+
+## C++ API
+
+Located in /src/MotorI2C
+On should work on any linux system provided that the i2c bus is accessable and that the correct bus is selected.
