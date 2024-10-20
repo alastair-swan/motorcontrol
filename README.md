@@ -12,5 +12,5 @@ Built using React and Next.js App Router for the backend with c++ libraries hand
 
 ## C++ API
 
-Located in /src/MotorI2C
-On should work on any linux system provided that the i2c bus is accessable and that the correct bus is selected.
+Located in /src/MotorI2C,
+should work on any linux system provided that the i2c bus is accessable and that the correct bus is selected.
