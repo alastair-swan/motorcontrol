@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { KIX } from "./Register"
 
 // KIX
 export function KIXSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -22,7 +23,7 @@ export function KIXSwitch ({ motorNumber, state, setState, frameStyle = componen
                         ...state,
                         KIX: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.KIX.command, checked)
+                    UpdateParam(motorNumber, KIX, checked)
                 }}
             />
             I coefficient {switchText()} 

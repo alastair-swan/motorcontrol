@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
-import { componentStyle } from "../UIStyle"
+import { componentStyle, warningStateColor } from "../UIStyle"
+import { LOCKDIS } from "./Register"
 
 // LOCKDIS
 export function ForcedComutationSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,10 +17,13 @@ export function ForcedComutationSwitch ({ motorNumber, state, setState, frameSty
                         ...state,
                         LOCKDIS: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.LOCKDIS.command, checked)
+                    UpdateParam(motorNumber, LOCKDIS, checked)
                 }}
             /> 
-            Forced Comutation
+            { state.LOCKDIS ? 
+                "Failure to transition to closed loop control will trigger an error" :
+                <span style={{color: warningStateColor}}>Startup Errors Ignored</span>
+            }
         </Box>
     )
 }

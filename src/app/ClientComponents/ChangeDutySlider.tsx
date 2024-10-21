@@ -3,8 +3,9 @@
 import { asPercentage } from "./helper"
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { componentStyle } from "../UIStyle"
+import { CHANGEDUTY } from "./Register"
 
 // CHANGEDUTY
 export function ChangeDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -18,8 +19,8 @@ export function ChangeDutySlider ({ motorNumber, state, setState, frameStyle = c
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.CHANGEDUTY }
-                min={0} 
-                max={255}
+                min={ CHANGEDUTY.min } 
+                max={ CHANGEDUTY.max }
                 step={1}
                 scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -28,7 +29,7 @@ export function ChangeDutySlider ({ motorNumber, state, setState, frameStyle = c
                             ...state,
                             CHANGEDUTY: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.CHANGEDUTY.command, newValue)
+                        UpdateParam(motorNumber, CHANGEDUTY, newValue)
                     }
                 }}
                 valueLabelFormat={(value: number) => {

@@ -1,10 +1,11 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
+import { MAXDUTY } from "./Register"
 
 // MAXDUTY
 export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -19,8 +20,8 @@ export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = comp
             <Slider 
                 valueLabelDisplay='auto' 
                 value={state.MAXDUTY}
-                min={0} 
-                max={255}
+                min={ MAXDUTY.min } 
+                max={ MAXDUTY.max }
                 step={1}
                 scale={scaleFunction}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -31,7 +32,7 @@ export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = comp
                             ...state,
                             MAXDUTY: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.MAXDUTY.command, newValue)
+                        UpdateParam(motorNumber, MAXDUTY, newValue)
                     }
                 }}
                 valueLabelFormat={asPercentage}

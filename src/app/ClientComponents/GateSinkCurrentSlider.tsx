@@ -1,14 +1,23 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { SINK } from "./Register"
 
 // SINK
 export function GateSinkCurrentSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        if (typeof(SINK.valuemap) === 'undefined'){
+            return value
+        }
+        else {
+            return SINK.valuemap[value] + 'mA'
+        }
+    }
     const switchText = () => {
-        return state.SINK
+        return formatText(state.SINK)
     }
     return (
         <Box sx={ frameStyle }>
@@ -16,8 +25,8 @@ export function GateSinkCurrentSlider ({ motorNumber, state, setState, frameStyl
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.SINK }
-                min={0} 
-                max={7}
+                min={ SINK.min } 
+                max={ SINK.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -25,13 +34,10 @@ export function GateSinkCurrentSlider ({ motorNumber, state, setState, frameStyl
                             ...state,
                             SINK: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.SINK.command, newValue)
+                        UpdateParam(motorNumber, SINK, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const current = [20, 27.8, 38.6, 53.7, 74.6, 103.6, 143.9, 200]
-                    return current[value] + 'mA'
-                }}
+                valueLabelFormat={ formatText }
             />
         </Box>
     )

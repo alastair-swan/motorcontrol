@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { KPX } from "./Register"
 
 // KPX
 export function KPXSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -22,7 +23,7 @@ export function KPXSwitch ({ motorNumber, state, setState, frameStyle = componen
                         ...state,
                         KPX: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.KPX.command, checked)
+                    UpdateParam(motorNumber, KPX, checked)
                 }}
             />
             I coefficient {switchText()} 

@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { TSPSEL } from "./Register"
 
 // TSPSEL
 export function SpeedInputModeSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -17,7 +18,7 @@ export function SpeedInputModeSwitch ({ motorNumber, state, setState, frameStyle
                         ...state,
                         TSPSEL: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.TSPSEL.command, checked)
+                    UpdateParam(motorNumber, TSPSEL, checked)
                 }}
             />
             Analog speed control mode: { switchText() }

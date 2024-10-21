@@ -1,10 +1,11 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
+import { MAXDUTYHYS } from "./Register"
 
 // MAXDUTYHYS
 export function MaxDutyHysteresisSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -23,9 +24,9 @@ export function MaxDutyHysteresisSlider ({ motorNumber, state, setState, frameSt
             <Slider 
                 track={"inverted"}
                 valueLabelDisplay='auto' 
-                value={ 15-state.MAXDUTYHYS }
-                min={0}
-                max={15}
+                value={ 15 - state.MAXDUTYHYS }
+                min={ MAXDUTYHYS.min }
+                max={ MAXDUTYHYS.max }
                 step={1}
                 scale={scaleFunction}
                 valueLabelFormat={formatText}
@@ -33,9 +34,9 @@ export function MaxDutyHysteresisSlider ({ motorNumber, state, setState, frameSt
                     if (typeof newValue === 'number'){
                         setState({
                             ...state,
-                            MAXDUTYHYS: 15-newValue
+                            MAXDUTYHYS: 15 - newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.MAXDUTYHYS.command, 15 - newValue)
+                        UpdateParam(motorNumber, MAXDUTYHYS , 15 - newValue)
                     }
                 }}
             />

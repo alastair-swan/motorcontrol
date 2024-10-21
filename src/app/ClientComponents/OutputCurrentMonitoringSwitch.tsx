@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { OCPDIS } from "./Register"
 
 // OCPDIS
 export function OutputCurrentMonitoringSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,7 +17,7 @@ export function OutputCurrentMonitoringSwitch ({ motorNumber, state, setState, f
                         ...state,
                         OCPDIS: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.OCPDIS.command, checked)
+                    UpdateParam(motorNumber, OCPDIS, checked)
                 }}
             />
             Monitor Current

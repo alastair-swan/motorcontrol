@@ -1,19 +1,20 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { RS_SEL } from "./Register"
 
 // RS_SEL
 export function CurrentSenseFilteringSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const formatText = (value: number) => {
-        if (typeof(RegisterList.RS_SEL.valuemap) === 'undefined'){
-            console.log("expected an array of speeds at RegisterList.RS_SEL.valuemap")
+        if (typeof(RS_SEL.valuemap) === 'undefined'){
+            console.log("expected an array of speeds at RS_SEL.valuemap")
             return "Data error"
         }
         else {
-            return RegisterList.RS_SEL.valuemap[value]
+            return RS_SEL.valuemap[value]
         }
     }
     
@@ -26,8 +27,8 @@ export function CurrentSenseFilteringSlider ({ motorNumber, state, setState, fra
             <Slider 
                 valueLabelDisplay='auto' 
                 value={state.RS_SEL}
-                min={0} 
-                max={3}
+                min={ RS_SEL.min } 
+                max={ RS_SEL.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -35,7 +36,7 @@ export function CurrentSenseFilteringSlider ({ motorNumber, state, setState, fra
                             ...state,
                             RS_SEL: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.RS_SEL.command, newValue)
+                        UpdateParam(motorNumber, RS_SEL, newValue)
                     }
                 }}
                 valueLabelFormat={ formatText }

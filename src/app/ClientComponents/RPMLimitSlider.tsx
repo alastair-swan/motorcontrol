@@ -1,14 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { RPMLIMIT } from "./Register"
 
 // RPMLIMIT
 export function RPMLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        return RegisterList.RPMLIMIT.valuemap[value] + ' RPM'
+        if (typeof(RPMLIMIT.valuemap) === 'undefined'){
+            console.error("Data error: RPMLIMIT.valuemap undefined")
+            return value
+        }
+        else{
+            return RPMLIMIT.valuemap[value] + ' RPM'
+        }
     }
     const switchText = () => {
         return sliderFormat(state.RPMLIMIT)
@@ -19,8 +26,8 @@ export function RPMLimitSlider ({ motorNumber, state, setState, frameStyle = com
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.RPMLIMIT }
-                min={0} 
-                max={7}
+                min={ RPMLIMIT.min } 
+                max={ RPMLIMIT.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -28,7 +35,7 @@ export function RPMLimitSlider ({ motorNumber, state, setState, frameStyle = com
                             ...state,
                             RPMLIMIT: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.RPMLIMIT.command, newValue)
+                        UpdateParam(motorNumber, RPMLIMIT, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

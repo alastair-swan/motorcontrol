@@ -1,15 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { TRE } from "./Register"
 
 // TRE
 export function RestartTimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        const time = [0, 0.5, 1, 1.5, 2, 4, 7, 10]
-        return time[value] + " seconds"
+        if (typeof(TRE.valuemap) === 'undefined'){
+            console.error("Data error: TRE.valuemap undefined")
+            return value
+        }
+        else{
+            return TRE.valuemap[value] + " seconds"
+        }
     }
     const switchText = () => {
         return sliderFormat(state.TRE)
@@ -20,8 +26,8 @@ export function RestartTimeSlider ({ motorNumber, state, setState, frameStyle = 
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.TRE }
-                min={0} 
-                max={7}
+                min={ TRE.min } 
+                max={ TRE.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -29,7 +35,7 @@ export function RestartTimeSlider ({ motorNumber, state, setState, frameStyle = 
                             ...state,
                             TRE: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.TRE.command, newValue)
+                        UpdateParam(motorNumber, TRE, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

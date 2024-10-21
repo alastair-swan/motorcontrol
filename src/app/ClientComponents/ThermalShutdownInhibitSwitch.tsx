@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
-import { componentStyle } from "../UIStyle"
+import { componentStyle, warningStateColor } from "../UIStyle"
+import { TSD_MASK } from "./Register"
 
 // TSD_MASK
 export function ThermalShutdownInhibitSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,10 +17,10 @@ export function ThermalShutdownInhibitSwitch ({ motorNumber, state, setState, fr
                         ...state,
                         TSD_MASK: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.TSD_MASK.command, checked)
+                    UpdateParam(motorNumber, TSD_MASK, checked)
                 }}
             />
-            Thermal Shutdown { !state.TSD_MASK ? "Disabled" : "Enabled" }
+            Thermal Shutdown { !state.TSD_MASK ? <span style={{color: warningStateColor}}>Disabled</span> : "Enabled" }
         </Box>
     )
 }

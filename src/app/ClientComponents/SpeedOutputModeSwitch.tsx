@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { FG_ON } from "./Register"
 
 // FG_ON
 export function SpeedOutputModeSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -11,7 +12,7 @@ export function SpeedOutputModeSwitch ({ motorNumber, state, setState, frameStyl
         if (!state.FG_ON){
             return "FG stops without speed control command"
         }
-        return "FG stops without speed control command"
+        return "FG continues without speed control command"
     }
     return (
         <Box sx={ frameStyle }>
@@ -22,7 +23,7 @@ export function SpeedOutputModeSwitch ({ motorNumber, state, setState, frameStyl
                         ...state,
                         FG_ON: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.FG_ON.command, checked)
+                    UpdateParam(motorNumber, FG_ON, checked)
                 }}
             />
             { switchText () }

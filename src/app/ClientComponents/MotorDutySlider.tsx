@@ -1,10 +1,11 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { asPercentage } from "./helper"
 import { componentStyle } from "../UIStyle"
+import { SPD } from "./Register"
 
 // SPD
 export function MotorDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -22,8 +23,8 @@ export function MotorDutySlider ({ motorNumber, state, setState, frameStyle = co
             <Slider 
                 valueLabelDisplay='off' 
                 value={state.SPD}
-                min={0} 
-                max={511}
+                min={ SPD.min } 
+                max={ SPD.max }
                 step={1}
                 scale={(value: number) => { return value }}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -32,7 +33,7 @@ export function MotorDutySlider ({ motorNumber, state, setState, frameStyle = co
                             ...state, 
                             SPD: newValue}
                         )  
-                        UpdateParam(motorNumber, RegisterList.SPD.command, newValue)
+                        UpdateParam(motorNumber, SPD, newValue)
                     }
                 }}
                 valueLabelFormat={ formatText }

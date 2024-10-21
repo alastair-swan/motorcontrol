@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { ISD_LVL } from "./Register"
 
 // ISD_LVL
 export function OvercurrentDetectionThresholdSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -17,7 +18,7 @@ export function OvercurrentDetectionThresholdSwitch ({ motorNumber, state, setSt
                         ...state,
                         ISD_LVL: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.ISD_LVL.command, checked)
+                    UpdateParam(motorNumber, ISD_LVL, checked)
                 }}
             />
             Overcurrent Detection Threshold: { switchText() }

@@ -1,18 +1,22 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { shuntResistor } from "./helper"
+import { SS_UP_SEL } from "./Register"
 
 // SS_UP_SEL
 export function SoftStartCurrentStepSizeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderScale = (value: number) => {
-        const steps = (index: number) : number => { 
-            return RegisterList.SS_UP_SEL.valuemap[index] as number
+        if (typeof(SS_UP_SEL.valuemap) === 'undefined'){
+            console.error("Data error: SS_UP_SEL.valuemap undefined")
+            return value
         }
-        return steps(value) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor) 
+        else {
+            return SS_UP_SEL.valuemap[value] as number * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor) 
+        }
     }
     const sliderFormat = (value: number) => { return value.toFixed(1) + ' Amps' }
     const switchText = () => {
@@ -24,8 +28,8 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, state, setState, 
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.SS_UP_SEL }
-                min={0} 
-                max={3}
+                min={ SS_UP_SEL.min } 
+                max={ SS_UP_SEL.max }
                 step={1}
                 scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -34,7 +38,7 @@ export function SoftStartCurrentStepSizeSlider ({ motorNumber, state, setState, 
                             ...state,
                             SS_UP_SEL: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.SS_UP_SEL.command, newValue)
+                        UpdateParam(motorNumber, SS_UP_SEL, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

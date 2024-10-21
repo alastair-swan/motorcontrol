@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { WAIT_CON } from "./Register"
 
 // WAIT_CON
 export function PostBrakingActionSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -19,7 +20,7 @@ export function PostBrakingActionSwitch ({ motorNumber, state, setState, frameSt
                         ...state,
                         WAIT_CON: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.WAIT_CON.command, checked)
+                    UpdateParam(motorNumber, WAIT_CON, checked)
                 }}
             /> 
             Post Braking Action: { switchText() }

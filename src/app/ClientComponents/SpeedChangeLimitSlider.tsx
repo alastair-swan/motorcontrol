@@ -1,14 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { DUTYCHGLIMIT } from "./Register"
 
 // DUTYCHGLIMIT
 export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        return (100 / (RegisterList.DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
+        if (typeof(DUTYCHGLIMIT.valuemap) === 'undefined'){
+            console.error("Data error: DUTYCHGLIMIT.valuemap undefined")
+            return value
+        }
+        else {
+            return (100 / (DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
+        }
     }
     const switchText = () => {
         return sliderFormat(state.DUTYCHGLIMIT) + " seconds"
@@ -19,8 +26,8 @@ export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameSty
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.DUTYCHGLIMIT }
-                min={0} 
-                max={7}
+                min={ DUTYCHGLIMIT.min } 
+                max={ DUTYCHGLIMIT.max }
                 step={1}
                 scale={(value: number) => { return (value + 1) % 8 }}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -29,7 +36,7 @@ export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameSty
                             ...state,
                             DUTYCHGLIMIT: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.DUTYCHGLIMIT.command, newValue)
+                        UpdateParam(motorNumber, DUTYCHGLIMIT, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

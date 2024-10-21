@@ -1,19 +1,22 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { shuntResistor } from "./helper"
 import { componentStyle } from "../UIStyle"
+import { STARTCURRENT } from "./Register"
 
 // STARTCURRENT
 export function StartupCurrentLimitSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        const steps = (index: number) : number => { 
-            const stepValues = [0, 0.3, 0.4, 0.5] as number[]
-            return ((typeof(stepValues[index]) === 'number') ? stepValues[index] : 0) as number
+        if (typeof(STARTCURRENT.valuemap) === 'undefined'){
+            console.error("Data error: STARTCURRENT.valuemap undefined")
+            return value
         }
-        return (steps(value) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor)) + " Amps"
+        else {
+            return (STARTCURRENT.valuemap[value] as number) * ((state.OCP_LVL ? 0.125 : 0.25) / shuntResistor) + " Amps"
+        }
     }
     const sliderScale = (value: number) => { 
         return (((8 - value) / 8) * (state.OCP_LVL ? 0.125 : 0.25)) / shuntResistor; 
@@ -27,8 +30,8 @@ export function StartupCurrentLimitSlider ({ motorNumber, state, setState, frame
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.STARTCURRENT }
-                min={0} 
-                max={7}
+                min={ STARTCURRENT.min } 
+                max={ STARTCURRENT.max }
                 step={1}
                 scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -37,7 +40,7 @@ export function StartupCurrentLimitSlider ({ motorNumber, state, setState, frame
                             ...state,
                             STARTCURRENT: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.STARTCURRENT.command, newValue)
+                        UpdateParam(motorNumber, STARTCURRENT, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { OCP_LVL } from "./Register"
 
 // OCP_LVL
 export function CurrentSenseGainSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,7 +17,7 @@ export function CurrentSenseGainSwitch ({ motorNumber, state, setState, frameSty
                         ...state,
                         OCP_LVL: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.OCP_LVL.command, checked)
+                    UpdateParam(motorNumber, OCP_LVL, checked)
                 }}
             />
             Current Sense Gain: {state.OCP_LVL? "10x" : "20x"}

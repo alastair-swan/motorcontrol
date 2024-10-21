@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle, warningStateColor } from "../UIStyle"
+import { ISD_MASK } from "./Register"
 
 // ISD_MASK
 export function OverCurrentDetectionSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -17,7 +18,7 @@ export function OverCurrentDetectionSwitch ({ motorNumber, state, setState, fram
                         ...state,
                         ISD_MASK: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.ISD_MASK.command, checked)
+                    UpdateParam(motorNumber, ISD_MASK, checked)
                 }}
             />
             Monitor Motor Current: { switchText() }

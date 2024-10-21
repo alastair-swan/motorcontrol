@@ -1,14 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { TIP } from "./Register"
 
 // TIP
 export function SecondDCExcitationTimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        return RegisterList.TIP.valuemap[value] + " seconds"
+        if (typeof(TIP.valuemap) === 'undefined'){
+            console.error("Data error: TIP.valuemap undefined")
+            return value
+        }
+        else{
+            return TIP.valuemap[value] + " seconds"
+        }
     }
     const switchText = () => {
         return sliderFormat(state.TIP)
@@ -19,8 +26,8 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, state, setState, fr
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.TIP }
-                min={0} 
-                max={7}
+                min={ TIP.min } 
+                max={ TIP.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -28,7 +35,7 @@ export function SecondDCExcitationTimeSlider ({ motorNumber, state, setState, fr
                             ...state,
                             TIP: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.TIP.command, newValue)
+                        UpdateParam(motorNumber, TIP, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

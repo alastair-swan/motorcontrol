@@ -1,12 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { SOURCE } from "./Register"
 
 // SOURCE
 export function GateSourceCurrentSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        if (typeof(SOURCE.valuemap) === 'undefined'){
+            return value
+        }
+        else {
+            return SOURCE.valuemap[value] + 'mA'
+        }
+    }
     const switchText = () => {
         return state.SOURCE
     }
@@ -16,8 +25,8 @@ export function GateSourceCurrentSlider ({ motorNumber, state, setState, frameSt
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.SOURCE }
-                min={0} 
-                max={7}
+                min={ SOURCE.min } 
+                max={ SOURCE.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -25,13 +34,10 @@ export function GateSourceCurrentSlider ({ motorNumber, state, setState, frameSt
                             ...state,
                             SOURCE: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.SOURCE.command, newValue)
+                        UpdateParam(motorNumber, SOURCE, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const frequency = [10, 13.9, 19.3, 26.8, 37.3, 51.8, 72, 100]
-                    return frequency[value] + 'mA'
-                }}
+                valueLabelFormat={ formatText }
             /> 
         </Box>
     )

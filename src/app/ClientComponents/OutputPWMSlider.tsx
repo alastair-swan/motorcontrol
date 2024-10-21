@@ -1,20 +1,12 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider, Grid2 } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { FPWM } from "./Register"
 
-export const PWMModeList = [
-    [ 23400,  23400,  23400,  23400,  23400,  23400],
-    [ 46900,  46900,  46900,  46900,  46900,  46900],
-    [ 93700,  93700,  93700,  93700,  93700,  93700],
-    [187500, 187500, 187500, 187500, 187500, 187500],
-    [ 46900,  46900,  93700,  93700,  93700, 187500],
-    [ 23400,  46900,  93700,  93700,  93700,  93700],
-    [ 23400,  23400,  46900,  46900,  93700,  93700],
-    [ 23400,  46900,  93700,  93700, 187500, 187500],
-] as Array<Array<number>>
+const PWMModeList = FPWM.valuemap as Array<Array<number | string>>
 
 // FPWM
 export function OutputPWMSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -56,8 +48,8 @@ export function OutputPWMSlider ({ motorNumber, state, setState, frameStyle = co
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.FPWM }
-                min={0} 
-                max={7}
+                min={ FPWM.min } 
+                max={ FPWM.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -65,7 +57,7 @@ export function OutputPWMSlider ({ motorNumber, state, setState, frameStyle = co
                             ...state,
                             FPWM: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.FPWM.command, newValue)
+                        UpdateParam(motorNumber, FPWM, newValue)
                     }
                 }}
             />

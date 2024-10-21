@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { OPENLOOP } from "./Register"
 
 // OPENLOOP
 export function OpenLoopSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -22,7 +23,7 @@ export function OpenLoopSwitch ({ motorNumber, state, setState, frameStyle = com
                         ...state,
                         OPENLOOP: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.OPENLOOP.command, checked)
+                    UpdateParam(motorNumber, OPENLOOP, checked)
                 }}
             /> 
             {switchText()} Loop Control

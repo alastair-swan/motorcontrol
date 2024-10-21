@@ -1,15 +1,21 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { COMP_HYS } from "./Register"
 
 // COMP_HYS
 export function PositionDetectionHysteresisSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        const voltage = ['none', '100mV', '200mV', '300mV']
-        return voltage[value]
+        if (typeof(COMP_HYS.valuemap) === 'undefined'){
+            console.error("Data error: valuemap undefined for COMP_HYS")
+            return value
+        }
+        else {
+            return COMP_HYS.valuemap[value]
+        }
     }
     const sliderText = () => {
         return sliderFormat(state.COMP_HYS)
@@ -20,8 +26,8 @@ export function PositionDetectionHysteresisSlider ({ motorNumber, state, setStat
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.COMP_HYS }
-                min={0} 
-                max={3}
+                min={ COMP_HYS.min } 
+                max={ COMP_HYS.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -29,7 +35,7 @@ export function PositionDetectionHysteresisSlider ({ motorNumber, state, setStat
                             ...state,
                             COMP_HYS: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.COMP_HYS.command, newValue)
+                        UpdateParam(motorNumber, COMP_HYS, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { ALERTINV } from "./Register"
 
 // ALERTINV
 export function AlertPinPolaritySwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,7 +17,7 @@ export function AlertPinPolaritySwitch ({ motorNumber, state, setState, frameSty
                         ...state,
                         ALERTINV: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.ALERTINV, checked)
+                    UpdateParam(motorNumber, ALERTINV, checked)
                 }}
             /> 
             Alert Pin Polarity {state.ALERTINV ? "Inverted" : "Normal"}

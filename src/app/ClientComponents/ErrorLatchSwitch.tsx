@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { LATCH } from "./Register"
 
 // LATCH
 export function ErrorLatchSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,10 +17,10 @@ export function ErrorLatchSwitch ({ motorNumber, state, setState, frameStyle = c
                         ...state,
                         LATCH: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.LATCH.command, checked)
+                    UpdateParam(motorNumber, LATCH, checked)
                 }}
             />
-            Latch Error State
+            { state.LATCH ? "Latch In Error State" : "Automatically Restart" }
         </Box>
     )
 }

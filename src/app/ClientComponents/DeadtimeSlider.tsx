@@ -1,19 +1,20 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { DEADTIME } from "./Register"
 
 // DEADTIME
 export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const formatText = (value: number) => {
-        if (typeof(RegisterList.DEADTIME.valuemap) === 'undefined'){
-            console.log("expected an array of speeds at RegisterList.DEADTIME.valuemap")
+        if (typeof(DEADTIME.valuemap) === 'undefined'){
+            console.log("expected an array of speeds at DEADTIME.valuemap")
             return "Data error"
         }
         else {
-            return RegisterList.DEADTIME.valuemap[value]
+            return DEADTIME.valuemap[value]
         }
     }
     const switchText = () => {
@@ -24,9 +25,9 @@ export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = com
             Dead Time Setting {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 
-                value={state.DEADTIME}
-                min={0} 
-                max={3}
+                value={ state.DEADTIME }
+                min={ DEADTIME.min } 
+                max={ DEADTIME.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -34,7 +35,7 @@ export function DeadtimeSlider ({ motorNumber, state, setState, frameStyle = com
                             ...state,
                             DEADTIME: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.DEADTIME.command, newValue)
+                        UpdateParam(motorNumber, DEADTIME, newValue)
                     }
                 }}
                 valueLabelFormat={ formatText }

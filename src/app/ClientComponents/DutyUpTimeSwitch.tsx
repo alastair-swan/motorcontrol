@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { DUTY_UP_TIME } from "./Register"
 
 // DUTY_UP_TIME
 export function DutyUpTimeSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -16,10 +17,10 @@ export function DutyUpTimeSwitch ({ motorNumber, state, setState, frameStyle = c
                         ...state,
                         DUTY_UP_TIME: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.DUTY_UP_TIME.command, checked)
+                    UpdateParam(motorNumber, DUTY_UP_TIME, checked)
                 }}
             />
-            Duty Up Time
+            Duty Up Time: { state.DUTY_UP_TIME ? "10.8ms" : "2.7ms" }
         </Box>
     )
 }

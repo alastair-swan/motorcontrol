@@ -1,23 +1,29 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { FST } from "./Register"
 
 // FST
 export function ForcedComutationFrequencySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
-    const switchText = () => {
-        return state.FST
+    const formatText = (value: number) => {
+        if (typeof(FST.valuemap) === 'undefined'){
+            return state.FST
+        }
+        else{
+            return FST.valuemap[value]
+        }
     }
     return (
         <Box sx={ frameStyle }>
-            Forced Comutation Frequency {switchText()}
+            Forced Comutation Frequency: { formatText(state.FST) }
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.FST }
-                min={0} 
-                max={3}
+                min={ FST.min } 
+                max={ FST.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -25,13 +31,10 @@ export function ForcedComutationFrequencySlider ({ motorNumber, state, setState,
                             ...state,
                             FST: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.FST.command, newValue)
+                        UpdateParam(motorNumber, FST, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const frequency = ['1.6Hz', '3.2Hz', '6.4Hz', '12.8Hz']
-                    return frequency[value]
-                }}
+                valueLabelFormat={ formatText }
             /> 
         </Box>
     )

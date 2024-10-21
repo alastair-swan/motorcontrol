@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { SPDINV } from "./Register"
 
 // SPDINV
 export function SpeedInputInversionSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -17,7 +18,7 @@ export function SpeedInputInversionSwitch ({ motorNumber, state, setState, frame
                         ...state,
                         SPDINV: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.SPDINV.command, checked)
+                    UpdateParam(motorNumber, SPDINV, checked)
                 }}
             />
             Analog Speed Control { switchText() }

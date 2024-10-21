@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { MAXOFF } from "./Register"
 
 // MAXOFF
 export function MaxOffSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -22,7 +23,7 @@ export function MaxOffSwitch ({ motorNumber, state, setState, frameStyle = compo
                         ...state,
                         MAXOFF: checked
                     })  
-                    UpdateParam(motorNumber, RegisterList.MAXOFF.command, checked)
+                    UpdateParam(motorNumber, MAXOFF, checked)
                 }}
             />
             {switchText()}

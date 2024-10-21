@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { WAIT_MODE } from "./Register"
 
 // WAIT_MODE
 export function BrakingModeSwitch ({ motorNumber, state, setState, frameStyle = componentStyle}: switchComponentProps){
@@ -16,7 +17,7 @@ export function BrakingModeSwitch ({ motorNumber, state, setState, frameStyle = 
                         ...state,
                         WAIT_MODE: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.WAIT_MODE.command, checked)
+                    UpdateParam(motorNumber, WAIT_MODE, checked)
                 }}
             />
             {state.WAIT_MODE ? "Shorted" : "Hi-Z"}

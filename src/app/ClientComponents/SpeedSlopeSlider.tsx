@@ -1,9 +1,10 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { SPEEDSLOP } from "./Register"
 
 // SPEEDSLOP
 export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -20,8 +21,8 @@ export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = c
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.SPEEDSLOP }
-                min={0} 
-                max={16383}
+                min={ SPEEDSLOP.min } 
+                max={ SPEEDSLOP.max }
                 step={1}
                 scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -30,7 +31,7 @@ export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = c
                             ...state,
                             SPEEDSLOP: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.SPEEDSLOP.command, newValue)
+                        UpdateParam(motorNumber, SPEEDSLOP, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

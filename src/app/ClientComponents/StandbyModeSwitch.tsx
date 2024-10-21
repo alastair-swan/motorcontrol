@@ -1,15 +1,16 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { STBY_MODE } from "./Register"
 
 // STBY_MODE
 export function StandbyModeSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     const switchText = () => {
         if (!state.STBY_MODE){
-            return "Only Stby Pin Controls Standby"
+            return "Only STBY Pin Controls Standby"
         }
         return "Standby if motor is off"
     }
@@ -22,7 +23,7 @@ export function StandbyModeSwitch ({ motorNumber, state, setState, frameStyle = 
                         ...state,
                         STBY_MODE: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.STBY_MODE.command, checked)
+                    UpdateParam(motorNumber, STBY_MODE, checked)
                 }}
             /> 
             {switchText()}

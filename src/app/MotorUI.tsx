@@ -3,10 +3,10 @@
 import { Grid2, Box } from "@mui/material";
 import './ClientComponents/MotorDutyCurve';
 import * as Client from './ClientComponents';
-import { RegisterList } from "./ClientComponents";
 import { useState } from "react";
 import { MotorParams } from "./MotorControlClient";
 import { itembgColor, sectionbgColor } from "./UIStyle";
+import * as RegisterList from "./ClientComponents/Register";
 
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     return (
@@ -106,7 +106,7 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
         COMP_HYS: RegisterList.COMP_HYS.default as number,
         SLAVE_ADRS: (RegisterList.SLAVE_ADRS.default as Array<number>)[motorNumber] as number,
         SPD: RegisterList.SPD.default as number,
-        hz_cnt: 0
+        hz_cnt: NaN
     })
 
     return (

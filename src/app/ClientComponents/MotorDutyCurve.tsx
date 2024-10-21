@@ -3,7 +3,7 @@
 import Box from '@mui/material/Box'
 import * as d3 from "d3"
 import { MotorParams } from '../MotorControlClient'
-import { RegisterList } from '.'
+import { MAXSPEED } from './Register'
 
 type graphPoint = { x: number, y: number }
 
@@ -15,7 +15,7 @@ export function DutyCurve({ state, width }: { motorNumber: number, state: MotorP
     const changeRPM = startRPM + (state.SPEEDSLOP * 0.08 * (changeDuty - stopDuty))
     const maxDuty = (state.MAXDUTY + 257) / 5.12
     const maxDutyRPM = changeRPM + (state.SPEEDSLOP2 * 0.08 * (maxDuty - changeDuty))
-    const maxSpeedLimit = typeof(RegisterList.MAXSPEED.valuemap) === "undefined" ? -1 : RegisterList.MAXSPEED.valuemap[state.MAXSPEED] as number
+    const maxSpeedLimit = typeof(MAXSPEED.valuemap) === "undefined" ? -1 : MAXSPEED.valuemap[state.MAXSPEED] as number
     const calc0DutySpeedSetting = () => (
         state.MAXOPEN ? (
             state.NOSTOP ? (
@@ -79,7 +79,7 @@ export function DutyCurve({ state, width }: { motorNumber: number, state: MotorP
                 backgroundColor: '#FFFFFF'
             }}
         >
-            <Graph data={graphData} maxX={(RegisterList.MAXSPEED.valuemap as Array<number>)[state.MAXSPEED] as number} width={width}/>
+            <Graph data={graphData} maxX={(MAXSPEED.valuemap as Array<number>)[state.MAXSPEED] as number} width={width}/>
         </Box>
     )
 }

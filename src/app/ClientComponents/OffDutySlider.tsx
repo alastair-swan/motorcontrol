@@ -1,10 +1,11 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
+import { STOPDUTY } from "./Register"
 
 // STOPDUTY
 export function OffDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
@@ -19,8 +20,8 @@ export function OffDutySlider ({ motorNumber, state, setState, frameStyle = comp
             <Slider 
                 valueLabelDisplay='auto' 
                 value={state.STOPDUTY}
-                min={0} 
-                max={127}
+                min={ STOPDUTY.min } 
+                max={ STOPDUTY.max }
                 step={1}
                 scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
@@ -29,7 +30,7 @@ export function OffDutySlider ({ motorNumber, state, setState, frameStyle = comp
                             ...state,
                             STOPDUTY: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.STOPDUTY.command, newValue)
+                        UpdateParam(motorNumber, STOPDUTY, newValue)
                     }
                 }}
                 valueLabelFormat={asPercentage}

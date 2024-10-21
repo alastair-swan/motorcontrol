@@ -1,9 +1,10 @@
 "use client"
 
-import { switchComponentProps, RegisterList } from "."
+import { switchComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Switch } from '@mui/material'
 import { componentStyle, warningStateColor } from "../UIStyle"
+import { VCP_MASK } from "./Register"
 
 // VCP_MASK
 export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
@@ -22,7 +23,7 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState,
                         ...state,
                         VCP_MASK: checked
                     })
-                    UpdateParam(motorNumber, RegisterList.VCP_MASK.command, checked)
+                    UpdateParam(motorNumber, VCP_MASK, checked)
                 } }
             /> 
             Charge Pump Monitoring: {switchText()}

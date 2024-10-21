@@ -1,19 +1,20 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { MAXSPEED } from "./Register"
 
 // MAXSPEED
 export function MaxSpeedSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        if (typeof(RegisterList.MAXSPEED.valuemap) === "undefined"){
-            console.log("expected an array of speeds at RegisterList.MAXSPEED.valuemap")
+        if (typeof(MAXSPEED.valuemap) === "undefined"){
+            console.log("expected an array of speeds at MAXSPEED.valuemap")
             return "Data error"
         }
         else{
-            return RegisterList.MAXSPEED.valuemap[value] + " RPM"
+            return MAXSPEED.valuemap[value] + " RPM"
         }
     }
     const switchText = () => {
@@ -25,8 +26,8 @@ export function MaxSpeedSlider ({ motorNumber, state, setState, frameStyle = com
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.MAXSPEED }
-                min={0} 
-                max={3}
+                min={ MAXSPEED.min } 
+                max={ MAXSPEED.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -34,7 +35,7 @@ export function MaxSpeedSlider ({ motorNumber, state, setState, frameStyle = com
                             ...state,
                             MAXSPEED: newValue
                         })  
-                        UpdateParam(motorNumber, RegisterList.MAXSPEED.command, newValue)
+                        UpdateParam(motorNumber, MAXSPEED, newValue)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

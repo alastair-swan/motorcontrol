@@ -1,14 +1,23 @@
 "use client"
 
-import { sliderComponentProps, RegisterList } from "."
+import { sliderComponentProps } from "."
 import { UpdateParam } from "../MotorControl"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
+import { FMAX } from "./Register"
 
 // FMAX
 export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
+    const formatText = (value: number) => {
+        return (FMAX.valuemap as Array<string>)[value]
+    }
     const switchText = () => {
-        return state.FMAX
+        if (typeof(FMAX.valuemap) === 'undefined') {
+            return state.FMAX
+        }
+        else {
+            return FMAX.valuemap[state.FMAX]
+        }
     }
     return (
         <Box sx={ frameStyle }>
@@ -16,8 +25,8 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setStat
             <Slider 
                 valueLabelDisplay='auto' 
                 value={state.FMAX}
-                min={0} 
-                max={3}
+                min={ FMAX.min } 
+                max={ FMAX.min }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
@@ -25,13 +34,10 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setStat
                             ...state,
                             FMAX: newValue
                         })
-                        UpdateParam(motorNumber, RegisterList.FMAX.command, newValue)
+                        UpdateParam(motorNumber, FMAX, newValue)
                     }
                 }}
-                valueLabelFormat={(value: number) => {
-                    const frequency = ['0.75kHz', '1.5kHz', '3kHz', 'unlimited']
-                    return frequency[value]
-                }}
+                valueLabelFormat={ formatText }
             /> 
         </Box>
     )
