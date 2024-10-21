@@ -9,13 +9,13 @@ import { KI, KIX } from "./Register"
 // KI
 export function KISlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderScale = (value: number) => { 
-        return value * 0.08 
+        return value
     }
     const sliderFormat = (value: number) => {
-        return value.toFixed(2)
+        return value
     }
     const switchText = () => {
-        return sliderFormat(sliderScale(state.KIX ? state.KI * 8 : state.KI))
+        return sliderFormat(sliderScale(state.KIX ? state.KI * 8: state.KI))
     }
     return (
         <Box sx={ frameStyle }>

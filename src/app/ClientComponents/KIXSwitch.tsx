@@ -9,7 +9,7 @@ import { KIX } from "./Register"
 // KIX
 export function KIXSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     const switchText = () => {
-        if (!state.KIX){
+        if (state.KIX){
             return "x8"
         }
         return "x1"

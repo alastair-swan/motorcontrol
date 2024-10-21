@@ -9,10 +9,10 @@ import { KP, KPX } from "./Register"
 // KP
 export function KPSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderScale = (value: number) => { 
-        return value * 0.08 
+        return value
     }
     const sliderFormat = (value: number) => {
-        return value.toFixed(2)
+        return value
     }
     const switchText = () => {
         return sliderFormat(sliderScale(state.KPX ? state.KP * 8 : state.KP))

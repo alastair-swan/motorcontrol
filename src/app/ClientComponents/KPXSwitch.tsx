@@ -9,7 +9,7 @@ import { KPX } from "./Register"
 // KPX
 export function KPXSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
     const switchText = () => {
-        if (!state.KPX){
+        if (state.KPX){
             return "x8"
         }
         return "x1"
