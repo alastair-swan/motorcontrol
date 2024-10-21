@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
 import { MotorParams } from "../MotorControlClient";
-import { RegisterList } from ".";
 import { errorStateColor, warningStateColor } from "../UIStyle";
+import { MAXSPEED } from "./Register";
 
 export function RotationState({state}: {state: MotorParams}){
     return (
         <Box>
             Reported Speed: <span style={{color: 
-                state.hz_cnt === 0 ? warningStateColor : 
-                state.hz_cnt > ((RegisterList.MAXSPEED.valuemap as Array<number>) [state.MAXSPEED] as number) ? errorStateColor : 
+                Number.isNaN(state.hz_cnt) ? warningStateColor : 
+                state.hz_cnt > ((MAXSPEED.valuemap as Array<number>) [state.MAXSPEED] as number) ? errorStateColor : 
                 'white'}}>{ 
-                    state.hz_cnt 
-                } RPM </span>
+                    Number.isNaN(state.hz_cnt) ? "No Info" : state.hz_cnt + "RPM"
+                } </span>
         </Box>
     )
 }
