@@ -121,7 +121,7 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
                             console.log(state)
                             setMotorState({...state})
                         }}
-                        />
+                    />
                 </Grid2>
             </Grid2>
         </Box>
