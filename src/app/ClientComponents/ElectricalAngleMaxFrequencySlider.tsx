@@ -9,15 +9,20 @@ import { FMAX } from "./Register"
 // FMAX
 export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const formatText = (value: number) => {
-        return (FMAX.valuemap as Array<string>)[value]
+        if (typeof(FMAX.valuemap) === 'undefined'){
+            console.error("Data error: FMAX.valuemap undefined")
+        }
+        else{
+            if (FMAX.valuemap[value] === undefined){
+                return "Unlimited"
+            }
+            else{
+                return FMAX.valuemap[value] / 1000 + "kHz"
+            }
+        }
     }
     const switchText = () => {
-        if (typeof(FMAX.valuemap) === 'undefined') {
-            return state.FMAX
-        }
-        else {
-            return FMAX.valuemap[state.FMAX]
-        }
+        return formatText(state.FMAX)
     }
     return (
         <Box sx={ frameStyle }>
@@ -26,7 +31,7 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setStat
                 valueLabelDisplay='auto' 
                 value={state.FMAX}
                 min={ FMAX.min } 
-                max={ FMAX.min }
+                max={ FMAX.max }
                 step={1}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
