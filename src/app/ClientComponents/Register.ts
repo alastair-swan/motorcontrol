@@ -42,10 +42,10 @@ export const CHANGEDUTY = { command: 'CHANGEDUTY', readable: true, writable: tru
 export const MAXDUTY = { command: 'MAXDUTY', readable: true, writable: true, type: 'number', min: 0, max: 255, default: 255, normalize: (value: number) => { return ((value + 257)/512)} } as Register
 export const STARTRPM = { command: 'STARTRPM', readable: true, writable: true, type: 'number', min: 0, max: 4095, default: 857, normalize: defaultNormalize } as Register
 export const MAXDUTYHYS = { command: 'MAXDUTYHYS', readable: true, writable: true, type: 'number', min: 0, max: 15, default: 3, normalize: defaultNormalize } as Register
-export const SPEEDSLOP = { command: 'SPEEDSLOP', readable: true, writable: true, type: 'number', min: 0, max: 16383, default: 815, normalize: (value: number) => { return value * 0.08 } } as Register
+export const SPEEDSLOP = { command: 'SPEEDSLOP', readable: true, writable: true, type: 'number', min: 0, max: 16383, default: 815, normalize: (value: number) => { return value * 8.0 } } as Register
 export const MAXOPEN = { command: 'MAXOPEN', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const MAXOFF = { command: 'MAXOFF', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
-export const SPEEDSLOP2 = { command: 'SPEEDSLOP2', readable: true, writable: true, type: 'number', min: 0, max: 16383, default: 1795, normalize: (value: number) => { return value * 0.08 } } as Register
+export const SPEEDSLOP2 = { command: 'SPEEDSLOP2', readable: true, writable: true, type: 'number', min: 0, max: 16383, default: 1795, normalize: (value: number) => { return value * 8.0 } } as Register
 export const VCP_MASK = { command: 'VCP_MASK', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const OPENLOOP = { command: 'OPENLOOP', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const KIX = { command: 'KIX', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
@@ -54,7 +54,7 @@ export const KPX = { command: 'KPX', readable: true, writable: true, type: 'bool
 export const KP = { command: 'KP', readable: true, writable: true, type: 'number', min: 0, max: 127, default: 30, normalize: defaultNormalize } as Register
 export const STBY_MODE = { command: 'STBY_MODE', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const DIR = { command: 'DIR', readable: true, writable: true, type: 'boolean', default: true, normalize: defaultNormalize } as Register
-export const POLEPAIR = { command: 'POLEPAIR', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 6, normalize: defaultNormalize } as Register
+export const POLEPAIR = { command: 'POLEPAIR', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 6, normalize: (value: number) => { return (value + 1) * 2 } } as Register
 export const MAXSPEED = { command: 'MAXSPEED', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2, valuemap: [4096, 8192, 16384, 32768], normalize: defaultNormalize } as Register
 export const FG_ON = { command: 'FG_ON', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const TSPSEL = { command: 'TSPSEL', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
@@ -69,10 +69,10 @@ export const SS_ADD_SEL = { command: 'SS_ADD_SEL', readable: true, writable: tru
 export const SS_UP_SEL = { command: 'SS_UP_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1, valuemap: [0.01, 0.02, 0.05, 0.10], normalize: defaultNormalize } as Register
 export const SS_DUTYCHGLIMIT = { command: 'SS_DUTYCHGLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, valuemap: [0.17, 0.20, 0.55, 1.11, 1.84, 2.76, 3.69, 5.53], normalize: defaultNormalize } as Register
 export const DUTY_UP_TIME = { command: 'DUTY_UP_TIME', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
-export const RPMLIMIT = { command: 'RPMLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, valuemap: ["Unlimited", 512, 2200, 3800, 5400, 7000, 8600, 10240], normalize: defaultNormalize } as Register
+export const RPMLIMIT = { command: 'RPMLIMIT', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, valuemap: [ undefined, 512, 2200, 3800, 5400, 7000, 8600, 10240], normalize: defaultNormalize } as Register
 export const BRK_INV = { command: 'BRK_INV', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const ISD_MASK = { command: 'ISD_MASK', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
-export const RS_SEL = { command: 'RS_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: ['unfiltered', '200kHz', '100kHz', '50kHz'], normalize: defaultNormalize } as Register
+export const RS_SEL = { command: 'RS_SEL', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: [undefined, 200000, 100000, 50000], normalize: defaultNormalize } as Register
 export const ANTITHROUGH = { command: 'ANTITHROUGH', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
 export const WAIT_TIME = { command: 'WAIT_TIME', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 2, normalize: defaultNormalize } as Register
 export const WAIT_MODE = { command: 'WAIT_MODE', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
@@ -101,8 +101,8 @@ export const LA = { command: 'LA', readable: true, writable: true, type: 'number
     [  11.25, 15.0 , 18.75, 22.5 , 26.25, 30.0 ],
     [   3.75, 11.25, 18.75, 26.25, 30.0 , 30.0 ]
 ], normalize: defaultNormalize } as Register
-export const FMAX = { command: 'FMAX', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2, valuemap: ['0.75kHz', '1.5kHz', '3kHz', 'unlimited'], normalize: defaultNormalize } as Register
-export const FST = { command: 'FST', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: ['1.6Hz', '3.2Hz', '6.4Hz', '12.8Hz'], normalize: defaultNormalize } as Register
+export const FMAX = { command: 'FMAX', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 2, valuemap: [750, 1500, 3000, undefined], normalize: defaultNormalize } as Register
+export const FST = { command: 'FST', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 0, valuemap: [1.6, 3.2, 6.4, 12.8], normalize: defaultNormalize } as Register
 export const FPWM = { command: 'FPWM', readable: true, writable: true, type: 'number', min: 0, max: 7, default: 7, valuemap: [
     [ 23400,  23400,  23400,  23400,  23400,  23400],
     [ 46900,  46900,  46900,  46900,  46900,  46900],

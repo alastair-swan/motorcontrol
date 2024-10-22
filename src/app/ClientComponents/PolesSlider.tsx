@@ -9,7 +9,7 @@ import { POLEPAIR } from "./Register"
 // POLEPAIR
 export function PolesSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const sliderFormat = (value: number) => {
-        return (value + 1) * 2 + " Pole Motor"
+        return POLEPAIR.normalize(value) + " Pole Motor"
     }
     const sliderText = () => {
         return sliderFormat(state.POLEPAIR)
