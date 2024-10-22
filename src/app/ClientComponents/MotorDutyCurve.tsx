@@ -103,7 +103,7 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                         <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:0},{x:0, y:1}]) as string} />
                         {
                             axisPoints.map((d) => (
-                                <g font-size="12" font-family="sans-serif" text-anchor="middle">
+                                <g fontSize="12" fontFamily="sans-serif" textAnchor="middle" fill="white">
                                     <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:d, y:0},{x:d, y:-0.02}]) as string} />
                                     <text dy={yAxis(-0.06)} dx={xAxis(d)}>{d * 100 + "%"}</text>
                                 </g>
@@ -114,7 +114,7 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                         <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:0},{x:1, y:0}]) as string} />
                         {
                             axisPoints.map((d) => (
-                                <g font-size="12" font-family="sans-serif" text-anchor="end">
+                                <g font-size="12" fontFamily="sans-serif" textAnchor="end" fill="white">
                                     <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:d},{x:-0.01, y:d}]) as string} />
                                     <text dy={yAxis(d) + 4} dx={xAxis(-0.02)}>{(d * maxSpeed).toFixed(0)}</text>
                                 </g>
