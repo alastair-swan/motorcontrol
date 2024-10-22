@@ -29,7 +29,7 @@ Number motorRegisterGetter(const CallbackInfo &info){
     if (paramName == "OV_SPD"){
         return Number::New(info.Env(), motors[motorNumber].getOverspeedErrorState(false));   
     }
-    if (paramName == "OU_SPD"){
+    if (paramName == "UD_SPD"){
         return Number::New(info.Env(), motors[motorNumber].getUnderspeedErrorState(false));  
     } 
     if (paramName == "ST_FAIL"){

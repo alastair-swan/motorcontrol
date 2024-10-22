@@ -32,7 +32,7 @@ export const CP_LOW = { command: 'CP_LOW', readable: true, writable: false, type
 export const TSD = { command: 'TSD', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
 export const ISD = { command: 'ISD', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
 export const OV_SPD = { command: 'OV_SPD', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
-export const OU_SPD = { command: 'OU_SPD', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
+export const UD_SPD = { command: 'UD_SPD', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
 export const ST_FAIL = { command: 'ST_FAIL', readable: true, writable: false, type: 'boolean', normalize: defaultNormalize } as Register
 export const USERID = { command: 'USERID', readable: true, writable: true, type: 'number', min: 0, max: 255, default: 0, normalize: defaultNormalize } as Register
 export const NOSTOP = { command: 'NOSTOP', readable: true, writable: true, type: 'boolean', default: false, normalize: defaultNormalize } as Register
@@ -121,4 +121,4 @@ export const SINK = { command: 'SINK', readable: true, writable: true, type: 'nu
 export const COMP_HYS = { command: 'COMP_HYS', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1, valuemap: ['none', '100mV', '200mV', '300mV'], normalize: defaultNormalize } as Register
 export const SLAVE_ADRS = {readable: true, writable: true, type: 'number', default: [41, 45, 50], normalize: defaultNormalize } as Register
 export const SPD = { command: 'SPD', readable: true, writable: true, type: 'number', min: 0, max: 512, default: 0, normalize: (value: number) => { return value / 511 } } as Register
-export const HZ_CNT = { command: 'HZ_CNT', readable: true, writable: false, type: 'number', normalize: (value: number) => { 250000 / Math.max(1, value) } } as Register
+export const HZ_CNT = { command: 'HZ_CNT', readable: true, writable: false, type: 'number', normalize: (value: number) => { return 250000 / Math.max(1, value) } } as Register
