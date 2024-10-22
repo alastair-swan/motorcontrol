@@ -9,10 +9,10 @@ import { SPEEDSLOP } from "./Register"
 // SPEEDSLOP
 export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
-        return sliderFormat(SPEEDSLOP.normalize(state.SPEEDSLOP))
+        return sliderFormat(state.SPEEDSLOP)
     }
     const sliderFormat = (value: number) => {
-        return Math.round(value * 100) / 100 + " RPM/%"
+        return (SPEEDSLOP.normalize(value) / 100).toFixed(2) + " RPM/%"
     }
     return (
         <Box sx={ frameStyle }>
@@ -23,7 +23,6 @@ export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = c
                 min={ SPEEDSLOP.min } 
                 max={ SPEEDSLOP.max }
                 step={ 1 }
-                scale={ SPEEDSLOP.normalize }
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({
