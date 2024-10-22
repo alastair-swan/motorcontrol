@@ -1,6 +1,6 @@
 "use client"
 
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { sliderComponentProps } from "."
 import { componentStyle } from "../UIStyle"
@@ -22,7 +22,6 @@ export function DigitalFilteringSlider ({ motorNumber, state, setState, frameSty
                 min={ OCPMASK.min } 
                 max={ OCPMASK.max }
                 step={1}
-                scale={(value: number) => { return value }}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({

@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
@@ -9,7 +9,6 @@ import { MAXDUTY } from "./Register"
 
 // MAXDUTY
 export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
-    const scaleFunction = (value: number) => { return ((value + 257)/512) }
     const switchText = () => {
         return state.MAXDUTY
     }
@@ -22,8 +21,8 @@ export function MaxDutySlider ({ motorNumber, state, setState, frameStyle = comp
                 value={state.MAXDUTY}
                 min={ MAXDUTY.min } 
                 max={ MAXDUTY.max }
-                step={1}
-                scale={scaleFunction}
+                step={ 1 }
+                scale={ MAXDUTY.normalize }
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         const updatedState = state

@@ -5,6 +5,8 @@ import { MotorParams } from '../MotorControlClient'
 export type componentProps = { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void, frameStyle?: {}}
 export type switchComponentProps = componentProps
 export type sliderComponentProps = componentProps
+export type { Register } from './Register'
+export type { ServerRegister } from './Register'
 
 export { AlertPinPolaritySwitch } from './AlertPinPolaritySwitch'
 export { AutodeadtimeSwitch } from './AutodeadtimeSwitch'

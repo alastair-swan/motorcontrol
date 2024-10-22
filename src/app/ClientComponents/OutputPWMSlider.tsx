@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider, Grid2 } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { FPWM } from "./Register"

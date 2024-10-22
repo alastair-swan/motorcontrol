@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { asPercentage } from "./helper"
@@ -10,9 +10,8 @@ import { STARTDUTY } from "./Register"
 //STARTDUTY
 export function StartDutySlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
-        return asPercentage(sliderScale(state.STARTDUTY))
+        return asPercentage(STARTDUTY.normalize(state.STARTDUTY))
     }
-    const sliderScale = (value: number) => { return (value/512) }
     return (
         <Box sx={ frameStyle }>
             Motor Start Input Value: { switchText() }
@@ -22,7 +21,7 @@ export function StartDutySlider ({ motorNumber, state, setState, frameStyle = co
                 min={ STARTDUTY.min } 
                 max={ STARTDUTY.max }
                 step={1}
-                scale={ sliderScale }
+                scale={ STARTDUTY.normalize }
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({

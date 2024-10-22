@@ -1,21 +1,15 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { KP, KPX } from "./Register"
 
 // KP
 export function KPSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
-    const sliderScale = (value: number) => { 
-        return value
-    }
-    const sliderFormat = (value: number) => {
-        return value
-    }
     const switchText = () => {
-        return sliderFormat(sliderScale(state.KPX ? state.KP * 8 : state.KP))
+        return state.KPX ? state.KP * 8 : state.KP
     }
     return (
         <Box sx={ frameStyle }>
@@ -26,7 +20,6 @@ export function KPSlider ({ motorNumber, state, setState, frameStyle = component
                 min={ KP.min } 
                 max={ KP.max as number * 8}
                 step={ state.KP <= (KP.max as number) ? 1 : 8 }
-                scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         if (newValue <= (KP.max as number) && state.KPX){
@@ -63,7 +56,6 @@ export function KPSlider ({ motorNumber, state, setState, frameStyle = component
                         }
                     }
                 }}
-                valueLabelFormat={sliderFormat}
             />
         </Box>
     )

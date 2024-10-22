@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { DUTYCHGLIMIT } from "./Register"
@@ -14,7 +14,7 @@ export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameSty
             return value
         }
         else {
-            return (100 / (DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
+            return (100 / (DUTYCHGLIMIT.valuemap[value] as number)).toFixed(1) + "%/second"
         }
     }
     const switchText = () => {

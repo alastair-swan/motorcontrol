@@ -1,21 +1,15 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { KI, KIX } from "./Register"
 
 // KI
 export function KISlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
-    const sliderScale = (value: number) => { 
-        return value
-    }
-    const sliderFormat = (value: number) => {
-        return value
-    }
     const switchText = () => {
-        return sliderFormat(sliderScale(state.KIX ? state.KI * 8: state.KI))
+        return state.KIX ? state.KI * 8: state.KI
     }
     return (
         <Box sx={ frameStyle }>
@@ -26,7 +20,6 @@ export function KISlider ({ motorNumber, state, setState, frameStyle = component
                 min={ KI.min } 
                 max={ KI.max as number * 8}
                 step={ state.KI <= (KI.max as number) ? 1 : 8 }
-                scale={sliderScale}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         if (newValue <= (KI.max as number) && state.KIX){
@@ -63,7 +56,6 @@ export function KISlider ({ motorNumber, state, setState, frameStyle = component
                         }
                     }
                 }}
-                valueLabelFormat={sliderFormat}
             />
         </Box>
     )

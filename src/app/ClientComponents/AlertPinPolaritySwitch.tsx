@@ -1,7 +1,7 @@
 "use client"
 
 import { switchComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Switch } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { ALERTINV } from "./Register"

@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { SS_DUTYCHGLIMIT } from "./Register"
@@ -14,7 +14,7 @@ export function SoftStartSpeedChangeLimitSlider ({ motorNumber, state, setState,
             return value
         }
         else{
-            return (100 / (SS_DUTYCHGLIMIT.valuemap[value] as number)) + "%/second"
+            return (100 / (SS_DUTYCHGLIMIT.valuemap[value] as number)).toFixed(1) + "%/second"
         }
     }
     const sliderText = () => {

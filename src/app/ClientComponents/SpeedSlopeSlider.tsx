@@ -1,7 +1,7 @@
 "use client"
 
 import { sliderComponentProps } from "."
-import { UpdateParam } from "../MotorControl"
+import { UpdateParam } from "../MotorControlClient"
 import { Box, Slider } from '@mui/material'
 import { componentStyle } from "../UIStyle"
 import { SPEEDSLOP } from "./Register"
@@ -9,9 +9,8 @@ import { SPEEDSLOP } from "./Register"
 // SPEEDSLOP
 export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = componentStyle }: sliderComponentProps){
     const switchText = () => {
-        return sliderFormat(sliderScale(state.SPEEDSLOP))
+        return sliderFormat(SPEEDSLOP.normalize(state.SPEEDSLOP))
     }
-    const sliderScale = (value: number) => { return value * 0.08 }
     const sliderFormat = (value: number) => {
         return Math.round(value * 100) / 100 + " RPM/%"
     }
@@ -23,8 +22,8 @@ export function SpeedSlopeSlider ({ motorNumber, state, setState, frameStyle = c
                 value={ state.SPEEDSLOP }
                 min={ SPEEDSLOP.min } 
                 max={ SPEEDSLOP.max }
-                step={1}
-                scale={sliderScale}
+                step={ 1 }
+                scale={ SPEEDSLOP.normalize }
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({
