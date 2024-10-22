@@ -17,7 +17,12 @@ export function ElectricalAngleMaxFrequencySlider ({ motorNumber, state, setStat
                 return "Unlimited"
             }
             else{
-                return FMAX.valuemap[value] / 1000 + "kHz"
+                if (typeof(FMAX.valuemap[value]) === 'number'){
+                    return FMAX.valuemap[value] / 1000 + "kHz"
+                }
+                else {
+                    return FMAX.valuemap[value]
+                }
             }
         }
     }
