@@ -1,6 +1,7 @@
 "use client"
 
 import { Register } from "./ClientComponents"
+import { CP_LOW, HZ_CNT, ISD, UD_SPD, OV_SPD, ST_FAIL, TSD } from "./ClientComponents/Register"
 import * as Server from './MotorControl'
 export type MotorParams = {
     CP_LOW: boolean,
@@ -72,16 +73,6 @@ export type MotorParams = {
     SPD: number,
     hz_cnt: number
 }
-var RPM = 0;
-export function getRPM(){
-    return RPM
-}
-
-export function startPollingValue( motorNumber: number, paramName: string | Register, pollRate: number): NodeJS.Timeout {
-    return setInterval(async () => {
-        RPM = await GetParam(motorNumber, paramName)
-    }, pollRate)
-} 
 
 export function UpdateParam(motorNumber: number, paramName: string | Register, paramValue: number | string | boolean): Promise<string> {
     var command

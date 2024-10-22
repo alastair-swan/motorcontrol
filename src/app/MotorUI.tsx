@@ -3,27 +3,51 @@
 import { Grid2, Box } from "@mui/material";
 import './ClientComponents/MotorDutyCurve';
 import * as Client from './ClientComponents';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MotorParams } from "./MotorControlClient";
 import { itembgColor, sectionbgColor } from "./UIStyle";
 import * as RegisterList from "./ClientComponents/Register";
+import { getData, updateValues } from "./MotorControl";
+
+var pollingStarted = false
 
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
+    const [motorTelem, setMotorTelem] = useState<updateValues>()
+    useEffect(() => {
+        setInterval(() => {
+            const update = async () => {
+                setMotorTelem(await getData( motorNumber ))
+                //console.log((await getData( motorNumber )).HZ_CNT)
+            }
+            update().catch(console.error)
+        }, 1000)
+        
+    }, [])
     return (
         <Box sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Grid2 container size={1} columns={4} sx={{ borderWidth: 0, padding: 1 }}>
                 <Grid2 gridColumn={0} size={1}sx={{height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                    <Client.ChargePumpState state={state}/>
-                    <Client.TemperatureState state={state}/>
-                    <Client.CurrentState state={state}/>
-                    <Client.RPMErrorState state={state}/>
-                    <Client.StartupState state={state}/>
-                    <Client.RotationState state={state}/>
+                    <Client.ChargePumpState state={{...state, CP_LOW: motorTelem?.CP_LOW as boolean}}/>
+                    <Client.TemperatureState state={{...state, TSD: motorTelem?.TSD as boolean}}/>
+                    <Client.CurrentState state={{...state, ISD: motorTelem?.ISD as boolean}}/>
+                    <Client.RPMErrorState state={{...state, OV_SPD: motorTelem?.OV_SPD as boolean, UD_SPD: motorTelem?.UD_SPD as boolean}}/>
+                    <Client.StartupState state={{...state, ST_FAIL: motorTelem?.ST_FAIL as boolean}}/>
+                    <Client.RotationState state={{...state, hz_cnt: motorTelem?.HZ_CNT as number}}/>
                 </Grid2>
                 <Grid2 gridColumn={1} size={3}>
                     <Grid2 container columns={1} width={600}>
                         <Grid2 gridColumn={0} size={1}>
-                            <Client.DutyCurve motorNumber={motorNumber} state={state} setState={setState} width={600}/>
+                            <Client.DutyCurve motorNumber={motorNumber} state={
+                                {
+                                    ...state, 
+                                    CP_LOW: motorTelem?.CP_LOW as boolean,
+                                    TSD: motorTelem?.TSD as boolean,
+                                    ISD: motorTelem?.ISD as boolean,
+                                    OV_SPD: motorTelem?.OV_SPD as boolean,
+                                    UD_SPD: motorTelem?.UD_SPD as boolean,
+                                    ST_FAIL: motorTelem?.ST_FAIL as boolean,
+                                    hz_cnt: motorTelem?.HZ_CNT as number,
+                                }} setState={setState} width={600}/>
                         </Grid2>
                         <Grid2 gridColumn={0} size={1}>
                             <MotorControlSliders motorNumber = {motorNumber} state={state} setState={setState}/>
@@ -110,7 +134,7 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
     return (
         <Box padding={2} height={'100vh'} overflow={'auto'}>
             <Grid2 container columns={1} spacing={1} width={1500}>
-                <Grid2 size={1} gridColumn={0}><MotorState motorNumber={0} state={motorState} setState={(motorState: MotorParams) => {
+                <Grid2 size={1} gridColumn={0}><MotorState motorNumber={ 0 } state={motorState} setState={(motorState: MotorParams) => {
                         setMotorState({...motorState})
                     }
                 }/></Grid2>
