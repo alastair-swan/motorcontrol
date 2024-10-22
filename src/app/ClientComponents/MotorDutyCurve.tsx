@@ -3,7 +3,7 @@
 import Box from '@mui/material/Box'
 import * as d3 from "d3"
 import { MotorParams } from '../MotorControlClient'
-import { CHANGEDUTY, FMAX, MAXDUTY, MAXSPEED, POLEPAIR, SPD, SPEEDSLOP, SPEEDSLOP2, STARTDUTY, STOPDUTY } from './Register'
+import { CHANGEDUTY, FMAX, HZ_CNT, MAXDUTY, MAXSPEED, POLEPAIR, SPD, SPEEDSLOP, SPEEDSLOP2, STARTDUTY, STOPDUTY } from './Register'
 import { errorStateColor, goodStateColor, warningStateColor } from '../UIStyle'
 
 type graphPoint = { x: number, y: number }
@@ -102,8 +102,8 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                     <g>
                         <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:0},{x:0, y:1}]) as string} />
                         {
-                            axisPoints.map((d) => (
-                                <g fontSize="12" fontFamily="sans-serif" textAnchor="middle" fill="white">
+                            axisPoints.map((d, i) => (
+                                <g key={i} fontSize="12" fontFamily="sans-serif" textAnchor="middle" fill="white">
                                     <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:d, y:0},{x:d, y:-0.02}]) as string} />
                                     <text dy={yAxis(-0.06)} dx={xAxis(d)}>{d * 100 + "%"}</text>
                                 </g>
@@ -113,8 +113,8 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                     <g>
                         <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:0},{x:1, y:0}]) as string} />
                         {
-                            axisPoints.map((d) => (
-                                <g font-size="12" fontFamily="sans-serif" textAnchor="end" fill="white">
+                            axisPoints.map((d, i) => (
+                                <g key={i} fontSize="12" fontFamily="sans-serif" textAnchor="end" fill="white">
                                     <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:0, y:d},{x:-0.01, y:d}]) as string} />
                                     <text dy={yAxis(d) + 4} dx={xAxis(-0.02)}>{(d * maxSpeed).toFixed(0)}</text>
                                 </g>
@@ -131,7 +131,7 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                     Number.isNaN(state.hz_cnt) ? warningStateColor : 
                     state.OV_SPD || state.UD_SPD ? errorStateColor : 
                     goodStateColor } strokeWidth="1.5">
-                    <circle cx={xAxis(SPD.normalize(state.SPD))} cy={yAxis( Number.isNaN(state.hz_cnt) ? 0 : state.hz_cnt )} r="2.5" />
+                    <circle cx={xAxis(SPD.normalize(state.SPD))} cy={yAxis( Number.isNaN(state.hz_cnt) ? 0 : HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60)} r="2.5" />
                 </g>
             </svg>
         </Box>
