@@ -121,4 +121,4 @@ export const SINK = { command: 'SINK', readable: true, writable: true, type: 'nu
 export const COMP_HYS = { command: 'COMP_HYS', readable: true, writable: true, type: 'number', min: 0, max: 3, default: 1, valuemap: ['none', '100mV', '200mV', '300mV'], normalize: defaultNormalize } as Register
 export const SLAVE_ADRS = {readable: true, writable: true, type: 'number', default: [41, 45, 50], normalize: defaultNormalize } as Register
 export const SPD = { command: 'SPD', readable: true, writable: true, type: 'number', min: 0, max: 512, default: 0, normalize: (value: number) => { return value / 511 } } as Register
-export const HZ_CNT = { command: 'HZ_CNT', readable: true, writable: false, type: 'number', normalize: defaultNormalize } as Register
+export const HZ_CNT = { command: 'HZ_CNT', readable: true, writable: false, type: 'number', normalize: (value: number) => { 250000 / Math.max(1, value) } } as Register
