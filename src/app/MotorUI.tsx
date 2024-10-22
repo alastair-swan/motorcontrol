@@ -20,7 +20,7 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
                 //console.log((await getData( motorNumber )).HZ_CNT)
             }
             update().catch(console.error)
-        }, 1000)
+        }, 500)
         
     }, [])
     return (
