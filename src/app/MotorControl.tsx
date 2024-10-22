@@ -51,7 +51,7 @@ export async function GetParam(motorNumber: number, paramName: string): Promise<
         }
         else {
             const result = native.getParam(motorNumber, paramName)
-            console.log('readback: ' + paramName + ' from Motor: ' + motorNumber + ' with result: ' + result)
+            console.log('simulated readback: ' + paramName + ' from Motor: ' + motorNumber + ' with result: ' + result)
             return result
         }
     }
