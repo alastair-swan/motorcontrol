@@ -35,8 +35,6 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
     )
 }
 
-
-
 export default function Motor ({motorNumber}: {motorNumber: number}){
     const [motorState, setMotorState] = useState<MotorParams>({
         CP_LOW: false,
@@ -112,13 +110,15 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
     return (
         <Box padding={2} height={'100vh'} overflow={'auto'}>
             <Grid2 container columns={1} spacing={1} width={1500}>
-                <Grid2 size={1} gridColumn={0}><MotorState motorNumber={0} state={motorState} setState={(motorState: MotorParams) => {setMotorState({...motorState})}}/></Grid2>
+                <Grid2 size={1} gridColumn={0}><MotorState motorNumber={0} state={motorState} setState={(motorState: MotorParams) => {
+                        setMotorState({...motorState})
+                    }
+                }/></Grid2>
                 <Grid2 size={1} gridColumn={0}>
                     <MotorControlSettings 
                         motorNumber={0} 
                         state={motorState} 
                         setState={(state: MotorParams) => {
-                            console.log(state)
                             setMotorState({...state})
                         }}
                     />
