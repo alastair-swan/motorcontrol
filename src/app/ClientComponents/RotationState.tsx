@@ -4,14 +4,19 @@ import { errorStateColor, warningStateColor } from "../UIStyle";
 import { HZ_CNT, MAXSPEED } from "./Register";
 
 export function RotationState({state}: {state: MotorParams}){
+    const getRPMText = () => {
+        return (
+            Number.isNaN(state.hz_cnt) ? " No Info" : 
+            " " + Math.round(HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60) + " RPM"
+        )
+    }
     return (
         <Box>
-            Reported Speed: <span style={{color: 
-                Number.isNaN(state.hz_cnt) ? warningStateColor : 
-                HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60 > ((MAXSPEED.valuemap as Array<number>) [state.MAXSPEED] as number) ? errorStateColor : 
-                'white'}}>{ 
-                    Number.isNaN(state.hz_cnt) ? "No Info" : Math.round(HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60) + " RPM"
-                } </span>
+            {state.simulated ? <span style={{color: warningStateColor}}>Simulated </span> : ""}
+            Reported Speed:
+            {
+                <span style={{color: warningStateColor}}>{getRPMText()}</span>
+            }
         </Box>
     )
 }
