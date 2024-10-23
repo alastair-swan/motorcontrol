@@ -61,6 +61,9 @@ export async function GetParam(motorNumber: number, paramName: string, simulated
         else if (paramName === OV_SPD.command){
             return 0
         }
+        else if (paramName === UD_SPD.command){
+            return 0
+        }
         else if (paramName === ST_FAIL.command){
             return 0
         }
