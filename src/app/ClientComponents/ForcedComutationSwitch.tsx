@@ -11,13 +11,13 @@ export function ForcedComutationSwitch ({ motorNumber, state, setState, frameSty
     return (
         <Box sx={ frameStyle }>
             <Switch  
-                checked={ state.LOCKDIS }
+                checked={ !state.LOCKDIS }
                 onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                     setState({
                         ...state,
-                        LOCKDIS: checked
+                        LOCKDIS: !checked
                     })
-                    UpdateParam(motorNumber, LOCKDIS, checked)
+                    UpdateParam(motorNumber, LOCKDIS, !checked)
                 }}
             /> 
             { state.LOCKDIS ? 

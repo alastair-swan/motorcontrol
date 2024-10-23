@@ -20,7 +20,7 @@ export function ThermalShutdownInhibitSwitch ({ motorNumber, state, setState, fr
                     UpdateParam(motorNumber, TSD_MASK, checked)
                 }}
             />
-            Thermal Shutdown { !state.TSD_MASK ? <span style={{color: warningStateColor}}>Disabled</span> : "Enabled" }
+            Thermal Shutdown { state.TSD_MASK ? <span style={{color: warningStateColor}}>Disabled</span> : "Enabled" }
         </Box>
     )
 }

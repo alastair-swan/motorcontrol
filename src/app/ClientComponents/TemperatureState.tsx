@@ -11,7 +11,7 @@ export function TemperatureState({state}: {state: MotorParams}){
                 state.simulated ? <span style={{color: warningStateColor}}>Simulated </span> : ""
             }
             Temperature: {" "}{ 
-                state.TSD_MASK ? (
+                !state.TSD_MASK ? (
                     state.TSD === 1 ? <span style={{color: errorStateColor}}>Overtemperature</span> : 
                     state.TSD === -1 ? <span style={{color: warningStateColor}}>No Telemetry</span> :
                     <span style={{color: goodStateColor}}>Normal</span> ) : 

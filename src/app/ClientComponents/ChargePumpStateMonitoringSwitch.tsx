@@ -8,12 +8,6 @@ import { VCP_MASK } from "./Register"
 
 // VCP_MASK
 export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState, frameStyle = componentStyle }: switchComponentProps){
-    const switchText = () => {
-        if (state.VCP_MASK){
-            return "Enabled"
-        }
-        return <span style={{color: warningStateColor}}>Not Monitored</span>
-    }
     return (
         <Box sx={ frameStyle }>
             <Switch 
@@ -26,7 +20,7 @@ export function ChargePumpStateMonitoringSwitch ({ motorNumber, state, setState,
                     UpdateParam(motorNumber, VCP_MASK, checked)
                 } }
             /> 
-            Charge Pump Monitoring: {switchText()}
+            Charge Pump Monitoring: {state.VCP_MASK ? <span style={{color: warningStateColor}}>Not Monitored</span> : "Enabled"}
         </Box>
     )
 }

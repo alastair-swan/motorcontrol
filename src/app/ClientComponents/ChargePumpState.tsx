@@ -11,7 +11,7 @@ export function ChargePumpState({ state }: { state: MotorParams }){
                 state.simulated ? <span style={{color: warningStateColor}}>Simulated </span> : ""
             }
             Charge Pump: { 
-                state.VCP_MASK ? (
+                !state.VCP_MASK ? (
                     state.CP_LOW === 1 ? <span style={{color: errorStateColor}}>Low</span> : 
                     state.CP_LOW === -1 ? <span style={{color: warningStateColor}}>No Telemetry</span> :
                     <span style={{color: goodStateColor}}>Normal</span> ) : 
