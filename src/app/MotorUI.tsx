@@ -9,14 +9,12 @@ import { itembgColor, sectionbgColor } from "./UIStyle";
 import * as RegisterList from "./ClientComponents/Register";
 import { getData, updateValues } from "./MotorControl";
 
-var pollingStarted = false
-
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     const [motorTelem, setMotorTelem] = useState<updateValues>()
     useEffect(() => {
         setInterval(() => {
             const update = async () => {
-                setMotorTelem(await getData( motorNumber ))
+                setMotorTelem(await getData( motorNumber, true ))
                 //console.log((await getData( motorNumber )).HZ_CNT)
             }
             update().catch(console.error)
@@ -25,28 +23,36 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
     }, [])
     return (
         <Box sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
-            <Grid2 container size={1} columns={4} sx={{ borderWidth: 0, padding: 1 }}>
-                <Grid2 gridColumn={0} size={1}sx={{height: '100%', bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                    <Client.ChargePumpState state={{...state, CP_LOW: motorTelem?.CP_LOW as boolean}}/>
-                    <Client.TemperatureState state={{...state, TSD: motorTelem?.TSD as boolean}}/>
-                    <Client.CurrentState state={{...state, ISD: motorTelem?.ISD as boolean}}/>
-                    <Client.RPMErrorState state={{...state, OV_SPD: motorTelem?.OV_SPD as boolean, UD_SPD: motorTelem?.UD_SPD as boolean}}/>
-                    <Client.StartupState state={{...state, ST_FAIL: motorTelem?.ST_FAIL as boolean}}/>
-                    <Client.RotationState state={{...state, hz_cnt: motorTelem?.HZ_CNT as number}}/>
+            <Grid2 container size={1} columns={2} spacing={1} sx={{ borderWidth: 0, padding: 1 }}>
+                <Grid2 gridColumn={0} size={1}>
+                    <Grid2 container columns={1} width={"100%"} size={1} spacing={1}>
+                        <Grid2 size={1} sx={{ bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
+                            <Client.ChargePumpState state={{...state, CP_LOW: typeof(motorTelem) ==='undefined' ? state.CP_LOW : motorTelem?.CP_LOW, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.TemperatureState state={{...state, TSD: typeof(motorTelem) ==='undefined' ? state.TSD : motorTelem?.TSD, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.CurrentState state={{...state, ISD: typeof(motorTelem) ==='undefined' ? state.ISD : motorTelem?.ISD, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.RPMErrorState state={{...state, OV_SPD: typeof(motorTelem) ==='undefined' ? state.OV_SPD : motorTelem?.OV_SPD, UD_SPD: motorTelem?.UD_SPD as number, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.StartupState state={{...state, ST_FAIL: typeof(motorTelem) ==='undefined' ? state.ST_FAIL : motorTelem?.ST_FAIL, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.RotationState state={{...state, hz_cnt: typeof(motorTelem) ==='undefined' ? state.hz_cnt : motorTelem?.HZ_CNT, simulated: motorTelem?.simulated as boolean}}/>
+                        </Grid2>
+                        <Grid2 width={"100%"}>
+                            <MotorMonitoring motorNumber = {motorNumber} state={state} setState={setState}/>
+                        </Grid2>
+                    </Grid2>
                 </Grid2>
-                <Grid2 gridColumn={1} size={3}>
+                <Grid2 gridColumn={1} size={1}>
                     <Grid2 container columns={1} width={600}>
                         <Grid2 gridColumn={0} size={1}>
                             <Client.DutyCurve motorNumber={motorNumber} state={
                                 {
                                     ...state, 
-                                    CP_LOW: motorTelem?.CP_LOW as boolean,
-                                    TSD: motorTelem?.TSD as boolean,
-                                    ISD: motorTelem?.ISD as boolean,
-                                    OV_SPD: motorTelem?.OV_SPD as boolean,
-                                    UD_SPD: motorTelem?.UD_SPD as boolean,
-                                    ST_FAIL: motorTelem?.ST_FAIL as boolean,
+                                    CP_LOW: motorTelem?.CP_LOW as number,
+                                    TSD: motorTelem?.TSD as number,
+                                    ISD: motorTelem?.ISD as number,
+                                    OV_SPD: motorTelem?.OV_SPD as number,
+                                    UD_SPD: motorTelem?.UD_SPD as number,
+                                    ST_FAIL: motorTelem?.ST_FAIL as number,
                                     hz_cnt: motorTelem?.HZ_CNT as number,
+                                    simulated: motorTelem?.simulated as boolean
                                 }} setState={setState} width={600}/>
                         </Grid2>
                         <Grid2 gridColumn={0} size={1}>
@@ -61,12 +67,13 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
 
 export default function Motor ({motorNumber}: {motorNumber: number}){
     const [motorState, setMotorState] = useState<MotorParams>({
-        CP_LOW: false,
-        TSD: false,
-        ISD: false,
-        OV_SPD: false,
-        UD_SPD: false,
-        ST_FAIL: false,
+        simulated: false,
+        CP_LOW: -1,
+        TSD: -1,
+        ISD: -1,
+        OV_SPD: -1,
+        UD_SPD: -1,
+        ST_FAIL: -1,
         USERID: RegisterList.USERID.default as number,
         NOSTOP: RegisterList.NOSTOP.default as boolean,
         STOPDUTY: RegisterList.STOPDUTY.default as number,
@@ -133,11 +140,14 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
 
     return (
         <Box padding={2} height={'100vh'} overflow={'auto'}>
-            <Grid2 container columns={1} spacing={1} width={1500}>
-                <Grid2 size={1} gridColumn={0}><MotorState motorNumber={ 0 } state={motorState} setState={(motorState: MotorParams) => {
-                        setMotorState({...motorState})
-                    }
-                }/></Grid2>
+            <Grid2 container columns={1} spacing={1} width={1225}>
+                <Grid2 size={1} gridColumn={0}>
+                    <MotorState motorNumber={ 0 } state={motorState} setState={
+                        (motorState: MotorParams) => {
+                            setMotorState({...motorState})
+                        }
+                    }/>
+                </Grid2>
                 <Grid2 size={1} gridColumn={0}>
                     <MotorControlSettings 
                         motorNumber={0} 
@@ -182,7 +192,6 @@ export function MotorTuningSliders({ motorNumber, state, setState }:
                 <Grid2 size={1} gridColumn={0}><Client.SpeedInputInversionSwitch motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.ErrorLatchSwitch motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.DigitalFilteringSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
-                <Grid2 size={1} gridColumn={0}><Client.ForcedComutationSwitch motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.SpeedChangeLimitSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.StartupCurrentLimitSlider motorNumber = {motorNumber} state={state} setState={setState}/></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.OutputCurrentMonitoringSwitch motorNumber = {motorNumber} state={state} setState={setState}/></Grid2>
@@ -205,7 +214,6 @@ export function MotorTuningSliders({ motorNumber, state, setState }:
                 <Grid2 size={1} gridColumn={0}><Client.FirstDCExcitationTimeSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.SecondDCExcitationTimeSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.LeadAngleSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
-                <Grid2 size={1} gridColumn={0}><Client.ElectricalAngleMaxFrequencySlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.ForcedComutationFrequencySlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.OutputPWMSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
                 <Grid2 size={1} gridColumn={0}><Client.DeadtimeSlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
@@ -223,9 +231,13 @@ export function MotorMonitoring({ motorNumber, state, setState }:
     {motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }) {
     return (
         <Box>
-            <Client.ChargePumpStateMonitoringSwitch motorNumber={motorNumber} state={state} setState={setState} />
-            <Client.ThermalShutdownInhibitSwitch motorNumber={motorNumber} state={state} setState={setState} />
-            <Client.OverCurrentDetectionSwitch motorNumber={motorNumber} state={state} setState={setState} />
+            <Grid2 container columns={1} spacing={1}>
+                <Grid2 size={1} gridColumn={0}><Client.ChargePumpStateMonitoringSwitch motorNumber={motorNumber} state={state} setState={setState} /></Grid2>
+                <Grid2 size={1} gridColumn={0}><Client.ThermalShutdownInhibitSwitch motorNumber={motorNumber} state={state} setState={setState} /></Grid2>
+                <Grid2 size={1} gridColumn={0}><Client.OverCurrentDetectionSwitch motorNumber={motorNumber} state={state} setState={setState} /></Grid2>
+                <Grid2 size={1} gridColumn={0}><Client.ForcedComutationSwitch motorNumber={motorNumber} state={state} setState={setState} /></Grid2>
+                <Grid2 size={1} gridColumn={0}><Client.ElectricalAngleMaxFrequencySlider motorNumber = {motorNumber} state={state} setState={setState} /></Grid2>
+            </Grid2>
         </Box>
     )
 }
@@ -245,7 +257,6 @@ export function MotorControlSettings({ motorNumber, state, setState}:
     return (
         <Box sx={{ borderWidth: 0, padding: 1, bgcolor: sectionbgColor, borderRadius: 4}}>
             <MotorTuningSliders motorNumber = {motorNumber} state={state} setState={setState}/>
-            <MotorMonitoring motorNumber = {motorNumber} state={state} setState={setState}/>
         </Box>
     )
 }
