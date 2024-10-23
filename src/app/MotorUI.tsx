@@ -9,12 +9,14 @@ import { itembgColor, sectionbgColor } from "./UIStyle";
 import * as RegisterList from "./ClientComponents/Register";
 import { getData, updateValues } from "./MotorControl";
 
+const simulate = true
+
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     const [motorTelem, setMotorTelem] = useState<updateValues>()
     useEffect(() => {
         setInterval(() => {
             const update = async () => {
-                setMotorTelem(await getData( motorNumber, true ))
+                setMotorTelem(await getData( motorNumber, simulate ))
                 //console.log((await getData( motorNumber )).HZ_CNT)
             }
             update().catch(console.error)
