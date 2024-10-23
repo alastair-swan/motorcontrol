@@ -1,15 +1,15 @@
 "use client"
 
 import { Register } from "./ClientComponents"
-import { CP_LOW, HZ_CNT, ISD, UD_SPD, OV_SPD, ST_FAIL, TSD } from "./ClientComponents/Register"
 import * as Server from './MotorControl'
 export type MotorParams = {
-    CP_LOW: boolean,
-    TSD: boolean,
-    ISD: boolean,
-    OV_SPD: boolean,
-    UD_SPD: boolean,
-    ST_FAIL: boolean,
+    simulated: boolean,
+    CP_LOW: number,
+    TSD: number,
+    ISD: number,
+    OV_SPD: number,
+    UD_SPD: number,
+    ST_FAIL: number,
     USERID: number,
     NOSTOP: boolean,
     STOPDUTY: number,
