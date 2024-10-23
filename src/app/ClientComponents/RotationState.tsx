@@ -6,7 +6,7 @@ import { HZ_CNT, MAXSPEED } from "./Register";
 export function RotationState({state}: {state: MotorParams}){
     const getRPMText = () => {
         return (
-            Number.isNaN(state.hz_cnt) ? " No Info" : 
+            Number.isNaN(state.hz_cnt) || HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60 === 2500000 ? " No Info" : 
             " " + Math.round(HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60) + " RPM"
         )
     }
