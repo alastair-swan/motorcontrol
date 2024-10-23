@@ -11,7 +11,7 @@ export function StartupState({ state }: {state: MotorParams}){
                 state.simulated ? <span style={{color: warningStateColor}}>Simulated </span> : ""
             }
             Motor Start: { 
-                !state.LOCKDIS ? <span style={{color: warningStateColor}}>Not Monitored</span> :
+                state.LOCKDIS ? <span style={{color: warningStateColor}}>Not Monitored</span> :
                 state.ST_FAIL ? <span style={{color: errorStateColor}}>Failed</span> : 
                 <span style={{color: goodStateColor}}>Successful</span>}
         </Box>

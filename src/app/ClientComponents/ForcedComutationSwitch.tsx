@@ -11,18 +11,18 @@ export function ForcedComutationSwitch ({ motorNumber, state, setState, frameSty
     return (
         <Box sx={ frameStyle }>
             <Switch  
-                checked={ !state.LOCKDIS }
+                checked={ state.LOCKDIS }
                 onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                     setState({
                         ...state,
-                        LOCKDIS: !checked
+                        LOCKDIS: checked
                     })
-                    UpdateParam(motorNumber, LOCKDIS, !checked)
+                    UpdateParam(motorNumber, LOCKDIS, checked)
                 }}
             /> 
             { state.LOCKDIS ? 
-                "Failure to transition to closed loop control will trigger an error" :
-                <span style={{color: warningStateColor}}>Startup Errors Ignored</span>
+                <span style={{color: warningStateColor}}>Startup Errors Ignored</span>:
+                "Failure to transition to closed loop control will trigger an error"
             }
         </Box>
     )
