@@ -127,10 +127,16 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                 <g fill="black" stroke="white" strokeWidth="1.5">
                     {graphData.map((d, i) => (<circle key={i} cx={xAxis(d.x)} cy={yAxis(d.y)} r="2.5" />))}
                 </g>
-                <g fill="black" stroke={
-                    Number.isNaN(state.hz_cnt) ? warningStateColor : 
-                    state.OV_SPD || state.UD_SPD ? errorStateColor : 
-                    goodStateColor } strokeWidth="1.5">
+                <g 
+                    fill="black" 
+                    stroke={
+                        Number.isNaN(state.hz_cnt) ? warningStateColor : 
+                        state.OV_SPD === 1 || state.UD_SPD === 1? errorStateColor :
+                        state.simulated ? warningStateColor : 
+                        goodStateColor 
+                    } 
+                    strokeWidth="1.5"
+                >
                     <circle cx={xAxis(SPD.normalize(state.SPD))} cy={yAxis( Number.isNaN(state.hz_cnt) ? 0 : HZ_CNT.normalize(state.hz_cnt) / state.POLEPAIR * 60 / maxSpeed)} r="2.5" />
                 </g>
             </svg>
