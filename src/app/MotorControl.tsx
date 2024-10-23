@@ -46,7 +46,7 @@ export async function GetParam(motorNumber: number, paramName: string, simulated
     if (simulated){
         if (paramName === HZ_CNT.command){
             const result = 10001-((new Date().getTime()) % 10000)
-            console.log('simulated readback: ' + paramName + ' from Motor: ' + motorNumber + " with result: " + result)
+            //console.log('simulated readback: ' + paramName + ' from Motor: ' + motorNumber + " with result: " + result)
             return result
         }
         else if (paramName === CP_LOW.command){
@@ -72,7 +72,7 @@ export async function GetParam(motorNumber: number, paramName: string, simulated
         }
         else {
             const result = native.getParam(motorNumber, paramName)
-            console.log('simulated readback: ' + paramName + ' from Motor: ' + motorNumber + ' with result: ' + result)
+            console.log('no simulate set for ' + paramName + ' readback: ' + paramName + ' from Motor: ' + motorNumber + ' with result: ' + result)
             return result
         }
     }
