@@ -104,7 +104,7 @@ export function DutyCurve({ state }: { motorNumber: number, state: MotorParams, 
                         {
                             axisPoints.map((d, i) => (
                                 <g key={i} fontSize="12" fontFamily="sans-serif" textAnchor="middle" fill="white">
-                                    <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:d, y:0},{x:d, y:-0.02}]) as string} />
+                                    <path fill="none" stroke="white" strokeWidth="1.5" d={line([{x:d, y:0},{x:d, y:-0.016}]) as string} />
                                     <text dy={yAxis(-0.06)} dx={xAxis(d)}>{d * 100 + "%"}</text>
                                 </g>
                             ))
