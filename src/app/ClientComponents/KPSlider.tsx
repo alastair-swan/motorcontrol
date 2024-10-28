@@ -13,7 +13,7 @@ export function KPSlider ({ motorNumber, state, setState, frameStyle = component
     }
     return (
         <Box sx={ frameStyle }>
-            I coefficient: {switchText()}
+            P coefficient: {switchText()}
             <Slider 
                 valueLabelDisplay='auto' 
                 value={ state.KPX ? state.KP * 8 : state.KP }

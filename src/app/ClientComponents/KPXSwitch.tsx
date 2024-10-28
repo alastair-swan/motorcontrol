@@ -26,7 +26,7 @@ export function KPXSwitch ({ motorNumber, state, setState, frameStyle = componen
                     UpdateParam(motorNumber, KPX, checked)
                 }}
             />
-            I coefficient {switchText()} 
+            P coefficient {switchText()} 
         </Box>
     )
 }
