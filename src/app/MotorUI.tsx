@@ -1,40 +1,41 @@
 "use client"
 
-import { Grid2, Box } from "@mui/material";
+import { Grid2, Box, Button, Switch } from "@mui/material";
 import './ClientComponents/MotorDutyCurve';
 import * as Client from './ClientComponents';
 import { useEffect, useState } from "react";
 import { MotorParams } from "./MotorControlClient";
 import { itembgColor, sectionbgColor } from "./UIStyle";
 import * as RegisterList from "./ClientComponents/Register";
-import { getData, updateValues } from "./MotorControl";
+import { getData, loadMotorDefault, loadMotorTune, saveMotorTune, updateValues } from "./MotorControl";
 
 const simulate = false
-
+var poller: NodeJS.Timeout
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     const [motorTelem, setMotorTelem] = useState<updateValues>()
     useEffect(() => {
-        setInterval(() => {
+        clearInterval(poller)
+        poller = setInterval(() => {
             const update = async () => {
-                setMotorTelem(await getData( motorNumber, simulate ))
+                setMotorTelem(await getData( motorNumber, state.simulated ))
                 //console.log((await getData( motorNumber )).HZ_CNT)
             }
             update().catch(console.error)
         }, 500)
         
-    }, [])
+    }, [state.simulated])
     return (
         <Box sx={{ bgcolor: sectionbgColor, borderRadius: 4, borderWidth: 0}}>
             <Grid2 container size={1} columns={2} spacing={1} sx={{ borderWidth: 0, padding: 1 }}>
                 <Grid2 gridColumn={0} size={1}>
                     <Grid2 container columns={1} width={"100%"} size={1} spacing={1}>
                         <Grid2 size={1} sx={{ bgcolor: itembgColor, borderRadius: 2, borderWidth: 0, padding: 1}}>
-                            <Client.ChargePumpState state={{...state, CP_LOW: typeof(motorTelem) ==='undefined' ? state.CP_LOW : motorTelem?.CP_LOW, simulated: motorTelem?.simulated as boolean}}/>
-                            <Client.TemperatureState state={{...state, TSD: typeof(motorTelem) ==='undefined' ? state.TSD : motorTelem?.TSD, simulated: motorTelem?.simulated as boolean}}/>
-                            <Client.CurrentState state={{...state, ISD: typeof(motorTelem) ==='undefined' ? state.ISD : motorTelem?.ISD, simulated: motorTelem?.simulated as boolean}}/>
-                            <Client.RPMErrorState state={{...state, OV_SPD: typeof(motorTelem) ==='undefined' ? state.OV_SPD : motorTelem?.OV_SPD, UD_SPD: motorTelem?.UD_SPD as number, simulated: motorTelem?.simulated as boolean}}/>
-                            <Client.StartupState state={{...state, ST_FAIL: typeof(motorTelem) ==='undefined' ? state.ST_FAIL : motorTelem?.ST_FAIL, simulated: motorTelem?.simulated as boolean}}/>
-                            <Client.RotationState state={{...state, hz_cnt: typeof(motorTelem) ==='undefined' ? state.hz_cnt : motorTelem?.HZ_CNT, simulated: motorTelem?.simulated as boolean}}/>
+                            <Client.ChargePumpState state={{...state, CP_LOW: typeof(motorTelem) ==='undefined' ? state.CP_LOW : motorTelem?.CP_LOW, simulated: state.simulated as boolean}}/>
+                            <Client.TemperatureState state={{...state, TSD: typeof(motorTelem) ==='undefined' ? state.TSD : motorTelem?.TSD, simulated: state.simulated as boolean}}/>
+                            <Client.CurrentState state={{...state, ISD: typeof(motorTelem) ==='undefined' ? state.ISD : motorTelem?.ISD, simulated: state.simulated as boolean}}/>
+                            <Client.RPMErrorState state={{...state, OV_SPD: typeof(motorTelem) ==='undefined' ? state.OV_SPD : motorTelem?.OV_SPD, UD_SPD: motorTelem?.UD_SPD as number, simulated: state.simulated as boolean}}/>
+                            <Client.StartupState state={{...state, ST_FAIL: typeof(motorTelem) ==='undefined' ? state.ST_FAIL : motorTelem?.ST_FAIL, simulated: state.simulated as boolean}}/>
+                            <Client.RotationState state={{...state, hz_cnt: typeof(motorTelem) ==='undefined' ? state.hz_cnt : motorTelem?.HZ_CNT, simulated: state.simulated as boolean}}/>
                         </Grid2>
                         <Grid2 width={"100%"}>
                             <MotorMonitoring motorNumber = {motorNumber} state={state} setState={setState}/>
@@ -54,7 +55,7 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
                                     UD_SPD: motorTelem?.UD_SPD as number,
                                     ST_FAIL: motorTelem?.ST_FAIL as number,
                                     hz_cnt: motorTelem?.HZ_CNT as number,
-                                    simulated: motorTelem?.simulated as boolean
+                                    simulated: state.simulated as boolean
                                 }} setState={setState} width={600}/>
                         </Grid2>
                         <Grid2 gridColumn={0} size={1}>
@@ -69,7 +70,7 @@ function MotorState({ motorNumber, state, setState }: { motorNumber: number, sta
 
 export default function Motor ({motorNumber}: {motorNumber: number}){
     const [motorState, setMotorState] = useState<MotorParams>({
-        simulated: false,
+        simulated: simulate,
         CP_LOW: -1,
         TSD: -1,
         ISD: -1,
@@ -140,6 +141,11 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
         hz_cnt: NaN
     })
 
+    useEffect(()=>{
+        const load = async () => {setMotorState(await loadMotorTune(motorNumber))}
+        load()
+    }, [])
+
     return (
         <Box padding={2} height={'100vh'} overflow={'auto'}>
             <Grid2 container columns={1} spacing={1} width={1225}>
@@ -151,6 +157,10 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
                     }/>
                 </Grid2>
                 <Grid2 size={1} gridColumn={0}>
+                    <Button onClick={() => {saveMotorTune(motorState, motorNumber)}}>Save Custom Tune</Button>
+                    <Button onClick={async () => {setMotorState(await loadMotorTune(motorNumber))}}>Load Custom Tune</Button>
+                    <Button onClick={async () => {setMotorState(await loadMotorDefault())}}>Load Default Tune</Button>
+                    <Button onClick={() => {setMotorState({...motorState, simulated: !motorState.simulated})}}>{motorState.simulated ? "Disable" : "Enable"} Simulated Data</Button>
                     <MotorControlSettings 
                         motorNumber={0} 
                         state={motorState} 
