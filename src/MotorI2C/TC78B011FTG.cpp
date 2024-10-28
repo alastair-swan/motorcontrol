@@ -1613,7 +1613,7 @@ int TC78B011FTG::getSpeedSetting(bool fromChip)
 
 int TC78B011FTG::getRPM(bool fromChip)
 {
-    return 250000 / (((uint16_t)(i2cRead(HZ_CNT_REGISTER_H)) << 8) | (uint16_t)i2cRead(HZ_CNT_REGISTER_L)) * 60;
+    return (((uint16_t)(i2cRead(HZ_CNT_REGISTER_H)) << 8) | (uint16_t)i2cRead(HZ_CNT_REGISTER_L));
 }
 
 int TC78B011FTG::readNVM()
