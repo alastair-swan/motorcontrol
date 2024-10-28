@@ -1,9 +1,33 @@
 "use server"
 
 import { CP_LOW, HZ_CNT, ISD, UD_SPD, OV_SPD, ST_FAIL, TSD } from "./ClientComponents/Register"
+import { MotorParams } from "./MotorControlClient"
+import fs from 'fs';
 
 //const native = require('/home/alastair/git/motorcontrol/build/Release/native.node')
 const native = __non_webpack_require__('../../../build/Release/native.node')
+//const fs = require('fs');
+
+export async function saveMotorTune(motorState: MotorParams, motorNumber: number){
+    const motorSave = {
+        motorNumber: motorNumber,
+        motorState: motorState
+    }
+    const jsonMotorSave = JSON.stringify(motorSave, null, 2);
+    fs.writeFile(process.cwd() + '/src/MotorI2C/motorTunes/motor' + motorNumber + 'tune.json', jsonMotorSave, {encoding: 'utf8', flag: 'w'}, (err) => {console.log(err)})
+}
+
+export async function loadMotorTune(motorNumber: number): Promise<MotorParams> {
+    const loadedMotorStateData = fs.readFileSync (process.cwd() + '/src/MotorI2C/motorTunes/motor' + motorNumber + 'tune.json', {encoding:'utf-8'});
+    const loadedMotorState = JSON.parse(loadedMotorStateData) as { motorNumber: number, motorState: MotorParams}
+    return loadedMotorState.motorState
+}
+
+export async function loadMotorDefault(): Promise<MotorParams> {
+    const loadedMotorStateData = fs.readFileSync (process.cwd() + '/src/MotorI2C/motorTunes/motordefault.json', {encoding:'utf-8'});
+    const loadedMotorState = JSON.parse(loadedMotorStateData) as { motorNumber: number, motorState: MotorParams}
+    return loadedMotorState.motorState
+}
 
 export type updateValues = {
     simulated: boolean,
