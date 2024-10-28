@@ -29,14 +29,13 @@ export function SpeedChangeLimitSlider ({ motorNumber, state, setState, frameSty
                 min={ DUTYCHGLIMIT.min } 
                 max={ DUTYCHGLIMIT.max }
                 step={1}
-                scale={(value: number) => { return (value + 1) % 8 }}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({
                             ...state,
                             DUTYCHGLIMIT: newValue
                         })  
-                        UpdateParam(motorNumber, DUTYCHGLIMIT, newValue)
+                        UpdateParam(motorNumber, DUTYCHGLIMIT, (newValue + 1) % 8)
                     }
                 }}
                 valueLabelFormat={sliderFormat}

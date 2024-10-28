@@ -29,14 +29,13 @@ export function SoftStartSpeedChangeLimitSlider ({ motorNumber, state, setState,
                 min={ SS_DUTYCHGLIMIT.min } 
                 max={ SS_DUTYCHGLIMIT.max }
                 step={1}
-                scale={(value: number) => { return (value + 1) % 8 }}
                 onChange={(event: Event, newValue: number | number[]) => {
                     if (typeof newValue === 'number'){
                         setState({
                             ...state,
                             SS_DUTYCHGLIMIT: newValue
                         })  
-                        UpdateParam(motorNumber, SS_DUTYCHGLIMIT, newValue)
+                        UpdateParam(motorNumber, SS_DUTYCHGLIMIT, (newValue + 1) % 8)
                     }
                 }}
                 valueLabelFormat={sliderFormat}
