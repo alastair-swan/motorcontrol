@@ -9,7 +9,7 @@ import { itembgColor, sectionbgColor } from "./UIStyle";
 import * as RegisterList from "./ClientComponents/Register";
 import { getData, updateValues } from "./MotorControl";
 
-const simulate = true
+const simulate = false
 
 function MotorState({ motorNumber, state, setState }: { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void }){
     const [motorTelem, setMotorTelem] = useState<updateValues>()
