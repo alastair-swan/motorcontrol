@@ -1,6 +1,6 @@
 "use client"
 
-import { Grid2, Box, Button, Switch } from "@mui/material";
+import { Grid2, Box, Button } from "@mui/material";
 import './ClientComponents/MotorDutyCurve';
 import * as Client from './ClientComponents';
 import { useEffect, useState } from "react";
@@ -157,10 +157,12 @@ export default function Motor ({motorNumber}: {motorNumber: number}){
                     }/>
                 </Grid2>
                 <Grid2 size={1} gridColumn={0}>
-                    <Button onClick={() => {saveMotorTune(motorState, motorNumber)}}>Save Custom Tune</Button>
-                    <Button onClick={async () => {setMotorState(await loadMotorTune(motorNumber))}}>Load Custom Tune</Button>
-                    <Button onClick={async () => {setMotorState(await loadMotorDefault())}}>Load Default Tune</Button>
-                    <Button onClick={() => {setMotorState({...motorState, simulated: !motorState.simulated})}}>{motorState.simulated ? "Disable" : "Enable"} Simulated Data</Button>
+                    <Box paddingBottom={1} paddingTop={1}>
+                        <Button sx={{'&:hover': { bgcolor: itembgColor }}} onClick={() => {saveMotorTune(motorState, motorNumber)}}>Save Custom Tune</Button>
+                        <Button sx={{'&:hover': { bgcolor: itembgColor }}} onClick={async () => {setMotorState(await loadMotorTune(motorNumber))}}>Load Custom Tune</Button>
+                        <Button sx={{'&:hover': { bgcolor: itembgColor }}} onClick={async () => {setMotorState(await loadMotorDefault())}}>Load Default Tune</Button>
+                        <Button sx={{'&:hover': { bgcolor: itembgColor }}} onClick={() => {setMotorState({...motorState, simulated: !motorState.simulated})}}>{motorState.simulated ? "Disable" : "Enable"} Simulated Data</Button>
+                    </Box>
                     <MotorControlSettings 
                         motorNumber={0} 
                         state={motorState} 
