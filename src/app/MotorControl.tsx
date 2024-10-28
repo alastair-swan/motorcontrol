@@ -11,7 +11,7 @@ const native = __non_webpack_require__('../../../build/Release/native.node')
 export async function saveMotorTune(motorState: MotorParams, motorNumber: number){
     const motorSave = {
         motorNumber: motorNumber,
-        motorState: motorState
+        motorState: {...motorState, SPD: 0}
     }
     const jsonMotorSave = JSON.stringify(motorSave, null, 2);
     fs.writeFile(process.cwd() + '/src/MotorI2C/motorTunes/motor' + motorNumber + 'tune.json', jsonMotorSave, {encoding: 'utf8', flag: 'w'}, (err) => {console.log(err)})
