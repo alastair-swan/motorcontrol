@@ -31,7 +31,7 @@ export async function loadMotorDefault(): Promise<MotorParams> {
 
 export type updateValues = {
     simulated: boolean,
-    HZ_CNT: number,
+    hz_cnt: number,
     CP_LOW: number,
     TSD: number,
     ISD: number,
@@ -43,7 +43,7 @@ export type updateValues = {
 export async function getData(motorNumber: number, simulated = false): Promise<updateValues>{
     return {
         simulated: simulated,
-        HZ_CNT: await GetParam(motorNumber, HZ_CNT.command, simulated),
+        hz_cnt: await GetParam(motorNumber, HZ_CNT.command, simulated),
         CP_LOW: (await GetParam(motorNumber, CP_LOW.command, simulated)),
         TSD: (await GetParam(motorNumber, TSD.command, simulated)),
         ISD: (await GetParam(motorNumber, ISD.command, simulated)),

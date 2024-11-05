@@ -1,8 +1,9 @@
 "use client"
 
+import { Dispatch, SetStateAction } from 'react'
 import { MotorParams } from '../MotorControlClient'
 
-export type componentProps = { motorNumber: number, state: MotorParams, setState: (motorState: MotorParams) => void, frameStyle?: {}}
+export type componentProps = { motorNumber: number, state: MotorParams, setState: Dispatch<SetStateAction<MotorParams>>, frameStyle?: {}}
 export type switchComponentProps = componentProps
 export type sliderComponentProps = componentProps
 export type { Register } from './Register'
